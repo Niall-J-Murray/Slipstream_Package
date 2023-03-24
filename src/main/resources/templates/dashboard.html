@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <link href="/css/general.css" rel="stylesheet" type="text/css"/>
+  <title>Dashboard</title>
+</head>
+<body>
+<header>
+  <ul class="nav-bar">
+    <li><img src="/images/F1Logo.png"></li>
+    <li><a href="/home">Home</a></li>
+    <div th:if="${isLoggedIn != true}">
+      <li><a href="/register">Register</a></li>
+      <li><a href="/login">Login</a></li>
+    </div>
+    <div th:if="${isAdmin == true}">
+      <li><a href="/admin">Admin</a></li>
+    </div>
+    <div th:if="${isLoggedIn == true}">
+      <li><a href="/dashboard">Dashboard</a></li>
+      <li><a href="/confirm_logout">Logout</a></li>
+    </div>
+  </ul>
+</header>
+<h1>Dashboard</h1>
+
+<p th:text="|Hello there ${user.username}|"></p>
+
+<p th:if="${user.team} != null" th:text="|Current team ${user.team.teamName}|"></p>
+<div th:unless="${user.team} != null" >
+  <p th:text="|No active team|"></p>
+  <p th:text="|Choose a team name below to get started|"></p>
+<!--<p th:text="|No active team"|></p>-->
+<!--<p th:text="|Choose a team name below to get started"|></p>-->
+</div>
+<fieldset>
+  <legend>Create Team</legend>
+  <table id="team-form">
+<!--    <form action="" method="POST" th:object="${user}">-->
+    <form action="" method="POST" th:action="@{/dashboard}" th:object="${user}">
+      <tr>
+        <th>
+          <label>Team Name:</label>
+        </th>
+        <td>
+          <label>
+            <input required th:field="*{team.teamName}" type="text"/>
+          </label>
+        </td>
+        <td>
+<!--          <p class="error-message" th:text="${teamExists}"></p>-->
+        </td>
+      </tr>
+      <tr>
+        <th>
+          <button type="submit">Register</button>
+        </th>
+        <td></td>
+      </tr>
+    </form>
+  </table>
+  </fieldset>
+</form>
+</body>
+</html>

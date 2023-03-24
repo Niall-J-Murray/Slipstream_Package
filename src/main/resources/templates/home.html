@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="/css/general.css" rel="stylesheet" type="text/css"/>
+  <title>Home</title>
+</head>
+<body>
+<header>
+  <ul class="nav-bar">
+    <li><img src="/images/F1Logo.png"></li>
+    <li><a href="/home">Home</a></li>
+    <div th:if="${isLoggedIn != true}">
+      <li><a href="/register">Register</a></li>
+      <li><a href="/login">Login</a></li>
+    </div>
+    <div th:if="${isAdmin == true}">
+      <li><a href="/admin">Admin</a></li>
+    </div>
+    <div th:if="${isLoggedIn == true}">
+      <li><a href="/dashboard">Dashboard</a></li>
+      <li><a href="/confirm_logout">Logout</a></li>
+    </div>
+  </ul>
+</header>
+
+<h1>Home</h1>
+<div th:if="${param.logout != null}">
+  You have been logged out.
+</div>
+<hr>
+<div th:if="${isLoggedIn == true}">
+  <p th:text="|Welcome ${user.getUsername()}|"></p>
+</div>
+
+
+<div th:if="${isLoggedIn == true}">
+  <div><a href="/dashboard">Dashboard</a></div>
+</div>
+<div th:if="${isLoggedIn != true}">
+  <div><a href="/login">Login</a></div>
+  -or-
+  <div><a href="/register">Create New Account</a></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+  <link href="/css/general.css" rel="stylesheet" type="text/css"/>
+  <title>Register</title>
+</head>
+<body>
+<header>
+  <ul class="nav-bar">
+    <li><img src="/images/F1Logo.png"></li>
+    <li><a href="/home">Home</a></li>
+    <div th:if="${isLoggedIn != true}">
+      <li><a href="/register">Register</a></li>
+      <li><a href="/login">Login</a></li>
+    </div>
+    <div th:if="${isAdmin == true}">
+      <li><a href="/admin">Admin</a></li>
+    </div>
+    <div th:if="${isLoggedIn == true}">
+      <li><a href="/dashboard">Dashboard</a></li>
+      <li><a href="/confirm_logout">Logout</a></li>
+    </div>
+  </ul>
+</header>
+<h1>Register</h1>
+<fieldset>
+  <table id="registration-form">
+    <form action="" method="POST" th:action="@{/register}" th:object="${user}">
+      <tr>
+        <th>
+          <label>Username:</label>
+        </th>
+        <td>
+          <label>
+            <input required th:field="*{username}" type="text"/>
+          </label>
+        </td>
+        <td>
+          <p class="error-message" th:text="${userExists}"></p>
+          <!--          <p th:each="error: ${#fields.errors('username')}"-->
+          <!--             th:text="${error}">Validation error</p>-->
+        </td>
+      </tr>
+      <tr>
+        <th>
+          <label>Email:</label>
+        </th>
+        <td>
+          <label>
+            <input required th:field="*{email}" type="email"/>
+          </label>
+        </td>
+        <td>
+          <p class="error-message" th:text="${emailExists}"></p>
+          <!--          <p th:each="error : ${#fields.errors('email')}"-->
+          <!--             th:text="${error}">Validation error</p>-->
+        </td>
+      </tr>
+      <tr>
+        <th>
+          <label>Password:</label>
+        </th>
+        <td>
+          <label>
+            <input required th:field="*{password}" type="password"/>
+          </label>
+        </td>
+        <td>
+          <p class="error-message" th:text="${badPassword}"></p>
+          <!--          <p th:each="error : ${#fields.errors('password')}"-->
+          <!--             th:text="${error}">Validation error</p>-->
+        </td>
+      </tr>
+      <!--Use JS to check if password matches before submitting-->
+      <!--  <div>-->
+      <!--    <label>Confirm Password:</label>-->
+      <!--    <input  type="password" required/>-->
+      <!--  </div>-->
+      <tr>
+        <th>
+          <button type="submit">Register</button>
+        </th>
+        <td></td>
+      </tr>
+    </form>
+  </table>
+</fieldset>
+
+
+<div>
+  Already registered?
+</div>
+<div>
+  <button onclick="window.location.href='/login';">
+    Login
+  </button>
+</div>
+</body>
+
+</html>

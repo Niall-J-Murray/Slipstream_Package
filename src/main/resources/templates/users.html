@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Users</title>
+</head>
+<body>
+<header>
+  <ul class="nav-bar">
+    <li><img src="/images/F1Logo.png" alt="f1Logo"></li>
+    <li><a href="/home">Home</a></li>
+    <div th:if="${isLoggedIn != true}">
+      <li><a href="/register">Register</a></li>
+      <li><a href="/login">Login</a></li>
+    </div>
+    <div th:if="${isAdmin == true}">
+      <li><a href="/admin">Admin</a></li>
+    </div>
+    <div th:if="${isLoggedIn == true}">
+      <li><a href="/dashboard">Dashboard</a></li>
+      <li><a href="/confirm_logout">Logout</a></li>
+    </div>
+  </ul>
+</header>
+
+<h2>Currently logged in users</h2>
+<div th:each="user : ${users}">
+  <p th:text="${user}">user</p>
+</div>
+
+</body>
+</html>
