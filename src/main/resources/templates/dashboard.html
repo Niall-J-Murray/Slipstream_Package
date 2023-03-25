@@ -27,39 +27,39 @@
 <p th:text="|Hello there ${user.username}|"></p>
 
 <p th:if="${user.team} != null" th:text="|Current team ${user.team.teamName}|"></p>
-<div th:unless="${user.team} != null" >
+<div th:unless="${user.team} != null">
   <p th:text="|No active team|"></p>
   <p th:text="|Choose a team name below to get started|"></p>
-<!--<p th:text="|No active team"|></p>-->
-<!--<p th:text="|Choose a team name below to get started"|></p>-->
 </div>
-<fieldset>
+<fieldset th:unless="${user.team} != null">
   <legend>Create Team</legend>
   <table id="team-form">
-<!--    <form action="" method="POST" th:object="${user}">-->
-    <form action="" method="POST" th:action="@{/dashboard}" th:object="${user}">
+    <form action="" method="POST" th:action="@{/dashboard/{userId} (userId=${user.userId})}" th:object="${user}">
       <tr>
         <th>
           <label>Team Name:</label>
         </th>
         <td>
+<!--          FIX TEAMNAME FORM BUG-->
           <label>
             <input required th:field="*{team.teamName}" type="text"/>
           </label>
         </td>
         <td>
-<!--          <p class="error-message" th:text="${teamExists}"></p>-->
+          <!--          <p class="error-message" th:text="${teamExists}"></p>-->
         </td>
       </tr>
       <tr>
         <th>
-          <button type="submit">Register</button>
+          <!--          <input th:field="${user}" type="hidden"/>-->
         </th>
-        <td></td>
+        <td>
+          <button type="submit">Register</button>
+        </td>
       </tr>
     </form>
   </table>
-  </fieldset>
+</fieldset>
 </form>
 </body>
 </html>

@@ -24,7 +24,7 @@ public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {
           throws IOException {
     HttpSession session = request.getSession();
     if (session != null) {
-      userService.updateLastLogout(((User) authentication.getPrincipal()).getId());
+      userService.updateLastLogout(((User) authentication.getPrincipal()).getUserId());
       session.removeAttribute("user");
     }
     response.sendRedirect("/home?logout");

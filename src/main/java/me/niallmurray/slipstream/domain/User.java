@@ -17,7 +17,7 @@ import java.util.Set;
 public class User {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Long userId;
   @Column(nullable = false, unique = true)
   private String username;
   @Column(nullable = false, unique = true)
@@ -28,12 +28,19 @@ public class User {
   private Set<Authority> authorities = new HashSet<>();
   @Column()
   private String lastLogout;
-  @OneToOne()
+  @OneToOne(mappedBy = "user",
+          cascade = {CascadeType.ALL},
+          orphanRemoval = true)
   private Team team;
+  // For simplicity, each user has only one team for now.
+  // This means no need for creating separate leagues for users with multiple teams.
+  // This also limits the app to 10 users at one time for now,
+  // but could separate schemas be used for multiple leagues of 10 users?
+  // Features for multiple teams/leagues per user, and/or drivers per team could be added eventually.
 
   @Override
   public int hashCode() {
-    return Objects.hash(id);
+    return Objects.hash(userId);
   }
 
   @Override
@@ -45,19 +52,19 @@ public class User {
     if (getClass() != obj.getClass())
       return false;
     User other = (User) obj;
-    return Objects.equals(id, other.id);
+    return Objects.equals(userId, other.userId);
   }
 
   @Override
   public String toString() {
     return "User{" +
-            "id=" + id +
+            "id=" + userId +
             ", username='" + username + '\'' +
             ", email='" + email + '\'' +
             ", password='" + password + '\'' +
             ", authorities=" + authorities +
             ", lastLogout='" + lastLogout + '\'' +
-            ", team=" + team +
+//            ", team=" + team +
             '}';
   }
 }

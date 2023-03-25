@@ -19,7 +19,7 @@ public class Authority implements GrantedAuthority {
   private static final long serialVersionUID = -8123526131047887755L;
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Long authId;
   @ManyToOne
   private User user;
   @Column(nullable = false)
@@ -27,7 +27,7 @@ public class Authority implements GrantedAuthority {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id);
+    return Objects.hash(authId);
   }
 
   @Override
@@ -38,7 +38,7 @@ public class Authority implements GrantedAuthority {
     if (!(obj instanceof Authority other)) {
       return false;
     }
-    return Objects.equals(id, other.id);
+    return Objects.equals(authId, other.authId);
   }
 
 //  @Override

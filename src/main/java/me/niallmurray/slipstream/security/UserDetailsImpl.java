@@ -15,7 +15,7 @@ public class UserDetailsImpl extends User implements UserDetails {
 
   public UserDetailsImpl(User user) {
     this.setAuthorities(user.getAuthorities());
-    this.setId(user.getId());
+    this.setUserId(user.getUserId());
     this.setPassword(user.getPassword());
     this.setUsername(user.getUsername());
   }

@@ -15,7 +15,7 @@ import java.util.Objects;
 public class F1Driver {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Long driverId;
   @Column(nullable = false, unique = true)
   private String name;
   @Column()
@@ -27,18 +27,18 @@ public class F1Driver {
   public boolean equals(Object o) {
     if (this == o) return true;
     if (!(o instanceof F1Driver f1Driver)) return false;
-    return id.equals(f1Driver.id) && name.equals(f1Driver.name) && Objects.equals(points, f1Driver.points) && Objects.equals(userTeam, f1Driver.userTeam);
+    return driverId.equals(f1Driver.driverId) && name.equals(f1Driver.name) && Objects.equals(points, f1Driver.points) && Objects.equals(userTeam, f1Driver.userTeam);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, points, userTeam);
+    return Objects.hash(driverId, name, points, userTeam);
   }
 
   @Override
   public String toString() {
     return "F1Driver{" +
-            "id=" + id +
+            "id=" + driverId +
             ", name='" + name + '\'' +
             ", points=" + points +
             ", userTeam=" + userTeam +

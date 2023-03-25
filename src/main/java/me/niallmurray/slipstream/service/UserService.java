@@ -1,6 +1,7 @@
 package me.niallmurray.slipstream.service;
 
 import me.niallmurray.slipstream.domain.Authority;
+import me.niallmurray.slipstream.domain.Team;
 import me.niallmurray.slipstream.domain.User;
 import me.niallmurray.slipstream.repositories.UserRepository;
 import me.niallmurray.slipstream.security.ActiveUserStore;
@@ -26,12 +27,18 @@ public class UserService {
   public User createUser(User user) {
     Authority authority = new Authority();
     authority.setUser(user);
-
     authority.setAuthority("ROLE_USER");
+
     user.getAuthorities().add(authority);
     user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
     // For new users first login and to check for unsuccessful logouts.
     user.setLastLogout(String.valueOf(LocalDateTime.of(666, 6, 6, 6, 6)));
+
+    return userRepository.save(user);
+  }
+
+  public User updateUser(Long userId){
+    User user = findById(userId);
 
     return userRepository.save(user);
   }
@@ -82,5 +89,11 @@ public class UserService {
 
   public void delete(Long userId) {
     userRepository.deleteById(userId);
+  }
+
+  public User updateUserTeam(Long userId, Team team) {
+    User user = findById(userId);
+    user.setTeam(team);
+    return userRepository.save(user);
   }
 }
