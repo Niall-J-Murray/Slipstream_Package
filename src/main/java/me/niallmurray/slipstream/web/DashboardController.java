@@ -23,21 +23,40 @@ public class DashboardController {
   private TeamService teamService;
 
   @GetMapping("/dashboard")
-  public String redirectUserDashboard(@AuthenticationPrincipal User userAuth){
+  public String redirectUserDashboard(@AuthenticationPrincipal User userAuth) {
 
-    return "redirect:/dashboard/"+  userAuth.getUserId();
+    return "redirect:/dashboard/" + userAuth.getUserId();
   }
 
   @GetMapping("/dashboard/{userId}")
 //  public String getDashboard(@AuthenticationPrincipal User user, ModelMap model, @PathVariable String userId) {
-  public String getDashboard(@AuthenticationPrincipal User userAuth,ModelMap model, @PathVariable Long userId) {
+  public String getDashboard(@AuthenticationPrincipal User userAuth, ModelMap model, @PathVariable Long userId) {
     User user = userService.findById(userId);
 //   model.addAttribute("team", user.getTeam());
     model.addAttribute("user", user);
     if (userService.isLoggedIn(user)) {
       model.addAttribute("isLoggedIn", true);
     }
+// Currently ony one league up to 10 players available.
+// New users can register, but cannot create new team.
+// userId 666 = admin userId.
+    if (userId > 10 && userId != 666) {
+      model.addAttribute("gameFull", true);
+    }
     return "dashboard";
+  }
+
+  // Consider JS for team name as only one string needs to be parsed from client.
+  @PostMapping("/dashboard/{userId}")
+  public String postCreateTeam(@PathVariable Long userId, User user) {
+    String teamName = user.getTeam().getTeamName();
+    user = userService.findById(userId);
+    if (user.getTeam() == null) {
+      user.setTeam(new Team());
+    }
+    user.getTeam().setTeamName(teamName);
+    teamService.createTeam(user);
+    return "redirect:/dashboard/" + userId;
   }
 
 //  @PostMapping("/dashboard/{userId}")
@@ -72,18 +91,7 @@ public class DashboardController {
 //    return "redirect:/dashboard/"+userId;
 //  }
 
-  @PostMapping("/dashboard/{userId}")
-  public String postCreateTeam(@PathVariable Long userId, User user)  {
-    String teamName= user.getTeam().getTeamName();
-    user = userService.findById(userId);
-    user.getTeam().setTeamName(teamName);
-    teamService.createTeam(user);
-    return "redirect:/dashboard/"+userId;
-  }
+
 }
 
-// Team name and/or team not being passed to controller or service?
-// View is freezing after first post?
-// Review previous assignments to check team/account creation.
-// Consider JS as only one string needs to be parsed from client.
 

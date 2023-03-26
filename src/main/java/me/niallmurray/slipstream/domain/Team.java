@@ -22,8 +22,10 @@ public class Team {
   @OneToOne(cascade = {CascadeType.ALL}) //1-1 for now, see comment in User.class
   private User user;
   @Column(nullable = false, unique = true)
-  private Integer pickNumber;
-//  @Column(nullable = false, unique = true)
+  private Integer firstPickNumber;
+  @Column(nullable = false, unique = true)
+  private Integer secondPickNumber;
+  //  @Column(nullable = false, unique = true)
   private String teamName;
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "userTeam")
   private Set<F1Driver> drivers = new HashSet<>();
@@ -32,19 +34,19 @@ public class Team {
   public boolean equals(Object o) {
     if (this == o) return true;
     if (!(o instanceof Team team)) return false;
-    return userId.equals(team.userId) && pickNumber.equals(team.pickNumber) && Objects.equals(user, team.user) && teamName.equals(team.teamName) && Objects.equals(drivers, team.drivers);
+    return userId.equals(team.userId) && firstPickNumber.equals(team.firstPickNumber) && Objects.equals(user, team.user) && teamName.equals(team.teamName) && Objects.equals(drivers, team.drivers);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(userId, pickNumber, user, teamName, drivers);
+    return Objects.hash(userId, firstPickNumber, user, teamName, drivers);
   }
 
   @Override
   public String toString() {
     return "Team{" +
             "id=" + userId +
-            ", pickNumber=" + pickNumber +
+            ", pickNumber=" + firstPickNumber +
             ", user=" + user +
             ", teamName='" + teamName + '\'' +
             ", drivers=" + drivers +
