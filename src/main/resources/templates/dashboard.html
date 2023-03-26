@@ -25,6 +25,12 @@
 <h1>Dashboard</h1>
 
 <p th:text="|Hello there ${user.username}|"></p>
+<div th:if="${isAdmin == true}">
+  <p th:text="|Sorry, admin cannot play.|"></p>
+</div>
+<!-- ** fix what is not shown to admin on player dashboard-->
+<!-- add who is already in league below create team fieldset-->
+<div th:if="${isAdmin != true}">
 <div th:if="${gameFull} == true">
 <p th:text="|Sorry, the game is currently full.|"></p>
 <p th:text="|Please check back later.|"></p>
@@ -69,5 +75,7 @@
     </table>
   </fieldset>
 </div>
+</div>
+
 </body>
 </html>

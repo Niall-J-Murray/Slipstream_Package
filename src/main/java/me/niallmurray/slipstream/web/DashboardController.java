@@ -37,10 +37,10 @@ public class DashboardController {
     if (userService.isLoggedIn(user)) {
       model.addAttribute("isLoggedIn", true);
     }
-// Currently ony one league up to 10 players available.
-// New users can register, but cannot create new team.
-// userId 666 = admin userId.
-    if (userId > 10 && userId != 666) {
+// Currently ony one league up to 10 players(not including admin) available.
+// After game is full, new users can register, but cannot create new team.
+// admin userId = 1
+    if (userId > 11) {
       model.addAttribute("gameFull", true);
     }
     return "dashboard";
@@ -49,6 +49,7 @@ public class DashboardController {
   // Consider JS for team name as only one string needs to be parsed from client.
   @PostMapping("/dashboard/{userId}")
   public String postCreateTeam(@PathVariable Long userId, User user) {
+    // add check for unique team names.
     String teamName = user.getTeam().getTeamName();
     user = userService.findById(userId);
     if (user.getTeam() == null) {
