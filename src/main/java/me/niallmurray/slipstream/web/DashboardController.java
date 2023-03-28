@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-
 @Controller
 public class DashboardController {
 
@@ -24,7 +23,7 @@ public class DashboardController {
 
   @GetMapping("/dashboard")
   public String redirectUserDashboard(@AuthenticationPrincipal User userAuth) {
-
+//    User user = userService.findById(userAuth.getUserId());
     return "redirect:/dashboard/" + userAuth.getUserId();
   }
 
@@ -32,10 +31,15 @@ public class DashboardController {
 //  public String getDashboard(@AuthenticationPrincipal User user, ModelMap model, @PathVariable String userId) {
   public String getDashboard(@AuthenticationPrincipal User userAuth, ModelMap model, @PathVariable Long userId) {
     User user = userService.findById(userId);
-//   model.addAttribute("team", user.getTeam());
     model.addAttribute("user", user);
+    model.addAttribute("teams", teamService.getAllTeams());
+    model.addAttribute("teamExists",
+            "Sorry, the team name is already in use.");
     if (userService.isLoggedIn(user)) {
       model.addAttribute("isLoggedIn", true);
+    }
+    if (userService.isAdmin(user)) {
+      model.addAttribute("isAdmin", true);
     }
 // Currently ony one league up to 10 players(not including admin) available.
 // After game is full, new users can register, but cannot create new team.
@@ -48,49 +52,33 @@ public class DashboardController {
 
   // Consider JS for team name as only one string needs to be parsed from client.
   @PostMapping("/dashboard/{userId}")
-  public String postCreateTeam(@PathVariable Long userId, User user) {
+  public String postCreateTeam(@AuthenticationPrincipal User userAuth,@PathVariable Long userId, User user, ModelMap model) {
     // add check for unique team names.
+//    System.out.println(userAuth);
+//    System.out.println(userAuth.getTeam().getTeamName());
     String teamName = user.getTeam().getTeamName();
-    user = userService.findById(userId);
-    if (user.getTeam() == null) {
-      user.setTeam(new Team());
-    }
-    user.getTeam().setTeamName(teamName);
-    teamService.createTeam(user);
-    return "redirect:/dashboard/" + userId;
-  }
 
-//  @PostMapping("/dashboard/{userId}")
-//  public String postCreateTeam(@AuthenticationPrincipal User userAuth,@PathVariable Long userId, ModelMap model)  {
-////  public String postCreateTeam(@AuthenticationPrincipal User user, ModelMap model, String teamName)  {
-////    User user = userService.findById(userId);
-////    Team team = new Team();
-////    user.setTeam(team);
-////    team.setUser(user);
-////    team.setTeamName(user.getTeam().getTeamName());
-//
-////    if (teamService.teamNameExists(user.getTeam().getTeamName())) {
-////      model.addAttribute("teamExists", "Team name taken");
-////      return "/dashboard";
-////    }
-////    teamService.createTeam(user.getTeam().getTeamName());
-//
-////    user.getTeam().setTeamName(teamName);
-////    System.out.println(user);
-////    System.out.println(user.getTeam().getTeamName());
-//
-//    User user = userService.findById(userId);
-//
-//    Team team = new Team();
-//    user.setTeam(team);
-//    System.out.println(user.getTeam().getTeamName());
-//    team.setUser(user);
-//    team.setTeamName(user.getTeam().getTeamName());
-////    teamService.createTeam(user);
-////    teamService.createTeam(team);
-//    teamService.createTeam(user,team);
-//    return "redirect:/dashboard/"+userId;
-//  }
+//    if (teamService.teamNameExists(teamName)) {
+//      model.addAttribute("teamExists",
+//              "Sorry, the team name is already in use.");
+//      return "/dashboard"+"/"+userId;
+////      return "dashboard";
+//    }
+//   user = userService.findById(userId);
+//    model.addAttribute("user", user);
+//    model.addAttribute("teams", teamService.getAllTeams());
+
+    if (!teamService.teamNameExists(teamName)) {
+      user = userService.findById(userId);
+      if (user.getTeam() == null) {
+        user.setTeam(new Team());
+      }
+      user.getTeam().setTeamName(teamName);
+      teamService.createTeam(user);
+      return "redirect:/dashboard/" + userId;
+    }
+    return "redirect:/dashboard/"+userId+"/error";
+  }
 
 
 }

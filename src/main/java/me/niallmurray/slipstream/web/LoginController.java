@@ -37,9 +37,6 @@ public class LoginController {
       model.addAttribute("isLoggedIn", true);
     }
 
-    if (userService.isAdmin(user)) {
-      model.addAttribute("isAdmin", true);
-    }
     return "home";
   }
 

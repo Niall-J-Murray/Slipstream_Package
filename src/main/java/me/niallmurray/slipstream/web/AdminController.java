@@ -27,6 +27,7 @@ public class AdminController {
     model.addAttribute("users", allUserAccounts);
     model.addAttribute("activeUsers", activeUserStore.getUsers());
     model.addAttribute("isLoggedIn", true);
+    model.addAttribute("isAdmin", true);
 
     return "admin";
   }

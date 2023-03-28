@@ -7,10 +7,7 @@ import me.niallmurray.slipstream.repositories.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class TeamService {
@@ -23,6 +20,8 @@ public class TeamService {
 
   // Set list for up to 10 players for now. Can be changed or made dynamic according to number of players per league.
   private List<Integer> pickNumbers = new ArrayList<>(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+  private List<Team> teamsInLeague = new ArrayList<>(20);
+  private List<User> usersForNextLeague = new ArrayList<>(20);
   private int teamCounter = 0;
 
   public Team createTeam(User user) {
@@ -32,17 +31,19 @@ public class TeamService {
 //      throw new RuntimeException(e);
 //    }
 
-    if (teamCounter < 10) {
+    if (getAllTeams().size() < 10) {
       Team team = new Team();
       team.setUser(user);
       team.setUserId(user.getUserId());
       team.setFirstPickNumber(randomPickNumber());
       team.setSecondPickNumber(21 - team.getFirstPickNumber()); //So players get 1&20, 2&19 etc. up to 10&11.
-      team.setTeamName(user.getTeam().getTeamName());
-
+      if (!teamNameExists(user.getTeam().getTeamName())) {
+        team.setTeamName(user.getTeam().getTeamName());
+      }
       user.setTeam(team);
       user.setEmail(user.getEmail());
-      teamCounter++;
+//      teamsInLeague.add(user.getTeam());
+//      teamCounter++; //Will not work IRL
       return teamRepository.save(team);
     }
 // for testing, new users should not be able to create team if league is full.
@@ -55,6 +56,7 @@ public class TeamService {
     team.setTeamName(user.getTeam().getTeamName());
     user.setTeam(team);
     user.setEmail(user.getEmail());
+    usersForNextLeague.add(user);
     return teamRepository.save(team);
   }
 
@@ -68,6 +70,15 @@ public class TeamService {
   }
 
   public boolean teamNameExists(String teamName) {
-    return true;
+    List<Team> allTeams = teamRepository.findAll();
+    for (Team team : allTeams) {
+      if (Objects.equals(team.getTeamName(), teamName))
+        return true;
+    }
+    return false;
+  }
+
+  public List<Team> getAllTeams() {
+   return teamRepository.findAll();
   }
 }
