@@ -33,11 +33,14 @@
 <table class="user-table">
   <th>ID:</th>
   <th>Username:</th>
+  <th>Team:</th>
   <th>Last Logout:</th>
   <tr th:each="user : ${users}">
-    <td>[[${user.userId}]]</td>
-    <td>[[${user.username}]]</td>
-    <td>[[${user.lastLogout}]]</td>
+    <td th:text="${user.userId}"></td>
+    <td th:text="${user.getAuthorities().iterator().next().getAuthority()==('ROLE_ADMIN')}
+    ? ${user.username + ' (ADMIN) '}  : ${user.username}"></td>
+    <td th:text="${user.team} ?: 'No Team'"></td>
+    <td th:text="${user.lastLogout}"></td>
   </tr>
 </table>
 </body>

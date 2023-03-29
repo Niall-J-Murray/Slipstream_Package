@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.List;
+
 @Controller
 public class DashboardController {
 
@@ -23,18 +25,15 @@ public class DashboardController {
 
   @GetMapping("/dashboard")
   public String redirectUserDashboard(@AuthenticationPrincipal User userAuth) {
-//    User user = userService.findById(userAuth.getUserId());
     return "redirect:/dashboard/" + userAuth.getUserId();
   }
 
   @GetMapping("/dashboard/{userId}")
-//  public String getDashboard(@AuthenticationPrincipal User user, ModelMap model, @PathVariable String userId) {
   public String getDashboard(@AuthenticationPrincipal User userAuth, ModelMap model, @PathVariable Long userId) {
     User user = userService.findById(userId);
+    List<Team> allTeams = teamService.getAllTeams();
     model.addAttribute("user", user);
-    model.addAttribute("teams", teamService.getAllTeams());
-    model.addAttribute("teamExists",
-            "Sorry, the team name is already in use.");
+    model.addAttribute("teams", allTeams);
     if (userService.isLoggedIn(user)) {
       model.addAttribute("isLoggedIn", true);
     }
@@ -43,8 +42,7 @@ public class DashboardController {
     }
 // Currently ony one league up to 10 players(not including admin) available.
 // After game is full, new users can register, but cannot create new team.
-// admin userId = 1
-    if (userId > 11) {
+    if (allTeams.size() >= 10) {
       model.addAttribute("gameFull", true);
     }
     return "dashboard";
@@ -53,21 +51,8 @@ public class DashboardController {
   // Consider JS for team name as only one string needs to be parsed from client.
   @PostMapping("/dashboard/{userId}")
   public String postCreateTeam(@AuthenticationPrincipal User userAuth,@PathVariable Long userId, User user, ModelMap model) {
-    // add check for unique team names.
-//    System.out.println(userAuth);
-//    System.out.println(userAuth.getTeam().getTeamName());
+    // Check for unique team names.
     String teamName = user.getTeam().getTeamName();
-
-//    if (teamService.teamNameExists(teamName)) {
-//      model.addAttribute("teamExists",
-//              "Sorry, the team name is already in use.");
-//      return "/dashboard"+"/"+userId;
-////      return "dashboard";
-//    }
-//   user = userService.findById(userId);
-//    model.addAttribute("user", user);
-//    model.addAttribute("teams", teamService.getAllTeams());
-
     if (!teamService.teamNameExists(teamName)) {
       user = userService.findById(userId);
       if (user.getTeam() == null) {
@@ -77,7 +62,7 @@ public class DashboardController {
       teamService.createTeam(user);
       return "redirect:/dashboard/" + userId;
     }
-    return "redirect:/dashboard/"+userId+"/error";
+    return "redirect:/dashboard/"+userId+"?error";
   }
 
 

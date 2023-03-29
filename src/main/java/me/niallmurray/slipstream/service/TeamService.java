@@ -31,7 +31,7 @@ public class TeamService {
 //      throw new RuntimeException(e);
 //    }
 
-    if (getAllTeams().size() < 10) {
+    if (getAllTeams().size() < 11) {
       Team team = new Team();
       team.setUser(user);
       team.setUserId(user.getUserId());
@@ -39,9 +39,10 @@ public class TeamService {
       team.setSecondPickNumber(21 - team.getFirstPickNumber()); //So players get 1&20, 2&19 etc. up to 10&11.
       if (!teamNameExists(user.getTeam().getTeamName())) {
         team.setTeamName(user.getTeam().getTeamName());
+        user.setTeam(team);
+        user.setEmail(user.getEmail());
       }
-      user.setTeam(team);
-      user.setEmail(user.getEmail());
+
 //      teamsInLeague.add(user.getTeam());
 //      teamCounter++; //Will not work IRL
       return teamRepository.save(team);

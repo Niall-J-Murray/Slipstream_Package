@@ -24,7 +24,7 @@
 </header>
 <h1>Dashboard</h1>
 
-<p th:text="|Hello ${user.username}|"></p>
+<p th:text="|Hello ${user.username}!|"></p>
 
 <div th:if="${isAdmin == true}">
   <p th:text="|Sorry, admin cannot play.|"></p>
@@ -33,16 +33,19 @@
 <!-- ** fix what is not shown to admin on player dashboard-->
 <!-- add who is already in league below create team fieldset-->
 <div th:if="${isAdmin != true}">
-  <div th:if="${gameFull} == true">
+  <div th:if="${gameFull == true and user.team == null}">
     <p th:text="|Sorry, the game is currently full.|"></p>
     <p th:text="|Please check back later.|"></p>
   </div>
+
+  <div th:if="${user.team} != null">
+    <p th:text="|Your team: '${user.team.teamName}'|"></p>
+    <p th:text="|Random draft 1st pick number: ${user.team.firstPickNumber}|"></p>
+    <p th:text="|Random draft 2nd pick number: ${user.team.secondPickNumber}|"></p>
+    <p th:if="${teams.size() < 10}"> Draft can start when league is full.</p>
+    <p th:if="${teams.size() == 10}"> Draft in progress, please wait for your turn to pick.</p>
+  </div>
   <div th:if="${gameFull} != true">
-    <div th:if="${user.team} != null">
-      <p th:text="|Your team: ${user.team.teamName}|"></p>
-      <p th:text="|Random draft 1st pick number: ${user.team.firstPickNumber}|"></p>
-      <p th:text="|Random draft 2nd pick number: ${user.team.secondPickNumber}|"></p>
-    </div>
     <div th:unless="${user.team} != null">
       <p th:text="|No active team|"></p>
       <p th:text="|Choose a team name below to get started|"></p>
@@ -62,16 +65,9 @@
               </label>
             </td>
             <td>
-<!--             *** Make error message show if team name already taken.-->
               <div th:if="${param.error != null}">
-                Login failed: Please confirm your details are correct
-<!--                <div th:if="${SPRING_SECURITY_LAST_EXCEPTION != null}">-->
-<!--                  Reason: <span th:text="${SPRING_SECURITY_LAST_EXCEPTION.message}"></span>-->
-<!--                </div>-->
+                - Sorry, this team name is already taken.
               </div>
-<!--            <td th:if="${#fields.hasErrors('${team.teamName}')}>-->
-<!--              <p th:each="error: ${#fields.errors('team.teamName')}"-->
-<!--               th:text="${error}">Validation error</p>-->
             </td>
             <td th:each="team : ${teams}">
               <p th:if="*{team.teamName} == ${team.getTeamName()}" class="error-message" th:text="${teamExists}"></p>
@@ -91,7 +87,9 @@
   </div>
 </div>
 <div>
-  <h2>Players already in this league:</h2>
+
+  <h2>Players in this league:</h2>
+  <p th:text="|${teams.size()} of 10 teams so far.|"></p>
   <table class="user-table">
     <th>Username:</th>
     <th>Team Name:</th>

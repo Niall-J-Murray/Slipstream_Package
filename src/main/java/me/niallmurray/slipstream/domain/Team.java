@@ -25,7 +25,7 @@ public class Team {
   private Integer firstPickNumber;
   @Column(nullable = false, unique = true)
   private Integer secondPickNumber;
-  //  @Column(nullable = false, unique = true)
+  @Column(nullable = false, unique = true)
   private String teamName;
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "userTeam")
   private Set<F1Driver> drivers = new HashSet<>();
@@ -44,12 +44,20 @@ public class Team {
 
   @Override
   public String toString() {
-    return "Team{" +
-            "id=" + userId +
-            ", pickNumber=" + firstPickNumber +
-            ", user=" + user +
-            ", teamName='" + teamName + '\'' +
-            ", drivers=" + drivers +
-            '}';
+    return "Team Name: '" + teamName + '\''
+            +  System.lineSeparator() +
+            "Drivers: " + drivers;
   }
+
+
+//  @Override
+//  public String toString() {
+//    return "Team{" +
+//            "id=" + userId +
+//            ", pickNumber=" + firstPickNumber +
+//            ", user=" + user +
+//            ", teamName='" + teamName + '\'' +
+//            ", drivers=" + drivers +
+//            '}';
+//  }
 }
