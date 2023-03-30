@@ -19,29 +19,32 @@
     </div>
   </ul>
 </header>
+<section class="left-side">
 <h1>Admin Page</h1>
-
-<h2>Currently logged-in users:</h2>
-<table class="user-table">
-  <th>Username:</th>
-  <tr th:each="activeUser : ${activeUsers}">
-    <td th:text="${activeUser}">activeUser</td>
-  </tr>
-</table>
-
-<h2>All users:</h2>
-<table class="user-table">
-  <th>ID:</th>
-  <th>Username:</th>
-  <th>Team:</th>
-  <th>Last Logout:</th>
-  <tr th:each="user : ${users}">
-    <td th:text="${user.userId}"></td>
-    <td th:text="${user.getAuthorities().iterator().next().getAuthority()==('ROLE_ADMIN')}
+  <h2>Currently logged-in users:</h2>
+  <table class="user-table">
+    <th>Username:</th>
+    <tr th:each="activeUser : ${activeUsers}">
+      <td th:text="${activeUser}">activeUser</td>
+    </tr>
+  </table>
+</section>
+<section class="right-side-side">
+  <h2>All users:</h2>
+  <table class="user-table">
+    <th>ID:</th>
+    <th>Username:</th>
+    <th>Team:</th>
+    <th>Last Logout:</th>
+    <tr th:each="user : ${users}">
+      <td th:text="${user.userId}"></td>
+      <td th:text="${user.getAuthorities().iterator().next().getAuthority()==('ROLE_ADMIN')}
     ? ${user.username + ' (ADMIN) '}  : ${user.username}"></td>
-    <td th:text="${user.team} ?: 'No Team'"></td>
-    <td th:text="${user.lastLogout}"></td>
-  </tr>
-</table>
+      <td th:text="${user.team} ?: 'No Team'"></td>
+      <td th:text="${user.lastLogout}"></td>
+    </tr>
+  </table>
+</section>
+
 </body>
 </html>

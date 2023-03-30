@@ -15,7 +15,52 @@
 
 body {
     font-family: Font1, Arial, Helvetica, sans-serif;
+    color: white;
+    background-image: url("../images/background.jpg");
+    background-size: 100% auto;
+    background-repeat: no-repeat;
     /*font-family: Arial, Helvetica, sans-serif;*/
+}
+
+* {
+    box-sizing: border-box;
+}
+
+section {
+    float: left;
+    width: 50%;
+    padding: 25px;
+}
+
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.left-side{
+    justify-content: left;
+}
+
+.right-side{
+    justify-content: right;
+}
+
+a{
+    color: white;
+}
+
+/*Make custom chequered flag button or get icon*/
+button {
+    background-image:
+            linear-gradient(45deg, #000 25%, transparent 25%),
+            linear-gradient(45deg, transparent 75%, #000 75%),
+            linear-gradient(45deg, transparent 75%, #000 75%),
+            linear-gradient(45deg, #000 25%, #fff 25%);
+
+    background-size:100px 100px;
+
+    background-position:0 0, 0 0, -50px -50px, 50px 50px;
 }
 
 ul {
@@ -26,7 +71,7 @@ ul {
     background-color: black;
 }
 
-ul img{
+ul img {
     height: 50px;
     width: 150px;
 }
@@ -48,30 +93,43 @@ li a:hover {
     text-decoration-line: underline;
 }
 
-.user-table {
+.user-table,
+.champ-table {
     border-collapse: collapse;
     width: 75%;
 }
 
 .user-table td,
-.user-table th {
+.user-table th,
+.champ-table td,
+.champ-table th {
     border: 1px solid #ddd;
     padding: 8px;
 }
 
-.user-table tr:nth-child(even) {
-    background-color: #f2f2f2;
+.user-table tr:nth-child(even),
+.champ-table tr:nth-child(even) {
+    background-color: black;
+    color: white;
 }
 
-.user-table tr:hover {
-    background-color: #ddd;
+.user-table tr:nth-child(odd),
+.champ-table tr:nth-child(odd) {
+    background-color: white;
+    color: black;
 }
 
-.user-table th {
+.user-table tr:hover,
+.champ-table tr:hover {
+    background-color: gray;
+}
+
+.user-table th,
+.champ-table th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
-    background-color: #333;
+    background-color: black;
     color: white;
 }
 

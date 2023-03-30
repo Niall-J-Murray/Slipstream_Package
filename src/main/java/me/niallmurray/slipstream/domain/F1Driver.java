@@ -20,6 +20,8 @@ public class F1Driver {
   private String name;
   @Column()
   private Double points;
+  @Column()
+  private Integer standing;
   @ManyToOne
   private Team userTeam;
 
@@ -27,20 +29,21 @@ public class F1Driver {
   public boolean equals(Object o) {
     if (this == o) return true;
     if (!(o instanceof F1Driver f1Driver)) return false;
-    return driverId.equals(f1Driver.driverId) && name.equals(f1Driver.name) && Objects.equals(points, f1Driver.points) && Objects.equals(userTeam, f1Driver.userTeam);
+    return Objects.equals(driverId, f1Driver.driverId) && Objects.equals(name, f1Driver.name) && Objects.equals(points, f1Driver.points) && Objects.equals(standing, f1Driver.standing) && Objects.equals(userTeam, f1Driver.userTeam);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(driverId, name, points, userTeam);
+    return Objects.hash(driverId, name, points, standing, userTeam);
   }
 
   @Override
   public String toString() {
     return "F1Driver{" +
-            "id=" + driverId +
+            "driverId=" + driverId +
             ", name='" + name + '\'' +
             ", points=" + points +
+            ", standing=" + standing +
             ", userTeam=" + userTeam +
             '}';
   }

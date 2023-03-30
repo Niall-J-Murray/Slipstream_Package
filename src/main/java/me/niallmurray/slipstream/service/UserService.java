@@ -39,7 +39,6 @@ public class UserService {
 
   public User updateUser(Long userId){
     User user = findById(userId);
-
     return userRepository.save(user);
   }
 
@@ -81,9 +80,7 @@ public class UserService {
 
   public void updateLastLogout(Long userId) {
     User user = findById(userId);
-//    user.setLastLogout(String.valueOf(LocalDateTime.parse(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))));
-//    user.setLastLogout(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES));
-    user.setLastLogout(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yy-MM-dd HH:mm")));
+    user.setLastLogout(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yy HH:mm")));
     userRepository.save(user);
   }
 

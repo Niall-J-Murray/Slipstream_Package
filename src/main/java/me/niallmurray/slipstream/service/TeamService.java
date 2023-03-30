@@ -20,6 +20,7 @@ public class TeamService {
 
   // Set list for up to 10 players for now. Can be changed or made dynamic according to number of players per league.
   private List<Integer> pickNumbers = new ArrayList<>(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+  // Temp fields for testing.
   private List<Team> teamsInLeague = new ArrayList<>(20);
   private List<User> usersForNextLeague = new ArrayList<>(20);
   private int teamCounter = 0;
@@ -42,9 +43,9 @@ public class TeamService {
         user.setTeam(team);
         user.setEmail(user.getEmail());
       }
-
-//      teamsInLeague.add(user.getTeam());
-//      teamCounter++; //Will not work IRL
+      // Fix issue where new teams cannot be saved even after existing teams have been deleted from DB.
+      // e.g: "Error: Duplicate entry '1' for key 'team.UK_bkasmvd9arje65etjtxd5tf39'"
+      // Possible issue with cascade settings?
       return teamRepository.save(team);
     }
 // for testing, new users should not be able to create team if league is full.
@@ -80,6 +81,6 @@ public class TeamService {
   }
 
   public List<Team> getAllTeams() {
-   return teamRepository.findAll();
+    return teamRepository.findAll();
   }
 }

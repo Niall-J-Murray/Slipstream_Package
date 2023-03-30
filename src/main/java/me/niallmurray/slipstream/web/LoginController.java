@@ -40,6 +40,12 @@ public class LoginController {
     return "home";
   }
 
+  // Consider moving to different controller, perhaps with home?
+  @GetMapping("/current_standings")
+  public String getCurrentStandings(){
+    return "current_standings";
+  }
+
   @GetMapping("/login")
   public String getLogin(@AuthenticationPrincipal User user, ModelMap model) {
     List<String> activeUsers = activeUserStore.getUsers();

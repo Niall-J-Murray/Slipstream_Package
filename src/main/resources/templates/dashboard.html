@@ -22,8 +22,8 @@
     </div>
   </ul>
 </header>
+<section class="left-side">
 <h1>Dashboard</h1>
-
 <p th:text="|Hello ${user.username}!|"></p>
 
 <div th:if="${isAdmin == true}">
@@ -61,7 +61,7 @@
             </th>
             <td>
               <label>
-                <input required th:field="*{team.teamName}" type="text"/>
+                <input required th:field="*{team.teamName}" type="text" placeholder="|${user.username}'s F1 Team|"/>
               </label>
             </td>
             <td>
@@ -86,8 +86,9 @@
     </fieldset>
   </div>
 </div>
+</section>
+<section class="right-side">
 <div>
-
   <h2>Players in this league:</h2>
   <p th:text="|${teams.size()} of 10 teams so far.|"></p>
   <table class="user-table">
@@ -98,7 +99,7 @@
       <td>[[${team.getTeamName()}]]</td>
     </tr>
   </table>
-
 </div>
+</section>
 </body>
 </html>

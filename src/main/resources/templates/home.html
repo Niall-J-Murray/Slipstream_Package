@@ -28,8 +28,6 @@
 <div th:if="${isLoggedIn == true}">
   <p th:text="|Welcome ${user.getUsername()}|"></p>
 </div>
-
-
 <div th:if="${isLoggedIn == true}">
   <div><a href="/dashboard">Dashboard</a></div>
 </div>
@@ -38,5 +36,10 @@
   -or-
   <div><a href="/register">Create New Account</a></div>
 </div>
+
+<div><a href="/driverStandings">Current Driver Standings JSON</a></div>
+<div><a href="/current_standings">Current Driver Standings Table</a></div>
+
+
 </body>
 </html>
