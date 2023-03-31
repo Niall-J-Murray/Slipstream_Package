@@ -25,4 +25,12 @@ public class StandingsList {
     @Valid
     public List<DriverStanding> driverStandings;
 
+    @Override
+    public String toString() {
+        return "StandingsList{" +
+                "season='" + season + '\'' +
+                ", round='" + round + '\'' +
+                ", driverStandings=" + driverStandings +
+                '}';
+    }
 }

@@ -16,6 +16,7 @@
 body {
     font-family: Font1, Arial, Helvetica, sans-serif;
     color: white;
+    background: black;
     background-image: url("../images/background.jpg");
     background-size: 100% auto;
     background-repeat: no-repeat;
@@ -44,6 +45,14 @@ section {
 
 .right-side{
     justify-content: right;
+}
+
+
+#home-links{
+    position:absolute;
+    bottom:30px;
+    left:10px;
+    padding: 10px;
 }
 
 a{

@@ -28,7 +28,7 @@ public class Team {
   @Column(nullable = false, unique = true)
   private String teamName;
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "userTeam")
-  private Set<F1Driver> drivers = new HashSet<>();
+  private Set<Driver> drivers = new HashSet<>(6);
 
   @Override
   public boolean equals(Object o) {

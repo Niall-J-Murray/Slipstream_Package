@@ -21,25 +21,27 @@
 </header>
 
 <h1>Home</h1>
+
+<div th:if="${isLoggedIn == true}">
+  <h2 th:text="|Welcome ${user.getUsername()}!|"></h2>
+</div>
 <div th:if="${param.logout != null}">
-  You have been logged out.
-</div>
-<hr>
-<div th:if="${isLoggedIn == true}">
-  <p th:text="|Welcome ${user.getUsername()}|"></p>
+  <h3>You have been logged out.</h3>
 </div>
 <div th:if="${isLoggedIn == true}">
-  <div><a href="/dashboard">Dashboard</a></div>
+  <h3><a href="/dashboard">Dashboard</a></h3>
 </div>
 <div th:if="${isLoggedIn != true}">
-  <div><a href="/login">Login</a></div>
+  <h3><a href="/login">Login</a></h3>
   -or-
-  <div><a href="/register">Create New Account</a></div>
+  <h3><a href="/register">Create New Account</a></h3>
 </div>
 
-<div><a href="/driverStandings">Current Driver Standings JSON</a></div>
-<div><a href="/current_standings">Current Driver Standings Table</a></div>
-
+<section id="home-links">
+  <h4><a href="/driverStandings">Current Driver Standings List</a></h4>
+  <h4><a href="/current_standings">Current Driver Standings Table</a></h4>
+  <h4><a href="/driverStandingsJSON">Current Driver Standings JSON</a></h4>
+</section>
 
 </body>
 </html>

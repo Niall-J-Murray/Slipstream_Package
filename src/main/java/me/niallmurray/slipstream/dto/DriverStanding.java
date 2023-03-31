@@ -30,9 +30,20 @@ public class DriverStanding {
     public String wins;
     @JsonProperty("Driver")
     @Valid
-    public Driver driver;
+    public DriverDTO driverDTO;
     @JsonProperty("Constructors")
     @Valid
     public List<Constructor> constructors;
 
+    @Override
+    public String toString() {
+        return "DriverStanding{" +
+                "position='" + position + '\'' +
+                ", positionText='" + positionText + '\'' +
+                ", points='" + points + '\'' +
+                ", wins='" + wins + '\'' +
+                ", driver=" + driverDTO +
+                ", constructors=" + constructors +
+                '}';
+    }
 }

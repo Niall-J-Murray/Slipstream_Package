@@ -36,4 +36,16 @@ public class MRData {
     @Valid
     public StandingsTable standingsTable;
 
+    @Override
+    public String toString() {
+        return "MRData{" +
+                "xmlns='" + xmlns + '\'' +
+                ", series='" + series + '\'' +
+                ", url='" + url + '\'' +
+                ", limit='" + limit + '\'' +
+                ", offset='" + offset + '\'' +
+                ", total='" + total + '\'' +
+                ", standingsTable=" + standingsTable +
+                '}';
+    }
 }

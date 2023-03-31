@@ -25,4 +25,13 @@ public class Constructor {
     @JsonProperty("nationality")
     public String nationality;
 
+    @Override
+    public String toString() {
+        return "Constructor{" +
+                "constructorId='" + constructorId + '\'' +
+                ", url='" + url + '\'' +
+                ", name='" + name + '\'' +
+                ", nationality='" + nationality + '\'' +
+                '}';
+    }
 }

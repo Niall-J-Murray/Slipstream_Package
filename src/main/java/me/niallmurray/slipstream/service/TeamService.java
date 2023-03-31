@@ -2,7 +2,7 @@ package me.niallmurray.slipstream.service;
 
 import me.niallmurray.slipstream.domain.Team;
 import me.niallmurray.slipstream.domain.User;
-import me.niallmurray.slipstream.repositories.F1DriverRepository;
+import me.niallmurray.slipstream.repositories.DriverRepository;
 import me.niallmurray.slipstream.repositories.TeamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ public class TeamService {
   @Autowired
   TeamRepository teamRepository;
   @Autowired
-  F1DriverRepository f1DriverRepository;
+  DriverRepository driverRepository;
 
   // Set list for up to 10 players for now. Can be changed or made dynamic according to number of players per league.
   private List<Integer> pickNumbers = new ArrayList<>(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));

@@ -22,4 +22,11 @@ public class StandingsTable {
     @Valid
     public List<StandingsList> standingsLists;
 
+    @Override
+    public String toString() {
+        return "StandingsTable{" +
+                "season='" + season + '\'' +
+                ", standingsLists=" + standingsLists +
+                '}';
+    }
 }
