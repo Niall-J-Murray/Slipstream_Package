@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -31,5 +32,18 @@ public class AdminController {
 
     return "admin";
   }
+//
+//  @PostMapping("/admin")
+//  public String postAddDriverData(){
+//
+//    return "admin";
+//  }
+//
+//  @PostMapping("/admin")
+//  public String postUpdateDriverData(){
+//
+//
+//    return "admin";
+//  }
 
 }

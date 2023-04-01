@@ -36,7 +36,7 @@ public class Driver {
   @Column()
   private Double points;
   @Column()
-  private int standing;
+  private Integer standing;
   @ManyToOne
   private Team userTeam;
 

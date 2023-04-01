@@ -1,5 +1,6 @@
 package me.niallmurray.slipstream.web;
 
+import me.niallmurray.slipstream.domain.Driver;
 import me.niallmurray.slipstream.dto.DriverStanding;
 import me.niallmurray.slipstream.dto.DriverStandingResponse;
 import me.niallmurray.slipstream.dto.StandingsList;
@@ -11,12 +12,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class DriverController {
@@ -24,7 +25,7 @@ public class DriverController {
   @Autowired
   DriverService driverService;
 
-//  @Value("https://ergast.com/api/f1/current/driverStandings")
+  //  @Value("https://ergast.com/api/f1/current/driverStandings")
   @Value("${ergast.urls.base}${ergast.urls.currentDriverStandings}")
   private String f1DataApi;
 
@@ -59,14 +60,23 @@ public class DriverController {
   }
 
   @GetMapping("/driverStandings")
-  public String getDriverStandings(ModelMap modelMap){
-    DriverStandingResponse driverStandingResponseBody = getDriverStandingsResponse().getBody();
-    List<StandingsList> standingsLists = driverStandingResponseBody.mRData.standingsTable.standingsLists;
+  public String getDriverStandings(ModelMap modelMap) {
+//    DriverStandingResponse driverStandingResponseBody = getDriverStandingsResponse().getBody();
+    List<StandingsList> standingsLists = Objects.requireNonNull(getDriverStandingsResponse().getBody())
+            .mRData.standingsTable
+            .standingsLists;
     List<DriverStanding> currentStandings = standingsLists.listIterator().next().driverStandings;
-//    System.out.println("Controller: "+currentStandings);
-//    System.out.println("------");
-    driverService.addDrivers(currentStandings);
-    modelMap.addAttribute("allDrivers",driverService.findAll());
+    List<Driver> drivers = driverService.mapDTOToDrivers(currentStandings);
+
+    //For testing points/standing update
+//    drivers.stream()
+//            .filter(driver -> driver.getFirstName().equals("Yuki"))
+//            .findFirst().ifPresent(testDriver -> {testDriver.setPoints(22.0); testDriver.setStanding(4);});
+    // Separate add and update driver methods to different functions on admin page.
+//    driverService.addDrivers(drivers);
+
+    driverService.updateDrivers(drivers);
+    modelMap.addAttribute("allDrivers", driverService.sortDriversStanding());
     return "/test";
   }
 }
