@@ -16,6 +16,13 @@
     <div th:if="${isLoggedIn == true}">
       <li><a href="/dashboard">Dashboard</a></li>
       <li><a href="/confirm_logout">Logout</a></li>
+<!--      fix buttons to work and appear correctly-->
+      <form action="add">
+      <li><button type="submit"></button>Add Drivers</li>
+      </form>
+      <form action="update">
+      <li><button type="submit"></button>Update Drivers</li>
+      </form>
     </div>
   </ul>
 </header>
@@ -29,7 +36,7 @@
     </tr>
   </table>
 </section>
-<section class="right-side-side">
+<section class="center">
   <h2>All users:</h2>
   <table class="user-table">
     <th>ID:</th>
@@ -44,6 +51,23 @@
       <td th:text="${user.lastLogout}"></td>
     </tr>
   </table>
+</section>
+<section class="right-side">
+    <h2>Current Standings:</h2>
+    <table class="user-table">
+      <th>Position:</th>
+      <th>Name:</th>
+      <th>Points:</th>
+      <th>Car Number:</th>
+      <th>Nationality:</th>
+      <tr th:each="driver : ${allDrivers}">
+        <td>[[${driver.standing}]]</td>
+        <td>[[${driver.surname}]]</td>
+        <td>[[${driver.points.intValue()}]]</td>
+        <td>[[${driver.carNumber}]]</td>
+        <td>[[${driver.nationality}]]</td>
+      </tr>
+    </table>
 </section>
 
 </body>

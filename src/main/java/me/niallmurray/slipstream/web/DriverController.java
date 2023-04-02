@@ -43,40 +43,40 @@ public class DriverController {
             .toUri();
   }
 
-  @ResponseBody
-  @GetMapping("/driverStandingsJSON")
-  public ResponseEntity<DriverStandingResponse> getDriverStandingsResponse() {
-//      String timeFrame = "week";
-    URI uri = uriBuilder();
+//  @ResponseBody
+//  @GetMapping("/driverStandingsJSON")
+//  public ResponseEntity<DriverStandingResponse> getDriverStandingsResponse() {
+////      String timeFrame = "week";
+//    URI uri = uriBuilder();
+//
+//    RestTemplate response = new RestTemplate();
+//
+//    DriverStandingResponse driverStandingResponse = response.getForEntity("https://ergast.com/api/f1/current/driverStandings.json", DriverStandingResponse.class).getBody();
+//
+////    System.out.println(driverStandingResponse);
+//
+////    System.out.println(response.getForEntity("https://ergast.com/api/f1/current/driverStandings.json", DriverStandingResponse.class));
+//    return response.getForEntity("https://ergast.com/api/f1/current/driverStandings.json", DriverStandingResponse.class);
+//  }
 
-    RestTemplate response = new RestTemplate();
-
-    DriverStandingResponse driverStandingResponse = response.getForEntity("https://ergast.com/api/f1/current/driverStandings.json", DriverStandingResponse.class).getBody();
-
-//    System.out.println(driverStandingResponse);
-
-//    System.out.println(response.getForEntity("https://ergast.com/api/f1/current/driverStandings.json", DriverStandingResponse.class));
-    return response.getForEntity("https://ergast.com/api/f1/current/driverStandings.json", DriverStandingResponse.class);
-  }
-
-  @GetMapping("/driverStandings")
-  public String getDriverStandings(ModelMap modelMap) {
-//    DriverStandingResponse driverStandingResponseBody = getDriverStandingsResponse().getBody();
-    List<StandingsList> standingsLists = Objects.requireNonNull(getDriverStandingsResponse().getBody())
-            .mRData.standingsTable
-            .standingsLists;
-    List<DriverStanding> currentStandings = standingsLists.listIterator().next().driverStandings;
-    List<Driver> drivers = driverService.mapDTOToDrivers(currentStandings);
-
-    //For testing points/standing update
-//    drivers.stream()
-//            .filter(driver -> driver.getFirstName().equals("Yuki"))
-//            .findFirst().ifPresent(testDriver -> {testDriver.setPoints(22.0); testDriver.setStanding(4);});
-    // Separate add and update driver methods to different functions on admin page.
-//    driverService.addDrivers(drivers);
-
-    driverService.updateDrivers(drivers);
-    modelMap.addAttribute("allDrivers", driverService.sortDriversStanding());
-    return "/test";
-  }
+//  @GetMapping("/driverStandings")
+//  public String getDriverStandings(ModelMap modelMap) {
+////    DriverStandingResponse driverStandingResponseBody = getDriverStandingsResponse().getBody();
+//    List<StandingsList> standingsLists = Objects.requireNonNull(getDriverStandingsResponse().getBody())
+//            .mRData.standingsTable
+//            .standingsLists;
+//    List<DriverStanding> currentStandings = standingsLists.listIterator().next().driverStandings;
+//    List<Driver> drivers = driverService.mapDTOToDrivers(currentStandings);
+//
+//    //For testing points/standing update
+////    drivers.stream()
+////            .filter(driver -> driver.getFirstName().equals("Yuki"))
+////            .findFirst().ifPresent(testDriver -> {testDriver.setPoints(22.0); testDriver.setStanding(4);});
+//    // Separate add and update driver methods to different functions on admin page.
+////    driverService.addDrivers(drivers);
+//
+//    driverService.updateDrivers(drivers);
+//    modelMap.addAttribute("allDrivers", driverService.sortDriversStanding());
+//    return "/test";
+//  }
 }

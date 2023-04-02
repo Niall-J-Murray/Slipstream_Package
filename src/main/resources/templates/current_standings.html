@@ -8,6 +8,26 @@
 <body>
 <h1>Current Standings:</h1>
 
+<!--Live update-->
+<div>
+  <h2>Current Standings</h2>
+  <table class="user-table">
+    <th>Position:</th>
+    <th>Name:</th>
+    <th>Points:</th>
+    <th>Car Number:</th>
+    <th>Nationality:</th>
+    <tr th:each="driver : ${allDrivers}">
+      <td>[[${driver.standing}]]</td>
+      <td>[[${driver.surname}]]</td>
+      <td>[[${driver.points.intValue()}]]</td>
+      <td>[[${driver.carNumber}]]</td>
+      <td>[[${driver.nationality}]]</td>
+    </tr>
+  </table>
+</div>
+
+<!--Hard Coded-->
 <table class="champ-table" width="80%">
   <tbody>
   <tr>
