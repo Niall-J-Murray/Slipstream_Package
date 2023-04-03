@@ -1,8 +1,10 @@
 package me.niallmurray.slipstream.web;
 
 
+import me.niallmurray.slipstream.domain.Driver;
 import me.niallmurray.slipstream.domain.Team;
 import me.niallmurray.slipstream.domain.User;
+import me.niallmurray.slipstream.service.DriverService;
 import me.niallmurray.slipstream.service.TeamService;
 import me.niallmurray.slipstream.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ public class DashboardController {
   private UserService userService;
   @Autowired
   private TeamService teamService;
+  @Autowired
+  private DriverService driverService;
 
   @GetMapping("/dashboard")
   public String redirectUserDashboard(@AuthenticationPrincipal User userAuth) {
@@ -29,28 +33,33 @@ public class DashboardController {
   }
 
   @GetMapping("/dashboard/{userId}")
-  public String getDashboard(@AuthenticationPrincipal User userAuth, ModelMap model, @PathVariable Long userId) {
+  public String getDashboard(@AuthenticationPrincipal User userAuth, ModelMap modelMap, @PathVariable Long userId) {
     User user = userService.findById(userId);
     List<Team> allTeams = teamService.getAllTeams();
-    model.addAttribute("user", user);
-    model.addAttribute("teams", allTeams);
+    modelMap.addAttribute("user", user);
+    modelMap.addAttribute("teams", allTeams);
+    modelMap.addAttribute("driver", new Driver());
+    modelMap.addAttribute("allDrivers", driverService.sortDriversStanding());
+
     if (userService.isLoggedIn(user)) {
-      model.addAttribute("isLoggedIn", true);
+      modelMap.addAttribute("isLoggedIn", true);
     }
     if (userService.isAdmin(user)) {
-      model.addAttribute("isAdmin", true);
+      modelMap.addAttribute("isAdmin", true);
     }
 // Currently ony one league up to 10 players(not including admin) available.
 // After game is full, new users can register, but cannot create new team.
     if (allTeams.size() >= 10) {
-      model.addAttribute("gameFull", true);
+      modelMap.addAttribute("gameFull", true);
     }
+    System.out.println(user.getTeam());
+    System.out.println(user.getTeam().getDrivers());
     return "dashboard";
   }
 
   // Consider JS for team name as only one string needs to be parsed from client.
   @PostMapping("/dashboard/{userId}")
-  public String postCreateTeam(@AuthenticationPrincipal User userAuth,@PathVariable Long userId, User user, ModelMap model) {
+  public String postCreateTeam(@AuthenticationPrincipal User userAuth, @PathVariable Long userId, User user) {
     // Check for unique team names.
     String teamName = user.getTeam().getTeamName();
     if (!teamService.teamNameExists(teamName)) {
@@ -62,9 +71,20 @@ public class DashboardController {
       teamService.createTeam(user);
       return "redirect:/dashboard/" + userId;
     }
-    return "redirect:/dashboard/"+userId+"?error";
+    return "redirect:/dashboard/" + userId + "?error";
   }
 
+  @PostMapping("/dashboard/{userId}/draftPick")
+  public String postMakePick(@PathVariable Long userId, Driver driver, User user) {
+    System.out.println(driver);
+    Long driverId = driver.getDriverId();
+    System.out.println(driverId);
+    teamService.addDriverToTeam(userId, driverId);
+    // * ADD DRIVER TO TEAM NOT WORKING
+    // MAY NEED TO UPDATE TEAM RATHER THAN SAVE
+    // MAY NEED TO DROP AND REBUILD DATABASE
+    return "redirect:/dashboard/" + userId;
+  }
 
 }
 

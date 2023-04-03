@@ -20,7 +20,7 @@ public class Driver {
   private Long driverId;
   //  @Column(nullable = false, unique = true)
   @Column()
-  private int carNumber;
+  private Integer carNumber;
   @Column()
   private String shortName;
   @Column()
@@ -71,7 +71,7 @@ public class Driver {
             ", surname='" + surname + '\'' +
             ", dateOfBirth='" + dateOfBirth + '\'' +
             ", nationality='" + nationality + '\'' +
-            ", points=" + points.intValue() +
+//            ", points=" + points.intValue() +
             ", standing=" + standing +
             ", userTeam=" + userTeam +
             '}';

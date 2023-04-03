@@ -27,6 +27,7 @@ public class Team {
   private Integer secondPickNumber;
   @Column(nullable = false, unique = true)
   private String teamName;
+  @Column()
   @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "userTeam")
   private Set<Driver> drivers = new HashSet<>(6);
 

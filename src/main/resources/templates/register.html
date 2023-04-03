@@ -37,8 +37,6 @@
         </td>
         <td>
           <p class="error-message" th:text="${userExists}"></p>
-          <!--          <p th:each="error: ${#fields.errors('username')}"-->
-          <!--             th:text="${error}">Validation error</p>-->
         </td>
       </tr>
       <tr>
@@ -52,8 +50,6 @@
         </td>
         <td>
           <p class="error-message" th:text="${emailExists}"></p>
-          <!--          <p th:each="error : ${#fields.errors('email')}"-->
-          <!--             th:text="${error}">Validation error</p>-->
         </td>
       </tr>
       <tr>
@@ -67,8 +63,6 @@
         </td>
         <td>
           <p class="error-message" th:text="${badPassword}"></p>
-          <!--          <p th:each="error : ${#fields.errors('password')}"-->
-          <!--             th:text="${error}">Validation error</p>-->
         </td>
       </tr>
       <!--Use JS to check if password matches before submitting-->

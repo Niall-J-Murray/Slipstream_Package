@@ -17,6 +17,14 @@ public class DriverService {
   @Autowired
   DriverRepository driverRepository;
 
+  public List<Driver> findAll() {
+    return driverRepository.findAll();
+  }
+
+  public Driver findById(Long driverId){
+    return driverRepository.findById(driverId).get();
+  }
+
   // Gets drivers info including points for whole season from API and stores in DB.
   // Should probably be moved to admin service/endpoint?
   // This can be called to update points after races, but may need tweaking.
@@ -77,10 +85,6 @@ public class DriverService {
       driverRepository.updateStandings(driver.getShortName(), driver.getStanding());
     }
 //    driverRepository.saveAll(updatedDrivers);
-  }
-
-  public List<Driver> findAll() {
-    return driverRepository.findAll();
   }
 
   public List<Driver> sortDriversStanding() {

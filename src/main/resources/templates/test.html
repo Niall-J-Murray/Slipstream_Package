@@ -28,14 +28,15 @@
 <h2>Current Standings</h2>
   <table class="user-table">
     <th>Position:</th>
-    <th>Name:</th>
     <th>Points:</th>
+    <th>Name:</th>
     <th>Car Number:</th>
     <th>Nationality:</th>
     <tr th:each="driver : ${allDrivers}">
       <td>[[${driver.standing}]]</td>
-      <td>[[${driver.surname}]]</td>
       <td>[[${driver.points.intValue()}]]</td>
+
+      <td>[[${driver.surname}]]</td>
       <td>[[${driver.carNumber}]]</td>
       <td>[[${driver.nationality}]]</td>
     </tr>

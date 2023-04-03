@@ -28,6 +28,7 @@ public class User {
   private Set<Authority> authorities = new HashSet<>();
   @Column()
   private String lastLogout;
+  @JoinColumn()
   @OneToOne(mappedBy = "user",
           cascade = {CascadeType.ALL},
           orphanRemoval = true)

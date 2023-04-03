@@ -25,9 +25,10 @@ public class DriverController {
   @Autowired
   DriverService driverService;
 
-  //  @Value("https://ergast.com/api/f1/current/driverStandings")
-  @Value("${ergast.urls.base}${ergast.urls.currentDriverStandings}")
-  private String f1DataApi;
+
+
+//  @Value("${ergast.urls.base}${ergast.urls.currentDriverStandings}")
+//  private String f1DataApi;
 
 //  http[s]://ergast.com/api/<series>/<season>/<round>/...
 //
@@ -36,12 +37,12 @@ public class DriverController {
 //  <season> 	is a 4 digit integer
 //  <round> 	is a 1 or 2 digit integer
 
-  public URI uriBuilder() {
-
-    return UriComponentsBuilder.fromHttpUrl("https://ergast.com/api/f1/")
-            .build()
-            .toUri();
-  }
+//  public URI uriBuilder() {
+//
+//    return UriComponentsBuilder.fromHttpUrl("https://ergast.com/api/f1/")
+//            .build()
+//            .toUri();
+//  }
 
 //  @ResponseBody
 //  @GetMapping("/driverStandingsJSON")

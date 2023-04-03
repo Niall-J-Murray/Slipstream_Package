@@ -1,9 +1,11 @@
 package me.niallmurray.slipstream.service;
 
+import me.niallmurray.slipstream.domain.Driver;
 import me.niallmurray.slipstream.domain.Team;
 import me.niallmurray.slipstream.domain.User;
 import me.niallmurray.slipstream.repositories.DriverRepository;
 import me.niallmurray.slipstream.repositories.TeamRepository;
+import me.niallmurray.slipstream.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,8 @@ public class TeamService {
   private List<Team> teamsInLeague = new ArrayList<>(20);
   private List<User> usersForNextLeague = new ArrayList<>(20);
   private int teamCounter = 0;
+  @Autowired
+  private UserRepository userRepository;
 
   public Team createTeam(User user) {
 //    try {
@@ -78,6 +82,28 @@ public class TeamService {
         return true;
     }
     return false;
+  }
+
+  public Long addDriverToTeam(Long userId, Long driverId){
+    User user = userService.findById(userId);
+    Driver driver = driverRepository.findById(driverId).get();
+    // teamId == userId
+    Team team = teamRepository.findById(userId).get();
+    Set<Driver> userDrivers = user.getTeam().getDrivers();
+    if (userDrivers.size() < 2){
+      userDrivers.add(driver);
+    }
+    team.setDrivers(userDrivers);
+    team.setUser(user);
+
+    user.setTeam(user.getTeam());
+    System.out.println("Add Driver-----");
+    System.out.println(user.getTeam());
+    System.out.println(user.getTeam().getDrivers());
+    teamRepository.save(team);
+    userRepository.save(user);
+
+    return driverId;
   }
 
   public List<Team> getAllTeams() {
