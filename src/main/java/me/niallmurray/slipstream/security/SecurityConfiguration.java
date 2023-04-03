@@ -60,8 +60,8 @@ public class SecurityConfiguration {
             .and()
             .logout()
             .logoutUrl("/confirm_logout")
-            .logoutSuccessHandler(logoutSuccessHandler)
-            .deleteCookies("JSESSIONID");
+            .logoutSuccessHandler(logoutSuccessHandler);
+//            .deleteCookies("JSESSIONID");
     return http.build();
   }
 

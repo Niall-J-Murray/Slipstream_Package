@@ -6,8 +6,11 @@
 </head>
 <body>
 <header>
-  <ul class="nav-bar">
+  <ul id="nav-bar">
+    <div id="nav-logo">
     <li><img src="/images/F1Logo.png"></li>
+    </div>
+    <div id="nav-links">
     <li><a href="/home">Home</a></li>
     <div th:if="${isLoggedIn != true}">
       <li><a href="/register">Register</a></li>
@@ -16,19 +19,25 @@
     <div th:if="${isLoggedIn == true}">
       <li><a href="/dashboard">Dashboard</a></li>
       <li><a href="/confirm_logout">Logout</a></li>
-<!--      fix buttons to work and appear correctly-->
-      <form action="add">
-      <li><button type="submit"></button>Add Drivers</li>
+    </div>
+    </div>
+    <div id="nav-buttons">
+      <form action="" method="POST" th:action="@{/admin/addDrivers}">
+        <li id="add">
+          <button type="submit">Add Drivers</button>
+        </li>
       </form>
-      <form action="update">
-      <li><button type="submit"></button>Update Drivers</li>
+      <form action="" method="POST" th:action="@{admin/updateDrivers}">
+        <li id="update">
+          <button type="submit">Update Drivers</button>
+        </li>
       </form>
     </div>
   </ul>
 </header>
+<h1><u>Admin</u></h1>
 <section class="left-side">
-<h1>Admin Page</h1>
-  <h2>Currently logged-in users:</h2>
+  <h2>Logged-in:</h2>
   <table class="user-table">
     <th>Username:</th>
     <tr th:each="activeUser : ${activeUsers}">
@@ -37,7 +46,7 @@
   </table>
 </section>
 <section class="center">
-  <h2>All users:</h2>
+  <h2>All Users:</h2>
   <table class="user-table">
     <th>ID:</th>
     <th>Username:</th>
@@ -53,21 +62,21 @@
   </table>
 </section>
 <section class="right-side">
-    <h2>Current Standings:</h2>
-    <table class="user-table">
-      <th>Position:</th>
-      <th>Name:</th>
-      <th>Points:</th>
-      <th>Car Number:</th>
-      <th>Nationality:</th>
-      <tr th:each="driver : ${allDrivers}">
-        <td>[[${driver.standing}]]</td>
-        <td>[[${driver.surname}]]</td>
-        <td>[[${driver.points.intValue()}]]</td>
-        <td>[[${driver.carNumber}]]</td>
-        <td>[[${driver.nationality}]]</td>
-      </tr>
-    </table>
+  <h2>Driver Standings:</h2>
+  <table class="user-table">
+    <th>Rank:</th>
+    <th>Points:</th>
+    <th>Name:</th>
+    <th>Car#:</th>
+    <th>Nationality:</th>
+    <tr th:each="driver : ${allDrivers}">
+      <td>[[${driver.standing}]]</td>
+      <td>[[${driver.points.intValue()}]]</td>
+      <td>[[${driver.surname}]]</td>
+      <td>[[${driver.carNumber}]]</td>
+      <td>[[${driver.nationality}]]</td>
+    </tr>
+  </table>
 </section>
 
 </body>

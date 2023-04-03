@@ -27,10 +27,31 @@ body {
     box-sizing: border-box;
 }
 
+button {
+    background-color: #2ea44f;
+    border: 1px solid rgba(27, 31, 35, .15);
+    border-radius: 9px;
+    display: block;
+    color: white;
+    text-align: center;
+    vertical-align: baseline;
+    padding: 3px 18px;
+    text-decoration: none;
+}
+
+button:hover {
+    background-color: #2c974b;
+}
+
+button:focus {
+    box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
+    outline: none;
+}
+
 section {
     float: left;
-    width: 50%;
-    padding: 25px;
+    /*width: 30%;*/
+    /*padding: 5px;*/
 }
 
 .clearfix::after {
@@ -39,41 +60,52 @@ section {
     display: table;
 }
 
-.left-side{
+.left-side {
+    width: 15%;
+    justify-content: left;
+    margin-right: 20px;
+}
+
+.center {
+    width: 40%;
     justify-content: left;
 }
 
-.center{
-    justify-content: center;
-}
-
-.right-side{
-    justify-content: right;
+.right-side {
+    width: 40%;
+    justify-content: left;
 }
 
 
-#home-links{
-    position:absolute;
-    bottom:30px;
-    left:10px;
+#home-links {
+    position: absolute;
+    bottom: 30px;
+    left: 10px;
     padding: 10px;
 }
 
-a{
+a {
     color: white;
 }
 
 /*Make custom chequered flag button or get icon*/
-button {
-    /*background-image:*/
-    /*        linear-gradient(45deg, #000 25%, transparent 25%),*/
-    /*        linear-gradient(45deg, transparent 75%, #000 75%),*/
-    /*        linear-gradient(45deg, transparent 75%, #000 75%),*/
-    /*        linear-gradient(45deg, #000 25%, #fff 25%);*/
+/*button {*/
+/*background-image:*/
+/*        linear-gradient(45deg, #000 25%, transparent 25%),*/
+/*        linear-gradient(45deg, transparent 75%, #000 75%),*/
+/*        linear-gradient(45deg, transparent 75%, #000 75%),*/
+/*        linear-gradient(45deg, #000 25%, #fff 25%);*/
 
-    /*background-size:100px 100px;*/
+/*background-size:100px 100px;*/
 
-    /*background-position:0 0, 0 0, -50px -50px, 50px 50px;*/
+/*background-position:0 0, 0 0, -50px -50px, 50px 50px;*/
+/*}*/
+#nav-bar {
+    /*list-style-type: none;*/
+    /*margin: 0;*/
+    /*padding: 0;*/
+    /*overflow: hidden;*/
+    /*background-color: black;*/
 }
 
 ul {
@@ -84,10 +116,15 @@ ul {
     background-color: black;
 }
 
+
 ul img {
     height: 50px;
     width: 150px;
 }
+
+/*#nav-links{*/
+/*    float: left;*/
+/*}*/
 
 li {
     float: left;
@@ -98,12 +135,54 @@ li a {
     color: white;
     text-align: center;
     vertical-align: baseline;
-    padding: 14px 16px;
+    margin-left: 10px;
+    padding: 15px 15px;
     text-decoration: none;
 }
 
 li a:hover {
     text-decoration-line: underline;
+}
+
+#add {
+    float: right;
+}
+
+#add:hover {
+    background-color: #2c974b;
+}
+
+#add:focus {
+    box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
+    outline: none;
+}
+
+#update {
+    float: right;
+}
+
+#update:hover {
+    background-color: #2c974b;
+}
+
+#update:focus {
+    box-shadow: rgba(46, 164, 79, .4) 0 0 0 3px;
+    outline: none;
+}
+
+li button {
+    background-color: #2ea44f;
+    border: 1px solid rgba(27, 31, 35, .15);
+    border-radius: 6px;
+    display: block;
+    margin-left: 30px;
+    margin-right: 30px;
+    margin-top: 15px;
+    color: white;
+    text-align: center;
+    vertical-align: baseline;
+    padding: 3px 18px;
+    text-decoration: none;
 }
 
 .user-table,
@@ -120,14 +199,14 @@ li a:hover {
     padding: 8px;
 }
 
-.user-table tr:nth-child(even),
-.champ-table tr:nth-child(even) {
+.user-table tr:nth-child(odd),
+.champ-table tr:nth-child(odd) {
     background-color: black;
     color: white;
 }
 
-.user-table tr:nth-child(odd),
-.champ-table tr:nth-child(odd) {
+.user-table tr:nth-child(even),
+.champ-table tr:nth-child(even) {
     background-color: white;
     color: black;
 }

@@ -23,83 +23,104 @@
   </ul>
 </header>
 <section class="left-side">
-<h1>Dashboard</h1>
-<p th:text="|Hello ${user.username}!|"></p>
+  <h1>Dashboard</h1>
+  <p th:text="|Hello ${user.username}!|"></p>
 
-<div th:if="${isAdmin == true}">
-  <p th:text="|Sorry, admin cannot play.|"></p>
-  <a href="/admin">Go to admin dashboard</a>
-</div>
-<!-- ** fix what is not shown to admin on player dashboard-->
-<!-- add who is already in league below create team fieldset-->
-<div th:if="${isAdmin != true}">
-  <div th:if="${gameFull == true and user.team == null}">
-    <p th:text="|Sorry, the game is currently full.|"></p>
-    <p th:text="|Please check back later.|"></p>
+  <div th:if="${isAdmin == true}">
+    <p th:text="|Sorry, admin cannot play.|"></p>
+    <a href="/admin">Go to admin dashboard</a>
   </div>
-
-  <div th:if="${user.team} != null">
-    <p th:text="|Your team: '${user.team.teamName}'|"></p>
-    <p th:text="|Random draft 1st pick number: ${user.team.firstPickNumber}|"></p>
-    <p th:text="|Random draft 2nd pick number: ${user.team.secondPickNumber}|"></p>
-    <p th:if="${teams.size() < 10}"> Draft can start when league is full.</p>
-    <p th:if="${teams.size() == 10}"> Draft in progress, please wait for your turn to pick.</p>
-  </div>
-  <div th:if="${gameFull} != true">
-    <div th:unless="${user.team} != null">
-      <p th:text="|No active team|"></p>
-      <p th:text="|Choose a team name below to get started|"></p>
+  <!-- ** fix what is not shown to admin on player dashboard-->
+  <!-- add who is already in league below create team fieldset-->
+  <div th:if="${isAdmin != true}">
+    <div th:if="${gameFull == true and user.team == null}">
+      <p th:text="|Sorry, the game is currently full.|"></p>
+      <p th:text="|Please check back later.|"></p>
     </div>
 
-    <fieldset th:unless="${user.team} != null">
-      <legend>Create Team</legend>
-      <table id="team-form">
-        <form action="" method="POST" th:action="@{/dashboard/{userId} (userId=${user.userId})}" th:object="${user}">
-          <tr>
-            <th>
-              <label>Team Name:</label>
-            </th>
-            <td>
-              <label>
-                <input required th:field="*{team.teamName}" type="text" placeholder="|${user.username}'s F1 Team|"/>
-              </label>
-            </td>
-            <td>
-              <div th:if="${param.error != null}">
-                - Sorry, this team name is already taken.
-              </div>
-            </td>
-            <td th:each="team : ${teams}">
-              <p th:if="*{team.teamName} == ${team.getTeamName()}" class="error-message" th:text="${teamExists}"></p>
-            </td>
-          </tr>
-          <tr>
-            <th>
+    <div th:if="${user.team} != null">
+      <p th:text="|Your team: '${user.team.teamName}'|"></p>
+      <p th:text="|Random draft 1st pick number: ${user.team.firstPickNumber}|"></p>
+      <p th:text="|Random draft 2nd pick number: ${user.team.secondPickNumber}|"></p>
+      <p th:if="${teams.size() < 10}"> Draft can start when league is full.</p>
+      <p th:if="${teams.size() == 10}"> Draft in progress, please wait for your turn to pick.</p>
+    </div>
+    <div th:if="${gameFull} != true">
+      <div th:unless="${user.team} != null">
+        <p th:text="|No active team|"></p>
+        <p th:text="|Choose a team name below to get started|"></p>
+      </div>
 
-            </th>
-            <td>
-              <button type="submit">Submit</button>
-            </td>
-          </tr>
-        </form>
-      </table>
-    </fieldset>
+      <fieldset th:unless="${user.team} != null">
+        <legend>Create Team</legend>
+        <table id="team-form">
+          <form action="" method="POST" th:action="@{/dashboard/{userId} (userId=${user.userId})}" th:object="${user}">
+            <tr>
+              <th>
+                <label>Team Name:</label>
+              </th>
+              <td>
+                <label>
+                  <input required th:field="*{team.teamName}" type="text" placeholder="|${user.username}'s F1 Team|"/>
+                </label>
+              </td>
+              <td>
+                <div th:if="${param.error != null}">
+                  - Sorry, this team name is already taken.
+                </div>
+              </td>
+              <td th:each="team : ${teams}">
+                <p th:if="*{team.teamName} == ${team.getTeamName()}" class="error-message" th:text="${teamExists}"></p>
+              </td>
+            </tr>
+            <tr>
+              <th>
+
+              </th>
+              <td>
+                <button type="submit">Submit</button>
+              </td>
+            </tr>
+          </form>
+        </table>
+      </fieldset>
+    </div>
   </div>
-</div>
+</section>
+<section class="center">
+  <div>
+    <h2>Players in this league:</h2>
+    <p th:text="|${teams.size()} of 10 teams so far.|"></p>
+    <table class="user-table">
+      <th>Username:</th>
+      <th>Team Name:</th>
+      <tr th:each="team : ${teams}">
+        <td>[[${team.getUser().getUsername()}]]</td>
+        <td>[[${team.getTeamName()}]]</td>
+      </tr>
+    </table>
+  </div>
 </section>
 <section class="right-side">
-<div>
-  <h2>Players in this league:</h2>
-  <p th:text="|${teams.size()} of 10 teams so far.|"></p>
-  <table class="user-table">
-    <th>Username:</th>
-    <th>Team Name:</th>
-    <tr th:each="team : ${teams}">
-      <td>[[${team.getUser().getUsername()}]]</td>
-      <td>[[${team.getTeamName()}]]</td>
-    </tr>
-  </table>
-</div>
+  <div>
+    <h2>Drivers Available:</h2>
+    <p th:text="'X' of 20 drivers remaining.|"></p>
+    <table class="pick-table">
+      <th>Current Rank:</th>
+      <th>Driver:</th>
+      <th>Nationality:</th>
+      <th>Team:</th>
+      <!--      Add list of drivers.-->
+      <tr th:each="team : ${teams}">
+        <td>[[${team.getUser().getUsername()}]]</td>
+        <td>[[${team.getTeamName()}]]</td>
+      </tr>
+    </table>
+  </div>
+
+
 </section>
+
+
 </body>
 </html>
