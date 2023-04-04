@@ -92,16 +92,22 @@ public class TeamService {
     Set<Driver> userDrivers = user.getTeam().getDrivers();
     if (userDrivers.size() < 2){
       userDrivers.add(driver);
+      driver.setTeam(team);
     }
     team.setDrivers(userDrivers);
     team.setUser(user);
 
     user.setTeam(user.getTeam());
+
     System.out.println("Add Driver-----");
     System.out.println(user.getTeam());
     System.out.println(user.getTeam().getDrivers());
-    teamRepository.save(team);
+    System.out.println(user);
+    System.out.println(team);
     userRepository.save(user);
+    teamRepository.save(team);
+//    driverRepository.save(driver);
+
 
     return driverId;
   }

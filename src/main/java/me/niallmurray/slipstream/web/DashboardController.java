@@ -53,7 +53,6 @@ public class DashboardController {
       modelMap.addAttribute("gameFull", true);
     }
     System.out.println(user.getTeam());
-    System.out.println(user.getTeam().getDrivers());
     return "dashboard";
   }
 
@@ -78,7 +77,6 @@ public class DashboardController {
   public String postMakePick(@PathVariable Long userId, Driver driver, User user) {
     System.out.println(driver);
     Long driverId = driver.getDriverId();
-    System.out.println(driverId);
     teamService.addDriverToTeam(userId, driverId);
     // * ADD DRIVER TO TEAM NOT WORKING
     // MAY NEED TO UPDATE TEAM RATHER THAN SAVE

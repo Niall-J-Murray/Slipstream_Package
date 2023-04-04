@@ -24,13 +24,15 @@ public class User {
   private String email;
   @Column(nullable = false)
   private String password;
-  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "user")
+  @OneToMany(fetch = FetchType.LAZY,
+          cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE},
+          mappedBy = "user")
   private Set<Authority> authorities = new HashSet<>();
   @Column()
   private String lastLogout;
-  @JoinColumn()
+  @JoinColumn(name = "user_id")
   @OneToOne(mappedBy = "user",
-          cascade = {CascadeType.ALL},
+          cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE},
           orphanRemoval = true)
   private Team team;
   // For simplicity, each user has only one team for now.
@@ -39,22 +41,19 @@ public class User {
   // but could separate schemas be used for multiple leagues of 10 users?
   // Features for multiple teams/leagues per user, and/or drivers per team could be added eventually.
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(userId);
-  }
 
   @Override
-  public boolean equals(Object obj) {
-    if (this == obj)
-      return true;
-    if (obj == null)
-      return false;
-    if (getClass() != obj.getClass())
-      return false;
-    User other = (User) obj;
-    return Objects.equals(userId, other.userId);
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof User user)) return false;
+    return Objects.equals(userId, user.userId) && Objects.equals(username, user.username) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(authorities, user.authorities) && Objects.equals(lastLogout, user.lastLogout) && Objects.equals(team, user.team);
   }
+
+  //Issue with hashcodes endless call loops
+//  @Override
+//  public int hashCode() {
+//    return Objects.hash(userId, username, email, password, authorities, lastLogout, team);
+//  }
 
   @Override
   public String toString() {

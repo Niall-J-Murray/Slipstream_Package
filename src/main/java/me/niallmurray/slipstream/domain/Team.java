@@ -19,7 +19,7 @@ public class Team {
   private Long userId;
   @MapsId
   @JoinColumn(name = "user_id")
-  @OneToOne(cascade = {CascadeType.ALL}) //1-1 for now, see comment in User.class
+  @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE}) //1-1 for now, see comment in User.class
   private User user;
   @Column(nullable = false, unique = true)
   private Integer firstPickNumber;
@@ -28,37 +28,40 @@ public class Team {
   @Column(nullable = false, unique = true)
   private String teamName;
   @Column()
-  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "userTeam")
+  @OneToMany(fetch = FetchType.LAZY,
+          cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE},
+          mappedBy = "team")
   private Set<Driver> drivers = new HashSet<>(6);
 
   @Override
   public boolean equals(Object o) {
     if (this == o) return true;
     if (!(o instanceof Team team)) return false;
-    return userId.equals(team.userId) && firstPickNumber.equals(team.firstPickNumber) && Objects.equals(user, team.user) && teamName.equals(team.teamName) && Objects.equals(drivers, team.drivers);
+    return Objects.equals(userId, team.userId) && Objects.equals(user, team.user) && Objects.equals(firstPickNumber, team.firstPickNumber) && Objects.equals(secondPickNumber, team.secondPickNumber) && Objects.equals(teamName, team.teamName) && Objects.equals(drivers, team.drivers);
   }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(userId, firstPickNumber, user, teamName, drivers);
-  }
-
-  @Override
-  public String toString() {
-    return "Team Name: '" + teamName + '\''
-            +  System.lineSeparator() +
-            "Drivers: " + drivers;
-  }
-
+    //Issue with hashcode endless call loops
+//  @Override
+//  public int hashCode() {
+//    return Objects.hash(userId, user, firstPickNumber, secondPickNumber, teamName, drivers);
+//  }
 
 //  @Override
 //  public String toString() {
-//    return "Team{" +
-//            "id=" + userId +
-//            ", pickNumber=" + firstPickNumber +
-//            ", user=" + user +
-//            ", teamName='" + teamName + '\'' +
-//            ", drivers=" + drivers +
-//            '}';
+//    return "Team Name: '" + teamName + '\''
+//            +  System.lineSeparator() +
+//            "Drivers: " + drivers;
 //  }
+
+
+  @Override
+  public String toString() {
+    return "Team{" +
+            "id=" + userId +
+            ", pickNumber=" + firstPickNumber +
+            ", user=" + user +
+            ", teamName='" + teamName + '\'' +
+            ", drivers=" + drivers +
+            '}';
+  }
 }

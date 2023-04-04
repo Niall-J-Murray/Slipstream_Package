@@ -1,17 +1,22 @@
+/*@font-face {*/
+/*    font-family: Font1;*/
+/*    src: url('https://www.formula1.com/etc/designs/fom-website/fonts/F1Regular/Formula1-Regular.ttf') format('truetype'),*/
+/*    url('https://www.formula1.com/etc/designs/fom-website/fonts/F1Bold/Formula1-Bold.ttf') format('truetype'),*/
+/*    url('https://www.formula1.com/etc/designs/fom-website/fonts/F1Wide/Formula1-Wide.ttf') format('truetype'),*/
+/*    url('https://www.formula1.com/etc/designs/fom-website/fonts/F1Wide/Formula1-Black.ttf') format('truetype');*/
+/*    !*Local links or files not working?*!*/
+/*    !*url('../font/Formula1-Regular_web_0.ttf') format('truetype'),*!*/
+/*    !*url('../font/Formula1-Regular.ttf') format('truetype'),*!*/
+/*    !*url('../font/Formula1-Display-Regular.woff2') format('woff2'),*!*/
+/*    !*url('../font/Formula1-Display-Regular.woff') format('woff');*!*/
+/*    font-display: auto;*/
+/*}*/
+
 @font-face {
     font-family: Font1;
-    src: url('https://www.formula1.com/etc/designs/fom-website/fonts/F1Regular/Formula1-Regular.ttf') format('truetype'),
-    url('https://www.formula1.com/etc/designs/fom-website/fonts/F1Bold/Formula1-Bold.ttf') format('truetype'),
-    url('https://www.formula1.com/etc/designs/fom-website/fonts/F1Wide/Formula1-Wide.ttf') format('truetype'),
-    url('https://www.formula1.com/etc/designs/fom-website/fonts/F1Wide/Formula1-Black.ttf') format('truetype');
-    /*Local links or files not working?*/
-    /*url('../font/Formula1-Regular_web_0.ttf') format('truetype'),*/
-    /*url('../font/Formula1-Regular.ttf') format('truetype'),*/
-    /*url('../font/Formula1-Display-Regular.woff2') format('woff2'),*/
-    /*url('../font/Formula1-Display-Regular.woff') format('woff');*/
+    src: url('https://www.formula1.com/etc/designs/fom-website/fonts/F1Bold/Formula1-Bold.ttf') format('truetype');
     font-display: auto;
 }
-
 
 body {
     font-family: Font1, Arial, Helvetica, sans-serif;
@@ -20,7 +25,6 @@ body {
     background-image: url("../images/background.jpg");
     background-size: 100% auto;
     background-repeat: no-repeat;
-    /*font-family: Arial, Helvetica, sans-serif;*/
 }
 
 * {

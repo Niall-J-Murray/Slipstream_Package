@@ -7,7 +7,9 @@
 <body>
 <header>
   <ul class="nav-bar">
-    <li><img src="/images/F1Logo.png"></li>
+<!--    <li><img src="/images/F1Logo.png"></li>-->
+    <li><img src="/images/customLogoWhite.png" alt="site logo"
+             style="height: 50px; width: 300px; margin-left: 10px" ></li>
     <li><a href="/home">Home</a></li>
     <div th:if="${isLoggedIn != true}">
       <li><a href="/register">Register</a></li>
@@ -68,7 +70,7 @@
 <section class="center">
   <div>
     <h2>Players in this league:</h2>
-    <p th:text="|${teams.size()} of 10 teams so far|"></p>
+    <p th:text="|${teams.size()} of 10 teams in league|"></p>
     <table class="user-table">
       <th>Username:</th>
       <th>Team Name:</th>
@@ -97,7 +99,7 @@
         <th>Team:</th>
         <tr th:each="driverInfo : ${allDrivers}">
           <td><input id="driver-pick" type="radio" th:field="*{driverId}" th:value="${driverInfo.driverId}"/>
-            <label for="driver-pick" th:field="${driverInfo.driverId}" th:text="${driverInfo.driverId}"></label></td>
+            <label for="driver-pick" th:field="${driverInfo.driverId}"></label></td>
           <td th:text="${driverInfo.standing}"></td>
           <td th:text="${driverInfo.points.intValue()}"></td>
           <td th:text="${driverInfo.surname}"></td>
