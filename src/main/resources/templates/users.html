@@ -7,18 +7,23 @@
 <body>
 <header>
   <ul class="nav-bar">
-    <li><img src="/images/F1Logo.png" alt="f1Logo"></li>
-    <li><a href="/home">Home</a></li>
-    <div th:if="${isLoggedIn != true}">
-      <li><a href="/register">Register</a></li>
-      <li><a href="/login">Login</a></li>
+    <div id="nav-logo">
+      <li><img src="/images/customLogoWhite.png" alt="site logo"
+               style="height: 50px; width: 300px; margin-left: 10px"></li>
     </div>
-    <div th:if="${isAdmin == true}">
-      <li><a href="/admin">Admin</a></li>
-    </div>
-    <div th:if="${isLoggedIn == true}">
-      <li><a href="/dashboard">Dashboard</a></li>
-      <li><a href="/confirm_logout">Logout</a></li>
+    <div id="nav-links">
+      <li><a href="/home">Home</a></li>
+      <div th:if="${isLoggedIn != true}">
+        <li><a href="/register">Register</a></li>
+        <li><a href="/login">Login</a></li>
+      </div>
+      <div th:if="${isAdmin == true}">
+        <li><a href="/admin">Admin</a></li>
+      </div>
+      <div th:if="${isLoggedIn == true}">
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/confirm_logout">Logout</a></li>
+      </div>
     </div>
   </ul>
 </header>

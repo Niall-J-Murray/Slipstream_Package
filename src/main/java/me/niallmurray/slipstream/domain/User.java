@@ -41,15 +41,26 @@ public class User {
   // but could separate schemas be used for multiple leagues of 10 users?
   // Features for multiple teams/leagues per user, and/or drivers per team could be added eventually.
 
+//  @Override
+//  public String toString() {
+//    return "User{" +
+//            "userId=" + userId +
+//            ", username='" + username + '\'' +
+//            ", email='" + email + '\'' +
+//            ", password='" + password + '\'' +
+//            ", authorities=" + authorities +
+//            ", lastLogout='" + lastLogout + '\'' +
+//            ", team=" + team +
+//            '}';
+//  }
 
-  @Override
-  public boolean equals(Object o) {
-    if (this == o) return true;
-    if (!(o instanceof User user)) return false;
-    return Objects.equals(userId, user.userId) && Objects.equals(username, user.username) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(authorities, user.authorities) && Objects.equals(lastLogout, user.lastLogout) && Objects.equals(team, user.team);
-  }
-
-  //Issue with hashcodes endless call loops
+//  @Override
+//  public boolean equals(Object o) {
+//    if (this == o) return true;
+//    if (!(o instanceof User user)) return false;
+//    return Objects.equals(userId, user.userId) && Objects.equals(username, user.username) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(authorities, user.authorities) && Objects.equals(lastLogout, user.lastLogout) && Objects.equals(team, user.team);
+//  }
+//
 //  @Override
 //  public int hashCode() {
 //    return Objects.hash(userId, username, email, password, authorities, lastLogout, team);
@@ -57,14 +68,23 @@ public class User {
 
   @Override
   public String toString() {
-    return "User{" +
-            "id=" + userId +
-            ", username='" + username + '\'' +
-            ", email='" + email + '\'' +
-            ", password='" + password + '\'' +
-            ", authorities=" + authorities +
-            ", lastLogout='" + lastLogout + '\'' +
-//            ", team=" + team +
-            '}';
+    return "User:" +
+            " userId= " + userId +
+            ", username= '" + username + '\'' +
+            ", email= '" + email + '\'' +
+            ", lastLogout= " + lastLogout;
   }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (!(o instanceof User user)) return false;
+    return Objects.equals(userId, user.userId);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(userId);
+  }
+
 }

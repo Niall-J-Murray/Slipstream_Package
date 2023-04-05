@@ -25,6 +25,14 @@ public class Authority implements GrantedAuthority {
   @Column(nullable = false)
   private String authority;
 
+//  @Override
+//  public String toString() {
+//    return "Authority:" +
+//            " id= " + id +
+//            ", user= " + user +
+//            ", authority= " + authority;
+//  }
+
   @Override
   public int hashCode() {
     return Objects.hash(authId);
@@ -41,12 +49,24 @@ public class Authority implements GrantedAuthority {
     return Objects.equals(authId, other.authId);
   }
 
+
 //  @Override
-//  public String toString() {
-//    return "Authority{" +
-//            "id=" + id +
-//            ", user=" + user +
-//            ", authority='" + authority + '\'' +
-//            '}';
+//  public boolean equals(Object o) {
+//    if (this == o) return true;
+//    if (o == null || getClass() != o.getClass()) return false;
+//
+//    Authority authority1 = (Authority) o;
+//
+//    if (!Objects.equals(authId, authority1.authId)) return false;
+//    if (!Objects.equals(user, authority1.user)) return false;
+//    return Objects.equals(authority, authority1.authority);
+//  }
+//
+//  @Override
+//  public int hashCode() {
+//    int result = authId != null ? authId.hashCode() : 0;
+//    result = 31 * result + (user != null ? user.hashCode() : 0);
+//    result = 31 * result + (authority != null ? authority.hashCode() : 0);
+//    return result;
 //  }
 }

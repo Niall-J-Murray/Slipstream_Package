@@ -8,18 +8,19 @@
 <header>
   <ul id="nav-bar">
     <div id="nav-logo">
-    <li><img src="/images/F1Logo.png"></li>
+      <li><img src="/images/customLogoWhite.png" alt="site logo"
+               style="height: 50px; width: 300px; margin-left: 10px"></li>
     </div>
     <div id="nav-links">
-    <li><a href="/home">Home</a></li>
-    <div th:if="${isLoggedIn != true}">
-      <li><a href="/register">Register</a></li>
-      <li><a href="/login">Login</a></li>
-    </div>
-    <div th:if="${isLoggedIn == true}">
-      <li><a href="/dashboard">Dashboard</a></li>
-      <li><a href="/confirm_logout">Logout</a></li>
-    </div>
+      <li><a href="/home">Home</a></li>
+      <div th:if="${isLoggedIn != true}">
+        <li><a href="/register">Register</a></li>
+        <li><a href="/login">Login</a></li>
+      </div>
+      <div th:if="${isLoggedIn == true}">
+        <li><a href="/dashboard">Dashboard</a></li>
+        <li><a href="/confirm_logout">Logout</a></li>
+      </div>
     </div>
     <div id="nav-buttons">
       <form action="" method="POST" th:action="@{/admin/addDrivers}">
@@ -36,32 +37,34 @@
   </ul>
 </header>
 <h2><u>Admin</u></h2>
-<section class="left-side">
-  <h2>Logged-in:</h2>
+<section id="admin-logged">
+  <h2>Currently Logged-in:</h2>
   <table class="user-table">
-    <th>Username:</th>
-    <tr th:each="activeUser : ${activeUsers}">
-      <td th:text="${activeUser}">activeUser</td>
+    <th>Usernames:</th>
+    <tr>
+      <td th:text="${activeUsers}">activeUsers</td>
     </tr>
   </table>
 </section>
-<section class="center">
+<section id="admin-users">
   <h2>All Users:</h2>
   <table class="user-table">
     <th>ID:</th>
     <th>Username:</th>
     <th>Team:</th>
+    <th>Drivers:</th>
     <th>Last Logout:</th>
     <tr th:each="user : ${users}">
       <td th:text="${user.userId}"></td>
       <td th:text="${user.getAuthorities().iterator().next().getAuthority()==('ROLE_ADMIN')}
     ? ${user.username + ' (ADMIN) '}  : ${user.username}"></td>
-      <td th:text="${user.team} ?: 'No Team'"></td>
+      <td th:text="${user.team != null} ? ${user.team.teamName}: 'No Team Created'"></td>
+      <td th:text="${user.team != null} ? ${user.team.drivers}: 'No Team Created'"></td>
       <td th:text="${user.lastLogout}"></td>
     </tr>
   </table>
 </section>
-<section class="right-side">
+<section id="admin-drivers">
   <h2>Driver Standings:</h2>
   <table class="user-table">
     <th>Rank:</th>

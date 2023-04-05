@@ -63,12 +63,36 @@ section {
     display: table;
 }
 
+#admin-logged {
+    float: none;
+    width: 40%;
+    padding-left: 2%;
+}
+
+#admin-users {
+    float: left;
+    width: 65%;
+    padding-left: 2%;
+}
+
+#admin-drivers {
+    float: left;
+    width: 33%;
+
+}
+
+/*.left-side {*/
+/*    width: 20%;*/
+/*    justify-content: left;*/
+/*    padding-left: 15px;*/
+/*    padding-right: 50px;*/
+/*    !*margin-right: 50px;*!*/
+/*}*/
+
+/* FIX DASHBOARD LAYOUT TO SPREAD USER INFO ACROSS TOP WITH TABLES UNDER*/
 .left-side {
-    width: 20%;
-    justify-content: left;
-    padding-left: 15px;
-    padding-right: 50px;
-    /*margin-right: 50px;*/
+    float: none;
+    display: inline;
 }
 
 .center {
@@ -92,7 +116,6 @@ section {
 a {
     color: white;
 }
-
 
 
 ul {
@@ -144,7 +167,7 @@ li a:hover {
     outline: none;
 }
 
-#confirm-pick{
+#confirm-pick {
     display: inline;
     margin-right: 20px;
     margin-bottom: 10px;
@@ -168,9 +191,6 @@ li button {
     border: 1px solid rgba(27, 31, 35, .15);
     border-radius: 6px;
     display: block;
-    /*margin-left: 30px;*/
-    /*margin-right: 30px;*/
-    /*margin-top: 15px;*/
     margin: 10px 20px;
     color: white;
     text-align: center;
@@ -182,7 +202,8 @@ li button {
 .user-table,
 .champ-table {
     border-collapse: collapse;
-    width: 75%;
+    width: 70%;
+    margin-top: 10px;
 }
 
 .user-table td,

@@ -21,7 +21,7 @@ public class DriverService {
     return driverRepository.findAll();
   }
 
-  public Driver findById(Long driverId){
+  public Driver findById(Long driverId) {
     return driverRepository.findById(driverId).get();
   }
 
@@ -37,12 +37,22 @@ public class DriverService {
       Driver driver = modelMapper.map(driverStanding.driverDTO, Driver.class);
       driver.setStanding(Integer.parseInt(driverStanding.position));
       driver.setPoints(Double.parseDouble(driverStanding.points));
+      driver.setConstructor(driverStanding.constructors.get(0).name);
       drivers.add(driver);
     }
     // To store drivers randomly
 //    Collections.shuffle(drivers);
     return drivers;
   }
+
+
+//  public void addConstructors(){
+//    List<Driver> drivers = driverRepository.findAll();
+//    for (Driver driver : drivers){
+//      driver.setConstructor(driverStanding.constructors.get(0).name);
+//
+//    }
+//  }
 
 
   public void addDrivers(List<Driver> drivers) {
@@ -80,7 +90,7 @@ public class DriverService {
 //                driverRepository.save(d1);
 //              }
 //            });
-    for (Driver driver : updatedDrivers){
+    for (Driver driver : updatedDrivers) {
       driverRepository.updatePoints(driver.getShortName(), driver.getPoints());
       driverRepository.updateStandings(driver.getShortName(), driver.getStanding());
     }
@@ -91,37 +101,11 @@ public class DriverService {
     return driverRepository.findAllByOrderByStandingAsc();
   }
 
-
-//    currentDrivers.replaceAll(driver -> driver.getPoints());
-//    currentDrivers.forEach(driver -> driver.getPoints());
-
-//    Driver testDriver =
-//    List<Driver> testDrivers = currentDrivers
-//            .stream()
-//            .filter(updatedDrivers::contains)
-//            .map(d -> d.getPoints())
-//            .collect(Collectors.toList());
-
-
-//    for (Driver driver : currentDrivers) {
-////     Driver currentDriver = driverRepository.findById(driver.getDriverId()).orElse(driverRepository.findByCarNumber(driver.getCarNumber()));
-////     Driver updateDriver =updatedDrivers.iterator().next();
-////      if(updatedDrivers.contains(currentDriver))
-////      driver.getDriverId();
-//      Driver updateDriver = updatedDrivers.stream()
-//              .filter(d -> d.getDriverId().equals(driver.getDriverId()))
-//              .findAny()
-//              .orElse(null);
-//      for (Driver updateDriver: updatedDrivers) {
-//        if (!currentDriver.getPoints().equals(updateDriver.getPoints())){
-//
-//        }
-
-
-//    Customer james = customers.stream()
-//            .filter(customer -> "James".equals(customer.getName()))
-//            .findAny()
-//            .orElse(null);
+  public List<Driver> getUndraftedDrivers() {
+    List<Driver> undraftedDrivers = driverRepository.findAllByOrderByStandingAsc();
+    undraftedDrivers.removeIf(driver -> driver.getTeam() != null);
+    return undraftedDrivers;
+  }
 
 
 }

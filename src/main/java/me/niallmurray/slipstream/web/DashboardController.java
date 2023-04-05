@@ -38,8 +38,12 @@ public class DashboardController {
     List<Team> allTeams = teamService.getAllTeams();
     modelMap.addAttribute("user", user);
     modelMap.addAttribute("teams", allTeams);
+    modelMap.addAttribute("teamsByPick", teamService.getAllTeamsByNextPick());
     modelMap.addAttribute("driver", new Driver());
     modelMap.addAttribute("allDrivers", driverService.sortDriversStanding());
+    modelMap.addAttribute("availableDrivers", driverService.getUndraftedDrivers());
+    modelMap.addAttribute("currentPickNumber", teamService.getPickNumber());
+    modelMap.addAttribute("timeToPick", false);
 
     if (userService.isLoggedIn(user)) {
       modelMap.addAttribute("isLoggedIn", true);
@@ -52,7 +56,14 @@ public class DashboardController {
     if (allTeams.size() >= 10) {
       modelMap.addAttribute("gameFull", true);
     }
-    System.out.println(user.getTeam());
+    if (!userService.isAdmin(user)) {
+      if (teamService.timeToPick(user.getTeam().getTeamId())) {
+        modelMap.addAttribute("timeToPick", true);
+      }
+    }
+
+    teamService.updateAllTeamsRankings();
+    modelMap.addAttribute("teamsByRank", teamService.getAllTeamsByRanking());
     return "dashboard";
   }
 
