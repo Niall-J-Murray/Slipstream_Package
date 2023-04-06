@@ -18,6 +18,9 @@
         <li><a href="/register">Register</a></li>
         <li><a href="/login">Login</a></li>
       </div>
+      <div th:if="${isAdmin == true}">
+        <li><a href="/admin">Admin</a></li>
+      </div>
       <div th:if="${isLoggedIn == true}">
         <li><a href="/dashboard">Dashboard</a></li>
         <li><a href="/confirm_logout">Logout</a></li>
@@ -25,8 +28,8 @@
     </div>
   </ul>
 </header>
+<section id="background">
 <h1>Home</h1>
-
 <div th:if="${isLoggedIn == true}">
   <h2 th:text="|Welcome ${user.getUsername()}!|"></h2>
 </div>
@@ -42,11 +45,10 @@
   <h3><a href="/register">Create New Account</a></h3>
 </div>
 
-<section id="home-links">
+<section id="home-links" th:if="${isAdmin == true}">
   <h4><a href="/driverStandings">Current Driver Standings List</a></h4>
-  <h4><a href="/current_standings">Current Driver Standings Table</a></h4>
   <h4><a href="/driverStandingsJSON">Current Driver Standings JSON</a></h4>
 </section>
-
+</section>
 </body>
 </html>

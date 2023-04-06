@@ -4,6 +4,7 @@ import me.niallmurray.slipstream.domain.Driver;
 import me.niallmurray.slipstream.domain.Team;
 import me.niallmurray.slipstream.domain.User;
 import me.niallmurray.slipstream.repositories.DriverRepository;
+import me.niallmurray.slipstream.repositories.LeagueRepository;
 import me.niallmurray.slipstream.repositories.TeamRepository;
 import me.niallmurray.slipstream.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ public class TeamService {
   TeamRepository teamRepository;
   @Autowired
   DriverRepository driverRepository;
+  @Autowired
+  LeagueService leagueService;
   // Set list for up to 10 players for now. Can be changed or made dynamic according to number of players per league.
   private List<Integer> pickNumbers = new ArrayList<>(List.of(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
   // Temp fields for testing.
@@ -35,6 +38,7 @@ public class TeamService {
       team.setTeamId(user.getUserId());
       team.setFirstPickNumber(randomPickNumber());
       team.setSecondPickNumber(21 - team.getFirstPickNumber()); //So players get 1&20, 2&19 etc. up to 10&11.
+      team.setLeague(leagueService.findNewestLeague());
       if (!teamNameExists(user.getTeam().getTeamName())) {
         team.setTeamName(user.getTeam().getTeamName());
         user.setTeam(team);

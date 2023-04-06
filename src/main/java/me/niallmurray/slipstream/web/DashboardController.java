@@ -2,9 +2,11 @@ package me.niallmurray.slipstream.web;
 
 
 import me.niallmurray.slipstream.domain.Driver;
+import me.niallmurray.slipstream.domain.League;
 import me.niallmurray.slipstream.domain.Team;
 import me.niallmurray.slipstream.domain.User;
 import me.niallmurray.slipstream.service.DriverService;
+import me.niallmurray.slipstream.service.LeagueService;
 import me.niallmurray.slipstream.service.TeamService;
 import me.niallmurray.slipstream.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,8 @@ public class DashboardController {
   private TeamService teamService;
   @Autowired
   private DriverService driverService;
+  @Autowired
+  private LeagueService leagueService;
 
   @GetMapping("/dashboard")
   public String redirectUserDashboard(@AuthenticationPrincipal User userAuth) {
@@ -36,14 +40,29 @@ public class DashboardController {
   public String getDashboard(@AuthenticationPrincipal User userAuth, ModelMap modelMap, @PathVariable Long userId) {
     User user = userService.findById(userId);
     List<Team> allTeams = teamService.getAllTeams();
+
+    League league = null;
+    if (allTeams.size() == 0 || allTeams.size() % 10 == 0) {
+//    if (allTeams.size() == 0) {
+      league = leagueService.createLeague();
+//      league.setTeams(allTeams);
+    }
     modelMap.addAttribute("user", user);
-    modelMap.addAttribute("teams", allTeams);
-    modelMap.addAttribute("teamsByPick", teamService.getAllTeamsByNextPick());
     modelMap.addAttribute("driver", new Driver());
+    modelMap.addAttribute("teams", allTeams);
+    modelMap.addAttribute("league",leagueService.findNewestLeague());
+    modelMap.addAttribute("teamsByPick", teamService.getAllTeamsByNextPick());
     modelMap.addAttribute("allDrivers", driverService.sortDriversStanding());
     modelMap.addAttribute("availableDrivers", driverService.getUndraftedDrivers());
     modelMap.addAttribute("currentPickNumber", teamService.getPickNumber());
+    modelMap.addAttribute("gameFull", false);
     modelMap.addAttribute("timeToPick", false);
+
+    if(league!=null){
+
+      List<Team> allTeamsInLeague = leagueService.getAllTeamsInLeague(league.getLeagueId());
+      modelMap.addAttribute("teamsInLeague",allTeamsInLeague);
+    }
 
     if (userService.isLoggedIn(user)) {
       modelMap.addAttribute("isLoggedIn", true);
@@ -56,7 +75,8 @@ public class DashboardController {
     if (allTeams.size() >= 10) {
       modelMap.addAttribute("gameFull", true);
     }
-    if (!userService.isAdmin(user)) {
+
+    if (!userService.isAdmin(user) && user.getTeam() != null) {
       if (teamService.timeToPick(user.getTeam().getTeamId())) {
         modelMap.addAttribute("timeToPick", true);
       }
@@ -79,6 +99,10 @@ public class DashboardController {
       }
       user.getTeam().setTeamName(teamName);
       teamService.createTeam(user);
+//      leagueService.addTeamToLeague(league.getLeagueId(),user.getTeam());
+//      int currentLeagueId = leagueService.findAll().size();
+      League league = leagueService.findNewestLeague();
+      leagueService.addTeamToLeague(league.getLeagueId(),user.getTeam());
       return "redirect:/dashboard/" + userId;
     }
     return "redirect:/dashboard/" + userId + "?error";
@@ -89,9 +113,6 @@ public class DashboardController {
     System.out.println(driver);
     Long driverId = driver.getDriverId();
     teamService.addDriverToTeam(userId, driverId);
-    // * ADD DRIVER TO TEAM NOT WORKING
-    // MAY NEED TO UPDATE TEAM RATHER THAN SAVE
-    // MAY NEED TO DROP AND REBUILD DATABASE
     return "redirect:/dashboard/" + userId;
   }
 

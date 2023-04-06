@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
   <link href="/css/general.css" rel="stylesheet" type="text/css"/>
   <title>Admin</title>
@@ -36,51 +36,54 @@
     </div>
   </ul>
 </header>
-<h2><u>Admin</u></h2>
-<section id="admin-logged">
-  <h2>Currently Logged-in:</h2>
-  <table class="user-table">
-    <th>Usernames:</th>
-    <tr>
-      <td th:text="${activeUsers}">activeUsers</td>
-    </tr>
-  </table>
-</section>
-<section id="admin-users">
-  <h2>All Users:</h2>
-  <table class="user-table">
-    <th>ID:</th>
-    <th>Username:</th>
-    <th>Team:</th>
-    <th>Drivers:</th>
-    <th>Last Logout:</th>
-    <tr th:each="user : ${users}">
-      <td th:text="${user.userId}"></td>
-      <td th:text="${user.getAuthorities().iterator().next().getAuthority()==('ROLE_ADMIN')}
+<section id="background">
+  <h2><u>Admin</u></h2>
+  <section id="admin-logged">
+    <h2>Currently Logged-in:</h2>
+    <table class="user-table">
+      <th>Usernames:</th>
+      <tr>
+        <td th:text="${activeUsers}">activeUsers</td>
+      </tr>
+    </table>
+  </section>
+  <section id="admin-users">
+    <h2>All Users:</h2>
+    <table class="user-table">
+      <th>ID:</th>
+      <th>Username:</th>
+      <th>Team:</th>
+      <th>Drivers:</th>
+      <th>Last Logout:</th>
+      <tr th:each="user : ${users}">
+        <td th:text="${user.userId}"></td>
+        <td th:text="${user.getAuthorities().iterator().next().getAuthority()==('ROLE_ADMIN')}
     ? ${user.username + ' (ADMIN) '}  : ${user.username}"></td>
-      <td th:text="${user.team != null} ? ${user.team.teamName}: 'No Team Created'"></td>
-      <td th:text="${user.team != null} ? ${user.team.drivers}: 'No Team Created'"></td>
-      <td th:text="${user.lastLogout}"></td>
-    </tr>
-  </table>
+        <td th:text="${user.team != null} ? ${user.team.teamName}: 'No Team Created'"></td>
+        <td th:text="${user.team != null} ? ${user.team.drivers}: 'No Team Created'"></td>
+        <td th:text="${user.lastLogout}"></td>
+      </tr>
+    </table>
+  </section>
+  <section id="admin-drivers">
+    <h2>Driver Standings:</h2>
+    <table class="user-table">
+      <th>Rank:</th>
+      <th>Points:</th>
+      <th>Name:</th>
+      <th>Nationality:</th>
+      <th>Car#:</th>
+      <th>Constructor:</th>
+      <tr th:each="driver : ${allDrivers}">
+        <td>[[${driver.standing}]]</td>
+        <td>[[${driver.points.intValue()}]]</td>
+        <td>[[${driver.surname}]]</td>
+        <td>[[${driver.nationality}]]</td>
+        <td>[[${driver.carNumber}]]</td>
+        <td>[[${driver.constructor}]]</td>
+      </tr>
+    </table>
+  </section>
 </section>
-<section id="admin-drivers">
-  <h2>Driver Standings:</h2>
-  <table class="user-table">
-    <th>Rank:</th>
-    <th>Points:</th>
-    <th>Name:</th>
-    <th>Car#:</th>
-    <th>Nationality:</th>
-    <tr th:each="driver : ${allDrivers}">
-      <td>[[${driver.standing}]]</td>
-      <td>[[${driver.points.intValue()}]]</td>
-      <td>[[${driver.surname}]]</td>
-      <td>[[${driver.carNumber}]]</td>
-      <td>[[${driver.nationality}]]</td>
-    </tr>
-  </table>
-</section>
-
 </body>
 </html>

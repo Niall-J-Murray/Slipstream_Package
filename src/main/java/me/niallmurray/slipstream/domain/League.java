@@ -5,8 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Entity
 @NoArgsConstructor
@@ -23,5 +24,5 @@ public class League {
   @OneToMany(fetch = FetchType.LAZY,
           cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE},
           mappedBy = "teamId")
-  private Set<Team> teams = new HashSet<>();
+  private List<Team> teams = new ArrayList<>();
 }

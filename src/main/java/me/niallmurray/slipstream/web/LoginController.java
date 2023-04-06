@@ -28,22 +28,19 @@ public class LoginController {
   }
 
   @GetMapping("/home")
-  public String getHome(@AuthenticationPrincipal User user, ModelMap model) {
-    model.addAttribute("activeUsers", activeUserStore.getUsers());
-    model.addAttribute("users", adminService.getAllUserAccounts());
-    model.addAttribute("user", user);
+  public String getHome(@AuthenticationPrincipal User user, ModelMap modelMap) {
+    modelMap.addAttribute("activeUsers", activeUserStore.getUsers());
+    modelMap.addAttribute("users", adminService.getAllUserAccounts());
+    modelMap.addAttribute("user", user);
 
     if (userService.isLoggedIn(user)) {
-      model.addAttribute("isLoggedIn", true);
+      modelMap.addAttribute("isLoggedIn", true);
+    }
+    if (userService.isAdmin(user)) {
+      modelMap.addAttribute("isAdmin", true);
     }
 
     return "home";
-  }
-
-  // Consider moving to different controller, perhaps with home?
-  @GetMapping("/current_standings")
-  public String getCurrentStandings(){
-    return "current_standings";
   }
 
   @GetMapping("/login")

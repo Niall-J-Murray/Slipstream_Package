@@ -77,11 +77,11 @@ public class Team {
   public boolean equals(Object o) {
     if (this == o) return true;
     if (!(o instanceof Team team)) return false;
-    return Objects.equals(teamId, team.teamId);
+    return Objects.equals(teamId, team.teamId) && Objects.equals(teamName, team.teamName);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(teamId);
+    return Objects.hash(teamId,teamName);
   }
 }
