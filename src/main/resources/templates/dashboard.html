@@ -27,58 +27,63 @@
     </div>
   </ul>
 </header>
-<section class="left-side">
-  <h2><u>Dashboard</u></h2>
-  <h3 th:text="|Hello ${user.username}|"></h3>
-  <div th:if="${isAdmin == true}">
-    <p th:text="|Sorry, admin cannot play.|"></p>
-    <a href="/admin">Go to admin dashboard</a>
+<section id="dash-top" class="left-side">
+  <div id="dash-welcome">
+    <h2><u>Dashboard</u></h2>
+    <h2 th:text="|Hello ${user.username}!|"></h2>
+    <h3>Welcome to Slipstream F1 Draft Picks</h3>
   </div>
-  <div class="dash-text" th:if="${isAdmin != true}">
-    <div th:if="${gameFull == true and user.team == null}">
-      <p th:text="|Sorry, the game is currently full.|"></p>
-      <p th:text="|Please check back later.|"></p>
+  <div id="dash-info">
+    <div th:if="${isAdmin == true}">
+      <p th:text="|Sorry, admin cannot play.|"></p>
+      <a href="/admin">Go to admin dashboard</a>
     </div>
+    <div class="dash-text" th:if="${isAdmin != true}">
+      <div th:if="${gameFull == true and user.team == null}">
+        <p th:text="|Sorry, the game is currently full.|"></p>
+        <p th:text="|Please check back later.|"></p>
+      </div>
 
-    <div class="dash-text" th:if="${user.team} != null">
-      <p th:text="|Your team: '${user.team.teamName}'|"></p>
-      <p th:text="|Random 1st pick draft number (1-10): ${user.team.firstPickNumber}|"></p>
-      <p th:text="|Random 2nd pick draft number (11-20): ${user.team.secondPickNumber}|"></p>
-      <div style="padding-top: 60px">
-        <p th:if="${!gameFull}"> Draft can start when league is full.</p>
-        <div th:if="${gameFull and currentPickNumber <= 20}">
-          <u><p th:text="|Current pick number: ${currentPickNumber}"></p></u>
-          <p th:if="${!timeToPick}">
-            Draft in progress, please wait for your turn to pick.</p>
-          <u><p th:if="${timeToPick}"
-                th:text="|Your turn to pick ${user.username}!|"></p></u>
+      <div class="dash-text" th:if="${user.team} != null">
+        <p th:text="|Your team: '${user.team.teamName}'|"></p>
+        <p th:text="|Random 1st pick draft number (1-10): ${user.team.firstPickNumber}|"></p>
+        <p th:text="|Random 2nd pick draft number (11-20): ${user.team.secondPickNumber}|"></p>
+        <div style="padding-top: 60px">
+          <p th:if="${!gameFull}"> Draft can start when league is full.</p>
+          <div th:if="${gameFull and currentPickNumber <= 20}">
+            <u><p th:text="|Current pick number: ${currentPickNumber}"></p></u>
+            <p th:if="${!timeToPick}">
+              Draft in progress, please wait for your turn to pick.</p>
+            <u><p th:if="${timeToPick}"
+                  th:text="|Your turn to pick ${user.username}!|"></p></u>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="dash-text" th:if="${gameFull} != true">
-      <div th:unless="${user.team} != null">
-        <p th:text="|This league is still open to join|"></p>
-        <p th:text="|Once the league is full, the draft can begin|"></p>
-        <p th:text="|Choose a team name below to get started...|"></p>
-      </div>
+      <div class="dash-text" th:if="${gameFull} != true">
+        <div th:unless="${user.team} != null">
+          <p th:text="|This league is still open to join|"></p>
+          <p th:text="|Once the league is full, the draft can begin|"></p>
+          <p th:text="|Choose a team name below to get started...|"></p>
+        </div>
 
-      <!--      <fieldset class="dash-text" th:unless="${user.team} != null">-->
-      <!--        <legend>Create Team</legend>-->
-      <div class="dash-text" id="team-form" th:unless="${user.team} != null">
-        <form action="" method="POST" th:action="@{/dashboard/{userId} (userId=${user.userId})}" th:object="${user}">
-          <label for="teamName">Team Name:</label>
-          <input required id="teamName" name="teamName" th:field="*{team.teamName}" type="text"
-                 th:placeholder="|Team ${user.username}|"/>
-          <div th:if="${param.error != null}">
-            - Sorry, this team name is already taken.
-          </div>
-          <button type="submit">Submit</button>
-        </form>
+        <!--      <fieldset class="dash-text" th:unless="${user.team} != null">-->
+        <!--        <legend>Create Team</legend>-->
+        <div class="dash-text" id="team-form" th:unless="${user.team} != null">
+          <form action="" method="POST" th:action="@{/dashboard/{userId} (userId=${user.userId})}" th:object="${user}">
+            <label for="teamName">Team Name:</label>
+            <input required id="teamName" name="teamName" th:field="*{team.teamName}" type="text"
+                   th:placeholder="|Team ${user.username}|"/>
+            <div th:if="${param.error != null}">
+              - Sorry, this team name is already taken.
+            </div>
+            <button type="submit">Submit</button>
+          </form>
+        </div>
       </div>
     </div>
   </div>
 </section>
-<section th:if="${currentPickNumber <= 20}"class="center">
+<section th:if="${currentPickNumber <= 20}" id="dash-table1" class="center">
   <div>
     <h2>Players in this league:</h2>
     <p th:text="|${teams.size()} of 10 teams in league|"></p>
@@ -98,8 +103,9 @@
 </section>
 <section th:if="${currentPickNumber > 20}" class="center">
   <div>
-    <h2>Player's League Standings:</h2>
+<!--    <h2>Player's League Standings:</h2>-->
     <table class="user-table">
+      <caption><h3>Player's League Standings:</h3></caption>
       <th>Rank:</th>
       <th>Total Points:</th>
       <th>Player:</th>
@@ -111,13 +117,15 @@
         <td>[[${team.getTeamPoints()}]]</td>
         <td>[[${team.getUser().getUsername()}]]</td>
         <td>[[${team.getTeamName()}]]</td>
-        <td th:each="driver : ${team.getDrivers}" th:text="|${driver.getShortName()} (${driver.getPoints})|">[[${driver.getShortName()}+ '(${driver.getPoints}))]]</td>
+        <td th:each="driver : ${team.getDrivers}" th:text="|${driver.getShortName()} (${driver.getPoints})|">
+          [[${driver.getShortName()}+ '(${driver.getPoints}))]]
+        </td>
       </tr>
     </table>
   </div>
 </section>
 
-<section th:if="${currentPickNumber <= 20}" class="right-side">
+<section th:if="${currentPickNumber <= 20}" id="dash-table2" class="right-side">
   <form action="" method="POST" th:action="@{/dashboard/{userId}/draftPick (userId=${user.userId})}"
         th:object="${driver}">
     <div>
@@ -135,7 +143,8 @@
         <th>Car #:</th>
         <th>Constructor:</th>
         <tr th:each="driverInfo : ${availableDrivers}">
-          <td th:if="${timeToPick}"><input id="driver-pick" type="radio" th:field="*{driverId}" th:value="${driverInfo.driverId}"/>
+          <td th:if="${timeToPick}"><input id="driver-pick" type="radio" th:field="*{driverId}"
+                                           th:value="${driverInfo.driverId}"/>
             <label for="driver-pick" th:field="${driverInfo.driverId}"></label></td>
           <td th:text="${driverInfo.surname}"></td>
           <td th:text="${driverInfo.standing}"></td>

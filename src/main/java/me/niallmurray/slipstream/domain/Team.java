@@ -35,6 +35,8 @@ public class Team {
           cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE},
           mappedBy = "team")
   private List<Driver> drivers = new ArrayList<>(6);
+  @ManyToOne()
+  League league;
 
 //  @Override
 //  public String toString() {
