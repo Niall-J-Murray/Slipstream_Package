@@ -41,6 +41,12 @@ public class User {
   // but could separate schemas be used for multiple leagues of 10 users?
   // Features for multiple teams/leagues per user, and/or drivers per team could be added eventually.
 
+
+ // CHECK IF EQUALS AND HASHCODE ARE NEEDED
+//  REFACTOR TO INCLUDE NON NULL FIELDS
+
+
+
 //  @Override
 //  public String toString() {
 //    return "User{" +

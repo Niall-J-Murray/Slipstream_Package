@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 
 @Entity
@@ -24,5 +25,29 @@ public class League {
   @OneToMany(fetch = FetchType.LAZY,
           cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE},
           mappedBy = "teamId")
+//  private List<Team> teams;
   private List<Team> teams = new ArrayList<>();
+
+
+  @Override
+  public String toString() {
+    return "League{" +
+            "leagueId=" + leagueId +
+            ", leagueName='" + leagueName + '\'' +
+            ", teams=" + teams +
+            '}';
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    League league = (League) o;
+    return Objects.equals(leagueId, league.leagueId) && Objects.equals(leagueName, league.leagueName);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(leagueId, leagueName);
+  }
 }

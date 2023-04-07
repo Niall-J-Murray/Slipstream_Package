@@ -83,7 +83,7 @@
                 <div th:if="${param.error != null}">
                   - Sorry, this team name is already taken.
                 </div>
-                <input th:field="${league}" th:value="${league}" type="hidden"/>
+                <input th:field="${currentLeague}" th:value="${currentLeague}" type="hidden"/>
                 <button type="submit">Submit</button>
               </form>
             </div>
@@ -94,26 +94,8 @@
   </section>
   <section th:if="${currentPickNumber <= 20}" id="dash-table1" class="center">
     <div>
-      <h2>Players in this league:</h2>
-      <p th:text="|${teams.size()} of 10 teams in league|"></p>
-      <table class="user-table">
-        <th>Player:</th>
-        <th>Team Name:</th>
-        <th>1st Pick #:</th>
-        <th>2nd Pick #:</th>
-        <tr th:each="team : ${teams}">
-          <td>[[${team.getUser().getUsername()}]]</td>
-          <td>[[${team.getTeamName()}]]</td>
-          <td>[[${team.getFirstPickNumber}]]</td>
-          <td>[[${team.getSecondPickNumber}]]</td>
-        </tr>
-      </table>
-    </div>
-  </section>
-  <section th:if="${currentPickNumber <= 20}" id="dash-table3" class="center">
-    <div>
-      <h2>Players in this league:</h2>
-      <p th:text="|${teamsInLeague.size()} of 10 teams in league|"></p>
+      <h2 th:text="${currentLeague.leagueName}"></h2>
+      <p th:text="|${currentLeague.teams.size()} of 10 teams in league|"></p>
       <table class="user-table">
         <th>Player:</th>
         <th>Team Name:</th>

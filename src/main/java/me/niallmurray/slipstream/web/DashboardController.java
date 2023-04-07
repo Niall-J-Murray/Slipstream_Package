@@ -41,28 +41,31 @@ public class DashboardController {
     User user = userService.findById(userId);
     List<Team> allTeams = teamService.getAllTeams();
 
-    League league = null;
-    if (allTeams.size() == 0 || allTeams.size() % 10 == 0) {
-//    if (allTeams.size() == 0) {
-      league = leagueService.createLeague();
-//      league.setTeams(allTeams);
+
+    League currentLeague = leagueService.findNewestLeague();
+    System.out.println(currentLeague);
+    System.out.println("current league size: " + currentLeague.getTeams().size());
+    if (currentLeague.getTeams().size() != 0
+            && currentLeague.getTeams().size() % 10 == 0) {
+      currentLeague = leagueService.createLeague();
     }
+//    if (allTeams.size() == 0 || allTeams.size() % 10 == 0) {
+////    if (allTeams.size() == 0) {
+//      league = leagueService.createLeague();
+////      league.setTeams(allTeams);
+//    }
     modelMap.addAttribute("user", user);
     modelMap.addAttribute("driver", new Driver());
-    modelMap.addAttribute("teams", allTeams);
-    modelMap.addAttribute("league",leagueService.findNewestLeague());
+    modelMap.addAttribute("allTeams", allTeams);
+    modelMap.addAttribute("currentLeague", currentLeague);
+    modelMap.addAttribute("teamsInLeague", currentLeague.getTeams());
     modelMap.addAttribute("teamsByPick", teamService.getAllTeamsByNextPick());
     modelMap.addAttribute("allDrivers", driverService.sortDriversStanding());
     modelMap.addAttribute("availableDrivers", driverService.getUndraftedDrivers());
-    modelMap.addAttribute("currentPickNumber", teamService.getPickNumber());
+    modelMap.addAttribute("currentPickNumber", teamService.getCurrentPickNumber());
     modelMap.addAttribute("gameFull", false);
     modelMap.addAttribute("timeToPick", false);
 
-    if(league!=null){
-
-      List<Team> allTeamsInLeague = leagueService.getAllTeamsInLeague(league.getLeagueId());
-      modelMap.addAttribute("teamsInLeague",allTeamsInLeague);
-    }
 
     if (userService.isLoggedIn(user)) {
       modelMap.addAttribute("isLoggedIn", true);
@@ -93,16 +96,21 @@ public class DashboardController {
     // Check for unique team names.
     String teamName = user.getTeam().getTeamName();
     if (!teamService.teamNameExists(teamName)) {
+      Team team = new Team();
       user = userService.findById(userId);
       if (user.getTeam() == null) {
-        user.setTeam(new Team());
+        user.setTeam(team);
       }
       user.getTeam().setTeamName(teamName);
-      teamService.createTeam(user);
+
 //      leagueService.addTeamToLeague(league.getLeagueId(),user.getTeam());
 //      int currentLeagueId = leagueService.findAll().size();
-      League league = leagueService.findNewestLeague();
-      leagueService.addTeamToLeague(league.getLeagueId(),user.getTeam());
+      League currentLeague = leagueService.findNewestLeague();
+      System.out.println(currentLeague);
+//      leagueService.addTeamsToLeague(currentLeague.getLeagueId());
+      teamService.createTeam(user);
+      leagueService.addOneTeamToLeague(currentLeague.getLeagueId(),team);
+
       return "redirect:/dashboard/" + userId;
     }
     return "redirect:/dashboard/" + userId + "?error";
