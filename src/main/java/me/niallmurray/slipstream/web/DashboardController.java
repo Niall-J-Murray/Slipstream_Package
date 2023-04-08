@@ -49,11 +49,7 @@ public class DashboardController {
             && currentLeague.getTeams().size() % 10 == 0) {
       currentLeague = leagueService.createLeague();
     }
-//    if (allTeams.size() == 0 || allTeams.size() % 10 == 0) {
-////    if (allTeams.size() == 0) {
-//      league = leagueService.createLeague();
-////      league.setTeams(allTeams);
-//    }
+
     modelMap.addAttribute("user", user);
     modelMap.addAttribute("driver", new Driver());
     modelMap.addAttribute("allTeams", allTeams);
@@ -61,10 +57,22 @@ public class DashboardController {
     modelMap.addAttribute("teamsInLeague", currentLeague.getTeams());
     modelMap.addAttribute("teamsByPick", teamService.getAllTeamsByNextPick());
     modelMap.addAttribute("allDrivers", driverService.sortDriversStanding());
-    modelMap.addAttribute("availableDrivers", driverService.getUndraftedDrivers());
-    modelMap.addAttribute("currentPickNumber", teamService.getCurrentPickNumber());
-    modelMap.addAttribute("gameFull", false);
+    modelMap.addAttribute("leagueFull", false);
     modelMap.addAttribute("timeToPick", false);
+
+    if (user.getTeam() == null) {
+      modelMap.addAttribute("teamLeague", currentLeague);
+      modelMap.addAttribute("availableDrivers", driverService.getUndraftedDrivers(currentLeague));
+      modelMap.addAttribute("currentPickNumber", teamService.getCurrentPickNumber(currentLeague));
+      modelMap.addAttribute("teamsByRank", teamService.updateLeagueTeamsRankings(currentLeague));
+    } else {
+      modelMap.addAttribute("teamLeague", user.getTeam().getLeague());
+      modelMap.addAttribute("availableDrivers", driverService.getUndraftedDrivers(user.getTeam().getLeague()));
+      modelMap.addAttribute("currentPickNumber", teamService.getCurrentPickNumber(user.getTeam().getLeague()));
+      modelMap.addAttribute("teamsByRank", teamService.updateLeagueTeamsRankings(user.getTeam().getLeague()));
+    }
+
+//    fix players standings table to only show league player is in!
 
 
     if (userService.isLoggedIn(user)) {
@@ -73,14 +81,13 @@ public class DashboardController {
     if (userService.isAdmin(user)) {
       modelMap.addAttribute("isAdmin", true);
     }
-// Currently ony one league up to 10 players(not including admin) available.
-// After game is full, new users can register, but cannot create new team.
-    if (allTeams.size() >= 10) {
-      modelMap.addAttribute("gameFull", true);
-    }
-
+// Currently only up to 10 players(not including admin) per league.
+// After league is full, new users are added to new league.
     if (!userService.isAdmin(user) && user.getTeam() != null) {
-      if (teamService.timeToPick(user.getTeam().getTeamId())) {
+      if (user.getTeam().getLeague().getTeams().size() >= 10) {
+        modelMap.addAttribute("leagueFull", true);
+      }
+      if (teamService.timeToPick(user.getTeam().getLeague(), user.getTeam().getTeamId())) {
         modelMap.addAttribute("timeToPick", true);
       }
     }
@@ -105,11 +112,11 @@ public class DashboardController {
 
 //      leagueService.addTeamToLeague(league.getLeagueId(),user.getTeam());
 //      int currentLeagueId = leagueService.findAll().size();
-      League currentLeague = leagueService.findNewestLeague();
-      System.out.println(currentLeague);
+//      League currentLeague = leagueService.findNewestLeague();
+//      System.out.println(currentLeague);
 //      leagueService.addTeamsToLeague(currentLeague.getLeagueId());
       teamService.createTeam(user);
-      leagueService.addOneTeamToLeague(currentLeague.getLeagueId(),team);
+//      leagueService.addOneTeamToLeague(currentLeague.getLeagueId(),team);
 
       return "redirect:/dashboard/" + userId;
     }

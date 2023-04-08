@@ -15,8 +15,6 @@ import java.util.Objects;
 public class LeagueService {
   @Autowired
   LeagueRepository leagueRepository;
-  @Autowired
-  TeamRepository teamRepository;
 
   public League createLeague() {
     League league = new League();
@@ -40,31 +38,26 @@ public class LeagueService {
     leagueRepository.save(league);
   }
 
-  public void addTeamsToLeague(Long leagueId) {
-    League league = leagueRepository.findById(leagueId).get();
-    List<Team> teams = teamRepository.findAll();
-    for (Team team : teams) {
-      if (Objects.equals(team.getLeague().getLeagueId(), leagueId)) {
-        league.getTeams().add(team);
-//        leagueRepository.updateOneTeamInLeague(league.getLeagueId(), team);
-      }
-    }
-    league.setTeams(league.getTeams());
-    List<Team> allTeams = league.getTeams();
+//  public void addTeamsToLeague(Long leagueId) {
+//    League league = leagueRepository.findById(leagueId).get();
+//    List<Team> teams = teamRepository.findAll();
+//    for (Team team : teams) {
+//      if (Objects.equals(team.getLeague().getLeagueId(), leagueId)) {
+//        league.getTeams().add(team);
+////        leagueRepository.updateOneTeamInLeague(league.getLeagueId(), team);
+//      }
+//    }
+//    league.setTeams(league.getTeams());
+//    List<Team> allTeams = league.getTeams();
 //    teams.add(team);
 //    league.setTeams(teams);
-    System.out.println("save: " + league);
+//    System.out.println("save: " + league);
 //    leagueRepository.save(league);
 //    leagueRepository.updateTeamsInLeague(league.getLeagueId(), allTeams);
 
-  }
 
   public List<Team> getAllTeamsInLeague(Long leagueId) {
     return leagueRepository.findById(leagueId).get().getTeams();
-  }
-
-  public List<League> findAll() {
-    return leagueRepository.findAll();
   }
 
   public League findNewestLeague() {
@@ -74,6 +67,14 @@ public class LeagueService {
     }
     // If leagues exist, get the latest created (last in list)
     return allLeagues.get(allLeagues.size() - 1);
+  }
+
+  public List<League> findAll() {
+    return leagueRepository.findAll();
+  }
+
+  public League findLeagueById(Long leagueId) {
+  return leagueRepository.findById(leagueId).get();
   }
 
 

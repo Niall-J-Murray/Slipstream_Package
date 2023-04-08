@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -37,8 +39,8 @@ public class Driver {
   private Integer standing;
   @Column()
   private String constructor;
-  @ManyToOne
-  private Team team;
+  @ManyToMany
+  private List<Team> teams = new ArrayList<>();
 
 // Trying to remove decimal point
 //  public double getPoints() {

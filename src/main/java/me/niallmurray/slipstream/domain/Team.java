@@ -11,7 +11,9 @@ import java.util.*;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "team")
+@Table(name = "team",
+uniqueConstraints=
+@UniqueConstraint(columnNames={"league_league_id", "firstPickNumber"}))
 public class Team {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,20 +22,22 @@ public class Team {
   @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
   //1-1 for now, see comment in User.class
   private User user;
-  @Column(nullable = false, unique = true)
+  @Column(nullable = false)
   private Integer firstPickNumber;
-  @Column(nullable = false, unique = true)
+  @Column(nullable = false)
   private Integer secondPickNumber;
-  @Column(nullable = false, unique = true)
+  @Column()
   private String teamName;
   @Column()
   private Double teamPoints;
   @Column()
+  private Double startingPoints;
+  @Column()
   private Integer ranking;
   @Column()
-  @OneToMany(fetch = FetchType.LAZY,
-          cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE},
-          mappedBy = "team")
+  @ManyToMany(fetch = FetchType.LAZY,
+          cascade = {CascadeType.MERGE, CascadeType.PERSIST},
+          mappedBy = "teams")
   private List<Driver> drivers = new ArrayList<>(6);
   @ManyToOne()
   League league;

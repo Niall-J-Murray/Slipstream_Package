@@ -22,6 +22,7 @@ body {
     font-family: Font1, Arial, Helvetica, sans-serif;
     color: white;
     background: black;
+    margin: 1%;
     /*background: black;*/
     /*background-image: url("../images/background.jpg");*/
     /*background-size: 100% auto;*/
@@ -74,52 +75,84 @@ section {
     display: table;
 }
 
-#admin-logged {
+#admin-top {
     float: none;
-    width: 35%;
+    /*display: inline;*/
+    /*width: 35%;*/
     padding-left: 2%;
+    padding-bottom: 30px;
+}
+
+#admin-logged{
+    float: left;
+    margin-right: 60px;
+    /*width: 40%;*/
+}
+
+#admin-leagues{
+    float: inherit;
+    display: inline;
+    /*margin-left: 30px;*/
+    padding: 3%;
 }
 
 #admin-users {
     float: left;
-    width: 60%;
+    width: 40%;
     padding-left: 2%;
 }
 
 #admin-drivers {
     float: left;
-    width: 33%;
+    width: 40%;
     padding-right: 2%;
 }
 
 #dash-top {
     float: none;
-    padding-bottom: 40px;
+    padding-bottom: 60px;
 }
 
 #dash-welcome {
     float: left;
     width: 25%;
     padding-left: 2%;
+    margin-right: 30px;
 }
 
 #dash-info {
     float: inherit;
     display: inline;
-    padding: 3%;
+    padding: 60px;
+    /*padding-bottom: 30px;*/
     /*padding-top: 2%;*/
     /*padding-left: 2%;*/
     /*padding-bottom: 5%;*/
 
 }
 
-#dash-table1 {
+/*.dash-text{*/
+/*    padding: 2%;*/
+/*}*/
+
+#dash-table1a {
     float: left;
     /*width: 50%;*/
     padding-left: 2%;
 }
 
-#dash-table2 {
+#dash-table1b {
+    float: left;
+    /*width: 50%;*/
+    padding-left: 2%;
+}
+
+#dash-table2a {
+    float: left;
+    /*width: 50%;*/
+}
+
+#dash-table2b {
     float: left;
     /*width: 50%;*/
 }
@@ -176,6 +209,10 @@ section {
 
 a {
     color: white;
+}
+
+ol li{
+    float: inherit;
 }
 
 ul {
@@ -264,6 +301,10 @@ li button {
     border-collapse: collapse;
     width: 70%;
     margin-top: 10px;
+    /*padding-right: 10px;*/
+
+    /* make columns wider to fit on one row*/
+    margin-right: 10px;
 }
 
 .user-table td,

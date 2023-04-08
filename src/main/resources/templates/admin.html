@@ -37,21 +37,42 @@
   </ul>
 </header>
 <section id="background">
-  <h2><u>Admin</u></h2>
-  <section id="admin-logged">
-    <h2>Currently Logged-in:</h2>
-    <table class="user-table">
-      <th>Usernames:</th>
-      <tr>
-        <td th:text="${activeUsers}">activeUsers</td>
-      </tr>
-    </table>
+  <section id="admin-top">
+    <h2><u>Admin</u></h2>
+        <div id="admin-logged">
+<!--    <div>-->
+      <h2>Currently Logged-in:</h2>
+      <table class="user-table">
+        <th>Usernames:</th>
+        <tr>
+          <td th:text="${activeUsers}"></td>
+        </tr>
+      </table>
+    </div>
+        <div id="admin-leagues">
+<!--    <div>-->
+      <h2>Created Leagues:</h2>
+      <ol>
+        <li th:each="league : ${leagues}" th:text="|League Name: ${league.leagueName}, ID: ${league.leagueId}, Num. of Players: ${league.teams.size()}|"></li>
+      </ol>
+    </div>
+    <!--    <div id="admin-leagues">-->
+    <!--      <h2>Created Leagues:</h2>-->
+    <!--      <table class="user-table">-->
+    <!--        <tr>-->
+    <!--          <td th:each="league : ${leagues}" th:text="${league.leagueName}"></td>-->
+    <!--          &lt;!&ndash;        <td th:text="${league.leagueName}"></td>&ndash;&gt;-->
+    <!--          &lt;!&ndash;        <td th:text="${leagues}"></td>&ndash;&gt;-->
+    <!--        </tr>-->
+    <!--      </table>-->
+    <!--    </div>-->
   </section>
   <section id="admin-users">
     <h2>All Users:</h2>
     <table class="user-table">
       <th>ID:</th>
       <th>Username:</th>
+      <th>League:</th>
       <th>Team:</th>
       <th>Drivers:</th>
       <th>Last Logout:</th>
@@ -59,6 +80,7 @@
         <td th:text="${user.userId}"></td>
         <td th:text="${user.getAuthorities().iterator().next().getAuthority()==('ROLE_ADMIN')}
     ? ${user.username + ' (ADMIN) '}  : ${user.username}"></td>
+        <td th:text="${user.team != null} ? ${user.team.league.leagueName}: 'No Team Created'"></td>
         <td th:text="${user.team != null} ? ${user.team.teamName}: 'No Team Created'"></td>
         <td th:text="${user.team != null} ? ${user.team.drivers}: 'No Team Created'"></td>
         <td th:text="${user.lastLogout}"></td>

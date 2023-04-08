@@ -8,6 +8,7 @@ import me.niallmurray.slipstream.dto.StandingsList;
 import me.niallmurray.slipstream.security.ActiveUserStore;
 import me.niallmurray.slipstream.service.AdminService;
 import me.niallmurray.slipstream.service.DriverService;
+import me.niallmurray.slipstream.service.LeagueService;
 import me.niallmurray.slipstream.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,6 +35,8 @@ public class AdminController {
   @Autowired
   private UserService userService;
   @Autowired
+  LeagueService leagueService;
+  @Autowired
   DriverService driverService;
   @Value("${ergast.urls.base}${ergast.urls.currentDriverStandings}")
   private String f1DataApi;
@@ -48,6 +51,7 @@ public class AdminController {
   public String getAdmin(ModelMap modelMap) {
     List<User> allUserAccounts = adminService.getAllUserAccounts();
     modelMap.addAttribute("users", allUserAccounts);
+    modelMap.addAttribute("leagues", leagueService.findAll());
     modelMap.addAttribute("activeUsers", activeUserStore.getUsers());
     modelMap.addAttribute("isLoggedIn", true);
     modelMap.addAttribute("isAdmin", true);

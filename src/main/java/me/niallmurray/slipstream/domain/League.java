@@ -22,11 +22,16 @@ public class League {
   @Column(nullable = false, unique = true)
   private String leagueName;
 //  @JoinColumn(name = "team_id")
-  @OneToMany(fetch = FetchType.LAZY,
-          cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE},
-          mappedBy = "teamId")
-//  private List<Team> teams;
-  private List<Team> teams = new ArrayList<>();
+//  @OneToMany(mappedBy = "teamId",
+//          fetch = FetchType.LAZY,
+//          cascade = {CascadeType.MERGE, CascadeType.REMOVE},
+//          orphanRemoval = true)
+////  private List<Team> teams;
+//  private List<Team> teams = new ArrayList<>();
+@ManyToMany(
+        fetch = FetchType.LAZY,
+        cascade = {CascadeType.MERGE})
+private List<Team> teams = new ArrayList<>();
 
 
   @Override

@@ -2,6 +2,8 @@ package me.niallmurray.slipstream.service;
 
 import jakarta.transaction.Transactional;
 import me.niallmurray.slipstream.domain.Driver;
+import me.niallmurray.slipstream.domain.League;
+import me.niallmurray.slipstream.domain.Team;
 import me.niallmurray.slipstream.dto.DriverStanding;
 import me.niallmurray.slipstream.repositories.DriverRepository;
 import org.modelmapper.ModelMapper;
@@ -16,14 +18,6 @@ public class DriverService {
 
   @Autowired
   DriverRepository driverRepository;
-
-  public List<Driver> findAll() {
-    return driverRepository.findAll();
-  }
-
-  public Driver findById(Long driverId) {
-    return driverRepository.findById(driverId).get();
-  }
 
   // Gets drivers info including points for whole season from API and stores in DB.
   // Should probably be moved to admin service/endpoint?
@@ -101,11 +95,21 @@ public class DriverService {
     return driverRepository.findAllByOrderByStandingAsc();
   }
 
-  public List<Driver> getUndraftedDrivers() {
+  public List<Driver> getUndraftedDrivers(League league) {
     List<Driver> undraftedDrivers = driverRepository.findAllByOrderByStandingAsc();
-    undraftedDrivers.removeIf(driver -> driver.getTeam() != null);
+    List<Team> teams = league.getTeams();
+    for (Team team : teams) {
+      List<Driver> drivers = team.getDrivers();
+      undraftedDrivers.removeAll(drivers);
+    }
     return undraftedDrivers;
   }
 
+  public List<Driver> findAll() {
+    return driverRepository.findAll();
+  }
 
+  public Driver findById(Long driverId) {
+    return driverRepository.findById(driverId).orElse(null);
+  }
 }
