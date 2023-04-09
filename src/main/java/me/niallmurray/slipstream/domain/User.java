@@ -37,8 +37,6 @@ public class User {
   private Team team;
   // For simplicity, each user has only one team for now.
   // This means no need for creating separate leagues for users with multiple teams.
-  // This also limits the app to 10 users at one time for now,
-  // but could separate schemas be used for multiple leagues of 10 users?
   // Features for multiple teams/leagues per user, and/or drivers per team could be added eventually.
 
 

@@ -40,36 +40,23 @@
   <section id="admin-top">
     <h2><u>Admin</u></h2>
         <div id="admin-logged">
-<!--    <div>-->
-      <h2>Currently Logged-in:</h2>
-      <table class="user-table">
-        <th>Usernames:</th>
+      <table class="league-table">
+        <th><h3>Currently Logged-in:</h3></th>
         <tr>
           <td th:text="${activeUsers}"></td>
         </tr>
       </table>
     </div>
         <div id="admin-leagues">
-<!--    <div>-->
       <h2>Created Leagues:</h2>
       <ol>
         <li th:each="league : ${leagues}" th:text="|League Name: ${league.leagueName}, ID: ${league.leagueId}, Num. of Players: ${league.teams.size()}|"></li>
       </ol>
     </div>
-    <!--    <div id="admin-leagues">-->
-    <!--      <h2>Created Leagues:</h2>-->
-    <!--      <table class="user-table">-->
-    <!--        <tr>-->
-    <!--          <td th:each="league : ${leagues}" th:text="${league.leagueName}"></td>-->
-    <!--          &lt;!&ndash;        <td th:text="${league.leagueName}"></td>&ndash;&gt;-->
-    <!--          &lt;!&ndash;        <td th:text="${leagues}"></td>&ndash;&gt;-->
-    <!--        </tr>-->
-    <!--      </table>-->
-    <!--    </div>-->
   </section>
   <section id="admin-users">
-    <h2>All Users:</h2>
-    <table class="user-table">
+    <table class="league-table">
+      <caption><h3>All Users:</h3></caption>
       <th>ID:</th>
       <th>Username:</th>
       <th>League:</th>
@@ -88,8 +75,8 @@
     </table>
   </section>
   <section id="admin-drivers">
-    <h2>Driver Standings:</h2>
-    <table class="user-table">
+    <table class="league-table">
+      <caption><h3>Driver Standings:</h3></caption>
       <th>Rank:</th>
       <th>Points:</th>
       <th>Name:</th>

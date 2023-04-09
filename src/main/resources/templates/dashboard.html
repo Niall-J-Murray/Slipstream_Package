@@ -28,7 +28,7 @@
   </ul>
 </header>
 <section id="background">
-  <section id="dash-top" class="left-side">
+  <section id="dash-top" class="top-section">
     <div id="dash-welcome">
       <h2><u>[[Dashboard]]</u></h2>
       <h3 th:text="|Hello ${user.username}, welcome to Slipstream F1 Draft Picks!|"></h3>
@@ -45,11 +45,6 @@
         <a href="/admin">Go to admin dashboard</a>
       </div>
       <div class="dash-text" th:if="${isAdmin != true}">
-        <!--        <div th:if="${gameFull == true and user.team == null}">-->
-        <!--          <p th:text="|Sorry, the game is currently full.|"></p>-->
-        <!--          <p th:text="|Please check back later.|"></p>-->
-        <!--        </div>-->
-
         <div class="dash-text" th:if="${user.team} != null">
           <p th:text="|Your team: '${user.team.teamName}'|"></p>
           <p th:text="|Random 1st pick draft number (1-10): ${user.team.firstPickNumber}|"></p>
@@ -71,7 +66,7 @@
         </div>
         <div class="dash-text" th:if="${leagueFull} != true">
           <div th:unless="${user.team} != null">
-            <p th:text="|This league is still open to join|"></p>
+            <p th:text="|${currentLeague.leagueName} is open to join|"></p>
             <p th:text="|Once the league is full, the draft can begin|"></p>
             <p th:text="|Choose a team name to get started...|"></p>
           </div>
@@ -96,19 +91,18 @@
       </div>
     </div>
   </section>
-  <section th:if="${currentPickNumber <= 20}" id="dash-table1a" class="center">
+  <section th:if="${currentPickNumber <= 20}" id="dash-table1a" class="left-table">
     <div>
-      <table class="user-table">
+      <table class="league-table">
         <caption>
           <h3 th:text="${teamLeague.leagueName}"></h3>
           <p th:if="${!leagueFull}" th:text="|${teamLeague.teams.size()} of 10 teams in league|"></p>
         </caption>
         <th>Player:</th>
-        <th>Team Name:</th>
-        <th>1st Pick #:</th>
-        <th>2nd Pick #:</th>
-        <tr th:if="${user.team == null}" th:each="team : ${teamsInLeague}">
-        <tr th:if="${user.team != null}" th:each="team : ${teamLeague.teams}">
+        <th>Team:</th>
+        <th>1st Pick#:</th>
+        <th>2nd Pick#:</th>
+        <tr th:each="team : ${teamsByRank}">
           <td>[[${team.getUser().getUsername()}]]</td>
           <td>[[${team.getTeamName()}]]</td>
           <td>[[${team.getFirstPickNumber}]]</td>
@@ -117,19 +111,21 @@
       </table>
     </div>
   </section>
-  <section th:if="${currentPickNumber > 20}" id="dash-table1b" class="center">
+  <section th:if="${currentPickNumber > 20}" id="dash-table1b" class="left-table">
     <div>
-      <table class="user-table">
-        <caption><h3>Player's League Standings:</h3></caption>
+      <table class="league-table">
+        <caption><h3 th:text="|${teamLeague.leagueName} Standings:|"></h3></caption>
         <th>Rank:</th>
-        <th>Total Points:</th>
+        <th>Points:</th>
         <th>Player:</th>
-        <th>Team Name:</th>
+        <th>Team:</th>
         <th>1st Pick:</th>
         <th>2nd Pick:</th>
         <tr th:each="team : ${teamsByRank}">
           <td>[[${team.getRanking()}]]</td>
-          <td>[[${team.getTeamPoints()}]]</td>
+          <!--          Only display decimal point in rare case where drivers get half a point.-->
+          <td th:if="${team.getTeamPoints() % 1 == 0}">[[${team.getTeamPoints().intValue()}]]</td>
+          <td th:if="${team.getTeamPoints() % 1 != 0}">[[${team.getTeamPoints()}]]</td>
           <td>[[${team.getUser().getUsername()}]]</td>
           <td>[[${team.getTeamName()}]]</td>
           <td th:each="driver : ${team.getDrivers}" th:text="${driver.getShortName()}">
@@ -140,27 +136,27 @@
     </div>
   </section>
 
-  <section th:if="${currentPickNumber <= 20}" id="dash-table2a" class="right-side">
+  <section th:if="${currentPickNumber <= 20}" id="dash-table2a" class="right-table">
     <form action="" method="POST" th:action="@{/dashboard/{userId}/draftPick (userId=${user.userId})}"
           th:object="${driver}">
       <div>
-        <table class="champ-table">
-          <caption><h2>Undrafted Drivers:</h2>
+        <table class="league-table">
+          <caption><h3>Undrafted Drivers:</h3>
             <div>
               <button th:if="${leagueFull and timeToPick}" id="confirm-pick" type="submit">Confirm Pick</button>
               <p style="display:inline;">[[|${availableDrivers.size()}/20 drivers remaining|]]</p>
             </div>
           </caption>
-          <th th:if="${timeToPick}">Your Pick:</th>
+          <th th:if="${leagueFull and timeToPick}">Your Pick:</th>
           <th>Driver:</th>
-          <th>Current Rank:</th>
+          <th>Rank:</th>
           <th>Points:</th>
           <th>Nationality</th>
-          <th>Car #:</th>
+          <th>Car#:</th>
           <th>Constructor:</th>
           <tr th:each="driverInfo : ${availableDrivers}">
-            <td th:if="${timeToPick}"><input id="driver-pick" type="radio" th:field="*{driverId}"
-                                             th:value="${driverInfo.driverId}"/>
+            <td th:if="${leagueFull and timeToPick}"><input id="driver-pick" type="radio" th:field="*{driverId}"
+                                                            th:value="${driverInfo.driverId}"/>
               <label for="driver-pick" th:field="${driverInfo.driverId}"></label></td>
             <td th:text="${driverInfo.surname}"></td>
             <td th:text="${driverInfo.standing}"></td>
@@ -174,19 +170,21 @@
     </form>
   </section>
 
-  <section th:if="${currentPickNumber > 20}" id="dash-table2b" class="right-side">
+  <section th:if="${currentPickNumber > 20}" id="dash-table2b" class="right-table">
     <div>
-      <table class="champ-table">
-        <caption><h2>F1 Drivers Championship:</h2></caption>
-        <th>Current Rank:</th>
+      <table class="league-table">
+        <caption><h3>F1 Drivers Championship:</h3></caption>
+        <th>Rank:</th>
         <th>Points:</th>
         <th>Driver:</th>
         <th>Nationality</th>
-        <th>Car #:</th>
+        <th>Car#:</th>
         <th>Constructor:</th>
         <tr th:each="driverInfo : ${allDrivers}">
           <td th:text="${driverInfo.standing}"></td>
-          <td th:text="${driverInfo.points.intValue()}"></td>
+          <!--          Only display decimal point in rare case where drivers get half a point.-->
+          <td th:if="${driverInfo.points % 1 == 0}" th:text="${driverInfo.points.intValue()}"></td>
+          <td th:if="${driverInfo.points % 1 != 0}" th:text="${driverInfo.points}"></td>
           <td th:text="${driverInfo.surname}"></td>
           <td th:text="${driverInfo.nationality}"></td>
           <td th:text="${driverInfo.carNumber}"></td>

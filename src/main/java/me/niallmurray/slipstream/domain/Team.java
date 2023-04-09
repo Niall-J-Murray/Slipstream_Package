@@ -22,9 +22,9 @@ public class Team {
   @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
   //1-1 for now, see comment in User.class
   private User user;
-  @Column(nullable = false)
+  @Column()
   private Integer firstPickNumber;
-  @Column(nullable = false)
+  @Column()
   private Integer secondPickNumber;
   @Column()
   private String teamName;

@@ -16,7 +16,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 import java.util.random.RandomGenerator;
-import java.util.stream.Collectors;
 
 @Service
 public class TeamService {
@@ -40,36 +39,19 @@ public class TeamService {
   private UserRepository userRepository;
 
   public Team createTeam(User user) {
-//    if (getAllTeams().size() < 11) {
     Team team = new Team();
     team.setUser(user);
     team.setTeamId(user.getUserId());
 
-//    team.setTeamPoints(0.0);
-//    team.setRanking(1);
-//    League currentLeague = leagueService.findNewestLeague();
-//    currentLeague.getTeams().add(team);
-//    currentLeague.setTeams(currentLeague.getTeams());
-
-//    leagueService.addTeamToLeague(currentLeague.getLeagueId(), newTeam);
     if (!teamNameExists(user.getTeam().getTeamName())) {
       team.setTeamName(user.getTeam().getTeamName());
       user.setTeam(team);
       user.setEmail(user.getEmail());
     }
-//    leagueService.updateLeague(currentLeague);
-    // Fix issue where new teams cannot be saved even after existing teams have been deleted from DB.
-    // e.g: "Error: Duplicate entry '1' for key 'team.UK_bkasmvd9arje65etjtxd5tf39'"
-    // Issue occurring intermittently when saving teams without having removed any.
-    // Seems to be related to chosen team name?
-    // "Duplicate entry '10' for key 'team.UK_bkasmvd9arje65etjtxd5tf39'"
-    // Possible issue with cascade settings?
-
-//    leagueService.addTeamToLeague(currentLeague, team);
-//    leagueService.updateLeague(currentLeague);
-//    leagueService.updateLeague(currentLeague);
     team.setFirstPickNumber(randomPickNumber());
     team.setSecondPickNumber(21 - team.getFirstPickNumber()); //So players get 1&20, 2&19 etc. up to 10&11.
+    team.setRanking(team.getFirstPickNumber());
+    team.setStartingPoints(0.0);
     team.setLeague(leagueService.findNewestLeague());
     addOneTeamToLeague(team);
 
@@ -79,7 +61,6 @@ public class TeamService {
 
 
   public void addOneTeamToLeague(Team team) {
-//    League league = leagueService.findLeagueById(leagueId);
     League league = leagueService.findNewestLeague();
     List<Team> teams = league.getTeams();
     // pick numbers cannot be null,updated to correct ones by teamService.
@@ -105,20 +86,20 @@ public class TeamService {
 //    teamRepository.save(team);
 //  }
 
-  public List<Team> updateAllTeamsRankings() {
-    List<Team> teams = teamRepository.findAll();
-    for (Team team : teams) {
-      Double totalDriverPoints = team.getDrivers().stream()
-              .mapToDouble(Driver::getPoints).sum();
-      team.setTeamPoints(totalDriverPoints - team.getStartingPoints());
-    }
-    teams.sort(Comparator.comparing(Team::getFirstPickNumber).reversed());
-    teams.sort(Comparator.comparing(Team::getTeamPoints).reversed());
-    for (Team team : teams) {
-      team.setRanking(teams.indexOf(team) + 1);
-    }
-    return teamRepository.saveAll(teams);
-  }
+//  public List<Team> updateAllTeamsRankings() {
+//    List<Team> teams = teamRepository.findAll();
+//    for (Team team : teams) {
+//      Double totalDriverPoints = team.getDrivers().stream()
+//              .mapToDouble(Driver::getPoints).sum();
+//      team.setTeamPoints(totalDriverPoints - team.getStartingPoints());
+//    }
+//    teams.sort(Comparator.comparing(Team::getFirstPickNumber).reversed());
+//    teams.sort(Comparator.comparing(Team::getTeamPoints).reversed());
+//    for (Team team : teams) {
+//      team.setRanking(teams.indexOf(team) + 1);
+//    }
+//    return teamRepository.saveAll(teams);
+//  }
 
   public List<Team> updateLeagueTeamsRankings(League league) {
 //    List<Team> teams = teamRepository.findAll().stream()
@@ -129,6 +110,11 @@ public class TeamService {
       Double totalDriverPoints = team.getDrivers().stream()
               .mapToDouble(Driver::getPoints).sum();
       team.setTeamPoints(totalDriverPoints - team.getStartingPoints());
+    }
+    // Sort by pick order until all picks made
+    if (getCurrentPickNumber(league)<21){
+      teams.sort(Comparator.comparing(Team::getFirstPickNumber));
+      return teams;
     }
     teams.sort(Comparator.comparing(Team::getFirstPickNumber).reversed());
     teams.sort(Comparator.comparing(Team::getTeamPoints).reversed());
@@ -195,12 +181,10 @@ public class TeamService {
     return driverId;
   }
 
-//  Check function for multiple leagues
+
   public int getCurrentPickNumber(League league) {
-//    List<Driver> undraftedDrivers = driverRepository.findAllByOrderByStandingAsc();
-//    undraftedDrivers.removeIf(driver -> driver.getTeam() != null);
     List<Driver> undraftedDrivers = driverService.getUndraftedDrivers(league);
-    System.out.println("pick no?:"+ (21-undraftedDrivers.size()));
+    System.out.println("pick no?:" + (21 - undraftedDrivers.size()));
     return 21 - undraftedDrivers.size();
   }
 

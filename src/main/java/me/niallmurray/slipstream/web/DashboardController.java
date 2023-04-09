@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -60,6 +61,8 @@ public class DashboardController {
     modelMap.addAttribute("leagueFull", false);
     modelMap.addAttribute("timeToPick", false);
 
+    // Change view depending on if user has created a team
+    // Also handles NPEs.
     if (user.getTeam() == null) {
       modelMap.addAttribute("teamLeague", currentLeague);
       modelMap.addAttribute("availableDrivers", driverService.getUndraftedDrivers(currentLeague));
@@ -72,16 +75,15 @@ public class DashboardController {
       modelMap.addAttribute("teamsByRank", teamService.updateLeagueTeamsRankings(user.getTeam().getLeague()));
     }
 
-//    fix players standings table to only show league player is in!
-
-
     if (userService.isLoggedIn(user)) {
       modelMap.addAttribute("isLoggedIn", true);
     }
     if (userService.isAdmin(user)) {
       modelMap.addAttribute("isAdmin", true);
+      modelMap.addAttribute("teamsByRank", teamService.updateLeagueTeamsRankings(currentLeague));
+
     }
-// Currently only up to 10 players(not including admin) per league.
+// Currently 10 players per league.
 // After league is full, new users are added to new league.
     if (!userService.isAdmin(user) && user.getTeam() != null) {
       if (user.getTeam().getLeague().getTeams().size() >= 10) {
@@ -91,9 +93,6 @@ public class DashboardController {
         modelMap.addAttribute("timeToPick", true);
       }
     }
-
-    teamService.updateAllTeamsRankings();
-    modelMap.addAttribute("teamsByRank", teamService.getAllTeamsByRanking());
     return "dashboard";
   }
 
@@ -109,15 +108,7 @@ public class DashboardController {
         user.setTeam(team);
       }
       user.getTeam().setTeamName(teamName);
-
-//      leagueService.addTeamToLeague(league.getLeagueId(),user.getTeam());
-//      int currentLeagueId = leagueService.findAll().size();
-//      League currentLeague = leagueService.findNewestLeague();
-//      System.out.println(currentLeague);
-//      leagueService.addTeamsToLeague(currentLeague.getLeagueId());
       teamService.createTeam(user);
-//      leagueService.addOneTeamToLeague(currentLeague.getLeagueId(),team);
-
       return "redirect:/dashboard/" + userId;
     }
     return "redirect:/dashboard/" + userId + "?error";
