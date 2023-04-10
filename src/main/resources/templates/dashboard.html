@@ -8,7 +8,7 @@
 <header>
   <ul class="nav-bar">
     <div id="nav-logo">
-      <li><img src="/images/customLogoWhite.png" alt="site logo"
+      <li><img alt="site logo" src="/images/customLogoWhite.png"
                style="height: 50px; width: 300px; margin-left: 10px"></li>
     </div>
     <div id="nav-links">
@@ -29,7 +29,7 @@
 </header>
 <section id="background">
 
-  <section id="dash-top" class="top-section">
+  <section class="top-section" id="dash-top">
     <div id="dash-welcome">
       <h2><u>[[Dashboard]]</u></h2>
       <h3 th:text="|Hello ${user.username}, welcome to Slipstream F1 Draft Picks!|"></h3>
@@ -41,7 +41,7 @@
       </div>
     </div>
     <div id="dash-info">
-      <div th:if="${isAdmin == true}" style="margin: 60px">
+      <div style="margin: 60px" th:if="${isAdmin == true}">
         <p th:text="|Sorry, admin cannot play.|"></p>
         <a href="/admin">Go to admin dashboard</a>
       </div>
@@ -72,14 +72,15 @@
             <p th:text="|Choose a team name to get started...|"></p>
           </div>
 
-          <fieldset class="dash-text" th:unless="${user.team} != null" style="width: 400px">
+          <fieldset class="dash-text" style="width: 400px" th:unless="${user.team} != null">
             <legend>Create Team</legend>
             <div class="dash-text" id="team-form" th:unless="${user.team} != null">
               <form action="" method="POST" th:action="@{/dashboard/{userId} (userId=${user.userId})}"
                     th:object="${user}">
                 <label for="teamName">Team Name:</label>
-                <input required id="teamName" name="teamName" th:field="*{team.teamName}" type="text"
-                       th:placeholder="|Team ${user.username}|"/>
+                <input id="teamName" name="teamName" required th:field="*{team.teamName}"
+                       th:placeholder="|Team ${user.username}|"
+                       type="text"/>
                 <div th:if="${param.error != null}">
                   <- Sorry, this team name is already taken.
                 </div>
@@ -93,7 +94,7 @@
     </div>
   </section>
 
-  <section th:if="${currentPickNumber <= 20}" id="dash-table1a" class="left-table">
+  <section class="left-table" id="dash-table1a" th:if="${currentPickNumber <= 20}">
     <div>
       <table class="league-table">
         <caption>
@@ -114,7 +115,7 @@
     </div>
   </section>
 
-  <section th:if="${currentPickNumber > 20}" id="dash-table1b" class="left-table">
+  <section class="left-table" id="dash-table1b" th:if="${currentPickNumber > 20}">
     <div>
       <table class="league-table">
         <caption><h3 th:text="|${teamLeague.leagueName} Standings:|"></h3></caption>
@@ -139,14 +140,14 @@
     </div>
   </section>
 
-  <section th:if="${currentPickNumber <= 20}" id="dash-table2a" class="right-table">
+  <section class="right-table" id="dash-table2a" th:if="${currentPickNumber <= 20}">
     <form action="" method="POST" th:action="@{/dashboard/{userId}/draftPick (userId=${user.userId})}"
           th:object="${driver}">
       <div>
         <table class="league-table">
           <caption><h3>Undrafted Drivers:</h3>
             <div>
-              <button th:if="${leagueFull and timeToPick}" id="confirm-pick" type="submit">Confirm Pick</button>
+              <button id="confirm-pick" th:if="${leagueFull and timeToPick}" type="submit">Confirm Pick</button>
               <p style="display:inline;">[[|${availableDrivers.size()}/20 drivers remaining|]]</p>
             </div>
           </caption>
@@ -158,8 +159,9 @@
           <th>Car#:</th>
           <th>Constructor:</th>
           <tr th:each="driverInfo : ${availableDrivers}">
-            <td th:if="${leagueFull and timeToPick}"><input id="driver-pick" type="radio" th:field="*{driverId}"
-                                                            th:value="${driverInfo.driverId}"/>
+            <td th:if="${leagueFull and timeToPick}"><input id="driver-pick" th:field="*{driverId}"
+                                                            th:value="${driverInfo.driverId}"
+                                                            type="radio"/>
               <label for="driver-pick" th:field="${driverInfo.driverId}"></label></td>
             <td th:text="${driverInfo.surname}"></td>
             <td th:text="${driverInfo.standing}"></td>
@@ -173,7 +175,7 @@
     </form>
   </section>
 
-  <section th:if="${currentPickNumber > 20}" id="dash-table2b" class="right-table">
+  <section class="right-table" id="dash-table2b" th:if="${currentPickNumber > 20}">
     <div>
       <table class="league-table">
         <caption><h3>F1 Drivers Championship:</h3></caption>

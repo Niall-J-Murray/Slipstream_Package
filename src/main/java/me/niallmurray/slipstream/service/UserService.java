@@ -1,7 +1,6 @@
 package me.niallmurray.slipstream.service;
 
 import me.niallmurray.slipstream.domain.Authority;
-import me.niallmurray.slipstream.domain.Team;
 import me.niallmurray.slipstream.domain.User;
 import me.niallmurray.slipstream.repositories.UserRepository;
 import me.niallmurray.slipstream.security.ActiveUserStore;
@@ -11,10 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
 
 @Service
 public class UserService {
@@ -24,7 +21,7 @@ public class UserService {
   @Autowired
   private UserRepository userRepository;
 
-  public User createUser(User user) {
+  public void createUser(User user) {
     Authority authority = new Authority();
     authority.setUser(user);
     authority.setAuthority("ROLE_USER");
@@ -34,16 +31,7 @@ public class UserService {
     // For new users first login and to check for unsuccessful logouts.
     user.setLastLogout(String.valueOf(LocalDateTime.of(666, 6, 6, 6, 6)));
 
-    return userRepository.save(user);
-  }
-
-  public User updateUser(Long userId){
-    User user = findById(userId);
-    return userRepository.save(user);
-  }
-
-  public List<User> findAll() {
-    return userRepository.findAll();
+    userRepository.save(user);
   }
 
   public User findById(Long userId) {
@@ -82,15 +70,5 @@ public class UserService {
     User user = findById(userId);
     user.setLastLogout(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yy HH:mm")));
     userRepository.save(user);
-  }
-
-  public void delete(Long userId) {
-    userRepository.deleteById(userId);
-  }
-
-  public User updateUserTeam(Long userId, Team team) {
-    User user = findById(userId);
-    user.setTeam(team);
-    return userRepository.save(user);
   }
 }

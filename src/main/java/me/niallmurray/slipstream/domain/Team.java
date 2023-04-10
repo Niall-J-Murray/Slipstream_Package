@@ -5,16 +5,20 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 @NoArgsConstructor
 @Getter
 @Setter
 @Table(name = "team",
-uniqueConstraints=
-@UniqueConstraint(columnNames={"league_league_id", "firstPickNumber"}))
+        uniqueConstraints =
+        @UniqueConstraint(columnNames = {"league_league_id", "firstPickNumber"}))
 public class Team {
+  @ManyToOne()
+  League league;
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long teamId;
@@ -39,32 +43,6 @@ public class Team {
           cascade = {CascadeType.MERGE, CascadeType.PERSIST},
           mappedBy = "teams")
   private List<Driver> drivers = new ArrayList<>(6);
-  @ManyToOne()
-  League league;
-
-//  @Override
-//  public String toString() {
-//    return "Team{" +
-//            "teamId=" + teamId +
-//            ", user=" + user +
-//            ", firstPickNumber=" + firstPickNumber +
-//            ", secondPickNumber=" + secondPickNumber +
-//            ", teamName='" + teamName + '\'' +
-//            ", drivers=" + drivers +
-//            '}';
-//  }
-
-//  @Override
-//  public boolean equals(Object o) {
-//    if (this == o) return true;
-//    if (!(o instanceof Team team)) return false;
-//    return Objects.equals(teamId, team.teamId) && Objects.equals(user, team.user) && Objects.equals(firstPickNumber, team.firstPickNumber) && Objects.equals(secondPickNumber, team.secondPickNumber) && Objects.equals(teamName, team.teamName) && Objects.equals(drivers, team.drivers);
-//  }
-//
-//  @Override
-//  public int hashCode() {
-//    return Objects.hash(teamId, user, firstPickNumber, secondPickNumber, teamName, drivers);
-//  }
 
   @Override
   public String toString() {
@@ -86,6 +64,6 @@ public class Team {
 
   @Override
   public int hashCode() {
-    return Objects.hash(teamId,teamName);
+    return Objects.hash(teamId, teamName);
   }
 }

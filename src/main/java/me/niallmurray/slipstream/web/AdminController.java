@@ -7,7 +7,10 @@ import me.niallmurray.slipstream.dto.DriverStanding;
 import me.niallmurray.slipstream.dto.DriverStandingResponse;
 import me.niallmurray.slipstream.dto.StandingsList;
 import me.niallmurray.slipstream.security.ActiveUserStore;
-import me.niallmurray.slipstream.service.*;
+import me.niallmurray.slipstream.service.AdminService;
+import me.niallmurray.slipstream.service.DriverService;
+import me.niallmurray.slipstream.service.LeagueService;
+import me.niallmurray.slipstream.service.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
@@ -27,13 +30,13 @@ public class AdminController {
   @Autowired
   ActiveUserStore activeUserStore;
   @Autowired
-  private AdminService adminService;
-  @Autowired
   TeamService teamService;
   @Autowired
   LeagueService leagueService;
   @Autowired
   DriverService driverService;
+  @Autowired
+  private AdminService adminService;
   @Value("${ergast.urls.base}${ergast.urls.currentDriverStandings}")
   private String f1DataApi;
 
@@ -67,6 +70,7 @@ public class AdminController {
     modelMap.addAttribute("allDrivers", driverService.sortDriversStanding());
     return "redirect:/admin";
   }
+
   @PostMapping("/admin/updateDrivers")
   public String getUpdateDriverStandings(ModelMap modelMap) {
     List<StandingsList> standingsLists = Objects.requireNonNull(getDriverStandingsResponse().getBody())
@@ -77,7 +81,7 @@ public class AdminController {
 
 
     driverService.updateDrivers(drivers);
-    for (League league: leagueService.findAll()) {
+    for (League league : leagueService.findAll()) {
       teamService.updateLeagueTeamsRankings(league);
     }
     modelMap.addAttribute("allDrivers", driverService.sortDriversStanding());

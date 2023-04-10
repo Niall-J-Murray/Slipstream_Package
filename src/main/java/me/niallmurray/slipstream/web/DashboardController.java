@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import java.util.Comparator;
 import java.util.List;
 
 @Controller
@@ -38,14 +37,11 @@ public class DashboardController {
   }
 
   @GetMapping("/dashboard/{userId}")
-  public String getDashboard(@AuthenticationPrincipal User userAuth, ModelMap modelMap, @PathVariable Long userId) {
+  public String getDashboard(ModelMap modelMap, @PathVariable Long userId) {
     User user = userService.findById(userId);
     List<Team> allTeams = teamService.getAllTeams();
-
-
     League currentLeague = leagueService.findNewestLeague();
-    System.out.println(currentLeague);
-    System.out.println("current league size: " + currentLeague.getTeams().size());
+
     if (currentLeague.getTeams().size() != 0
             && currentLeague.getTeams().size() % 10 == 0) {
       currentLeague = leagueService.createLeague();
@@ -98,10 +94,10 @@ public class DashboardController {
 
   // Consider JS for team name as only one string needs to be parsed from client.
   @PostMapping("/dashboard/{userId}")
-  public String postCreateTeam(@AuthenticationPrincipal User userAuth, @PathVariable Long userId, User user) {
+  public String postCreateTeam(@PathVariable Long userId, User user) {
     // Check for unique team names.
     String teamName = user.getTeam().getTeamName();
-    if (!teamService.teamNameExists(teamName)) {
+    if (teamService.teamNameExists(teamName)) {
       Team team = new Team();
       user = userService.findById(userId);
       if (user.getTeam() == null) {
@@ -115,7 +111,7 @@ public class DashboardController {
   }
 
   @PostMapping("/dashboard/{userId}/draftPick")
-  public String postMakePick(@PathVariable Long userId, Driver driver, User user) {
+  public String postMakePick(@PathVariable Long userId, Driver driver) {
     System.out.println(driver);
     Long driverId = driver.getDriverId();
     teamService.addDriverToTeam(userId, driverId);

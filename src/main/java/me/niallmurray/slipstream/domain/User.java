@@ -39,37 +39,6 @@ public class User {
   // This means no need for creating separate leagues for users with multiple teams.
   // Features for multiple teams/leagues per user, and/or drivers per team could be added eventually.
 
-
- // CHECK IF EQUALS AND HASHCODE ARE NEEDED
-//  REFACTOR TO INCLUDE NON NULL FIELDS
-
-
-
-//  @Override
-//  public String toString() {
-//    return "User{" +
-//            "userId=" + userId +
-//            ", username='" + username + '\'' +
-//            ", email='" + email + '\'' +
-//            ", password='" + password + '\'' +
-//            ", authorities=" + authorities +
-//            ", lastLogout='" + lastLogout + '\'' +
-//            ", team=" + team +
-//            '}';
-//  }
-
-//  @Override
-//  public boolean equals(Object o) {
-//    if (this == o) return true;
-//    if (!(o instanceof User user)) return false;
-//    return Objects.equals(userId, user.userId) && Objects.equals(username, user.username) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && Objects.equals(authorities, user.authorities) && Objects.equals(lastLogout, user.lastLogout) && Objects.equals(team, user.team);
-//  }
-//
-//  @Override
-//  public int hashCode() {
-//    return Objects.hash(userId, username, email, password, authorities, lastLogout, team);
-//  }
-
   @Override
   public String toString() {
     return "User:" +
@@ -90,5 +59,4 @@ public class User {
   public int hashCode() {
     return Objects.hash(userId);
   }
-
 }

@@ -18,7 +18,6 @@ public class Driver {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long driverId;
-  //  @Column(nullable = false, unique = true)
   @Column()
   private Integer carNumber;
   @Column()
@@ -41,8 +40,6 @@ public class Driver {
   private String constructor;
   @ManyToMany
   private List<Team> teams = new ArrayList<>();
-
-
 
   @Override
   public String toString() {

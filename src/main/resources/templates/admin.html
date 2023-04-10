@@ -8,7 +8,7 @@
 <header>
   <ul id="nav-bar">
     <div id="nav-logo">
-      <li><img src="/images/customLogoWhite.png" alt="site logo"
+      <li><img alt="site logo" src="/images/customLogoWhite.png"
                style="height: 50px; width: 300px; margin-left: 10px"></li>
     </div>
     <div id="nav-links">
@@ -38,24 +38,25 @@
 </header>
 <section id="background">
 
-  <section id="admin-top" class="top-section">
+  <section class="top-section" id="admin-top">
     <div id="admin-logged">
-    <h2><u>Admin</u></h2>
+      <h2><u>Admin</u></h2>
       <table class="league-table">
-        <th><h3>Currently Logged-in:</h3></th>
+        <caption><h3>Currently Logged-in:</h3></caption>
+        <th>List of Usernames:</th>
         <tr>
           <td th:text="${activeUsers}"></td>
         </tr>
       </table>
     </div>
-        <div id="admin-leagues">
+    <div id="admin-leagues">
+      <h2>Created Leagues:</h2>
       <ol>
-        <h2>Created Leagues:</h2>
-        <li th:each="league : ${leagues}" th:text="|League Name: ${league.leagueName}, ID: ${league.leagueId}, Num. of Players: ${league.teams.size()}|"></li>
+        <li th:each="league : ${leagues}" th:text="${league}"></li>
       </ol>
     </div>
   </section>
-  <section id="admin-users" class="left-table">
+  <section class="left-table" id="admin-users">
     <table class="league-table">
       <caption><h3>All Users:</h3></caption>
       <th>ID:</th>
@@ -77,7 +78,7 @@
       </tr>
     </table>
   </section>
-  <section id="admin-drivers" class="right-table">
+  <section class="right-table" id="admin-drivers">
     <table class="league-table">
       <caption><h3>Driver Standings:</h3></caption>
       <th>Rank:</th>

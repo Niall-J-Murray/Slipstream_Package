@@ -1,4 +1,3 @@
-
 package me.niallmurray.slipstream.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;

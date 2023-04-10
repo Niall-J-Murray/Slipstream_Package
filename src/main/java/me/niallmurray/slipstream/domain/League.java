@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -21,19 +23,19 @@ public class League {
   private Long leagueId;
   @Column(nullable = false, unique = true)
   private String leagueName;
-@ManyToMany(
-        fetch = FetchType.LAZY,
-        cascade = {CascadeType.MERGE})
-private List<Team> teams = new ArrayList<>();
-
+  @Column()
+  private LocalDateTime creationTime;
+  @ManyToMany(
+          fetch = FetchType.LAZY,
+          cascade = {CascadeType.MERGE})
+  private List<Team> teams = new ArrayList<>();
 
   @Override
   public String toString() {
-    return "League{" +
-            "leagueId=" + leagueId +
-            ", leagueName='" + leagueName + '\'' +
-            ", teams=" + teams +
-            '}';
+    return "Id= " + leagueId +
+            ", Name= " + leagueName +
+            ", Creation Time=" + creationTime.truncatedTo(ChronoUnit.MINUTES) +
+            ", No. of Teams= " + teams.size();
   }
 
   @Override

@@ -47,5 +47,4 @@ public class LoggedUser implements HttpSessionBindingListener, Serializable {
     users.remove(loggedUser.getUsername());
     loggedUser.setLoggedIn(false);
   }
-
 }
