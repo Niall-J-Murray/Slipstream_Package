@@ -14,8 +14,11 @@
 
 @font-face {
     font-family: Font1;
-    src: url('https://www.formula1.com/etc/designs/fom-website/fonts/F1Bold/Formula1-Bold.ttf') format('truetype');
     font-display: auto;
+    src: url('https://www.formula1.com/etc/designs/fom-website/fonts/F1Bold/Formula1-Bold.ttf') format('truetype'),
+    url('https://www.formula1.com/etc/designs/fom-website/fonts/F1Regular/Formula1-Regular.ttf') format('truetype'),
+    url('https://www.formula1.com/etc/designs/fom-website/fonts/F1Wide/Formula1-Wide.ttf') format('truetype'),
+    url('https://www.formula1.com/etc/designs/fom-website/fonts/F1Wide/Formula1-Black.ttf') format('truetype');
 }
 
 body {
@@ -23,19 +26,14 @@ body {
     color: white;
     background: black;
     margin: 1%;
-    /*background: black;*/
-    /*background-image: url("../images/background.jpg");*/
-    /*background-size: 100% auto;*/
-    /*background-repeat: no-repeat;*/
 }
 
-#background{
-    width: 2500px;
-    height: 1000px;
+#background {
+    width: 2400px;
+    height: 1200px;
     background: black;
-    background-image: url("../images/background6.jpg");
+    background-image: url("../images/background.jpg");
     background-size: 2500px;
-    /*background-size: 100% auto;*/
     background-repeat: no-repeat;
 }
 
@@ -75,84 +73,68 @@ section {
     display: table;
 }
 
-#admin-top {
-    float: none;
-    /*display: inline;*/
-    /*width: 35%;*/
-    padding-left: 2%;
-    padding-bottom: 30px;
-}
-
-#admin-logged{
+#admin-logged {
     float: left;
-    margin-right: 60px;
-    /*width: 40%;*/
+    width: 25%;
+    margin-right: 30px;
 }
 
-#admin-leagues{
-    float: inherit;
-    display: inline;
-    /*margin-left: 30px;*/
-    padding: 3%;
+#admin-leagues {
+    float: none;
+    display: inline-flex;
+    padding: 2%;
 }
 
 #admin-users {
     float: left;
     width: 40%;
-    padding-left: 2%;
 }
 
 #admin-drivers {
     float: left;
     width: 40%;
-    padding-right: 2%;
-}
-/* Tweak and check all table and page layouts*/
-.left-table{
-    margin-right: 5%;
 }
 
-.right-table{
-
-}
-#dash-top {
+.top-section {
     float: none;
-    padding-bottom: 60px;
+    padding: 2%;
+}
+
+.left-table {
+    padding: 1%;
+}
+
+.right-table {
+    padding: 1%;
 }
 
 #dash-welcome {
     float: left;
     width: 25%;
-    padding-left: 2%;
-    margin-right: 30px;
 }
 
 #dash-info {
-    float: inherit;
-    display: inline;
-    padding: 60px;
+    float: none;
+    display: inline-flex;
+    padding: 1%;
 }
 
 #dash-table1a {
     float: left;
-    /*width: 50%;*/
-    padding-left: 2%;
+    padding-left: 1%;
 }
 
 #dash-table1b {
     float: left;
-    /*width: 50%;*/
-    padding-left: 2%;
+    padding-left: 1%;
 }
 
 #dash-table2a {
     float: left;
-    /*width: 50%;*/
 }
 
 #dash-table2b {
     float: left;
-    /*width: 50%;*/
 }
 
 #home-links {
@@ -164,9 +146,14 @@ section {
 
 a {
     color: white;
+    text-decoration: none;
 }
 
-ol li{
+a:hover {
+    text-decoration-line: underline;
+}
+
+ol li {
     float: inherit;
 }
 
@@ -183,10 +170,6 @@ ul img {
     height: 50px;
     width: 150px;
 }
-
-/*#nav-links{*/
-/*    float: left;*/
-/*}*/
 
 li {
     float: left;
@@ -230,14 +213,6 @@ li a:hover {
     margin-left: 25px;
 }
 
-.dash-text {
-    font-weight: bold;
-    /*background: white;*/
-    /*color: black;*/
-    /*padding-left: 5px;*/
-    /*padding-right: 50px;*/
-}
-
 li button {
     background-color: #2ea44f;
     border: 1px solid rgba(27, 31, 35, .15);
@@ -254,14 +229,6 @@ li button {
 .league-table {
     border-collapse: collapse;
     width: 100%;
-    /*margin-top: 10px;*/
-    /*margin-left: 20px;*/
-    /*padding-left: 20px;*/
-    /*margin-right: 60px;*/
-    /*padding-right: 10px;*/
-
-    /* make columns wider to fit on one row*/
-    /*margin-right: 10px;*/
 }
 
 .league-table td,

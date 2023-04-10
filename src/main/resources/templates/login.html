@@ -28,34 +28,38 @@
   </ul>
 </header>
 <section id="background">
-  <form action="" method="POST">
-    <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
-    <fieldset style="width: 25%">
-      <legend>Please Login</legend>
-      <!-- the configured LogoutConfigurer#logoutSuccessUrl is /login?logout and contains the query param logout -->
-      <div th:if="${param.logout != null}">You have been logged out.</div>
-      <p>
-        <label for="username">Username</label> <input id="username"
-                                                      name="username" type="text"/>
-      </p>
-      <p>
-        <label for="password">Password</label> <input id="password"
-                                                      name="password" type="password"/>
-      </p>
-      <!-- use param.error assuming FormLoginConfigurer#failureUrl contains the query parameter error -->
-      <div th:if="${param.error != null}">
-        Login failed: Please confirm your details are correct
-        <div th:if="${SPRING_SECURITY_LAST_EXCEPTION != null}">
-          Reason: <span th:text="${SPRING_SECURITY_LAST_EXCEPTION.message}"></span>
+  <section class="top-section">
+    <form action="" method="POST">
+      <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+      <fieldset style="width: 25%">
+        <legend>Please Login</legend>
+        <!-- the configured LogoutConfigurer#logoutSuccessUrl is /login?logout and contains the query param logout -->
+        <div th:if="${param.logout != null}">You have been logged out.</div>
+        <p>
+          <label for="username">Username</label> <input id="username"
+                                                        name="username" type="text"/>
+        </p>
+        <p>
+          <label for="password">Password</label> <input id="password"
+                                                        name="password" type="password"/>
+        </p>
+        <!-- use param.error assuming FormLoginConfigurer#failureUrl contains the query parameter error -->
+        <div th:if="${param.error != null}">
+          Login failed: Please confirm your details are correct
+          <div th:if="${SPRING_SECURITY_LAST_EXCEPTION != null}">
+            Reason: <span th:text="${SPRING_SECURITY_LAST_EXCEPTION.message}"></span>
+          </div>
         </div>
-      </div>
-      <br>
-      <div>
-        <button class="btn" type="submit">Log in</button>
-      </div>
-    </fieldset>
-  </form>
-  <a href="/register">Create New Account</a>
+        <br>
+        <div>
+          <button class="btn" type="submit">Log in</button>
+        </div>
+      </fieldset>
+    </form>
+    <div style="margin: 1%">
+      <a href="/register">Create New Account</a>
+    </div>
+  </section>
 </section>
 </body>
 </html>

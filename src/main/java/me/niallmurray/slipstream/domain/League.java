@@ -21,13 +21,6 @@ public class League {
   private Long leagueId;
   @Column(nullable = false, unique = true)
   private String leagueName;
-//  @JoinColumn(name = "team_id")
-//  @OneToMany(mappedBy = "teamId",
-//          fetch = FetchType.LAZY,
-//          cascade = {CascadeType.MERGE, CascadeType.REMOVE},
-//          orphanRemoval = true)
-////  private List<Team> teams;
-//  private List<Team> teams = new ArrayList<>();
 @ManyToMany(
         fetch = FetchType.LAZY,
         cascade = {CascadeType.MERGE})

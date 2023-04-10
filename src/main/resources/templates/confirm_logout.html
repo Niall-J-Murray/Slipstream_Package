@@ -17,11 +17,13 @@
   </ul>
 </header>
 <section id="background">
-<h1>Are you sure?</h1>
-<form action="" method="post">
-  <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
-  <button type="submit">Confirm Logout</button>
-</form>
+  <section class="top-section">
+    <h1>Are you sure?</h1>
+    <form action="" method="post">
+      <input th:name="${_csrf.parameterName}" th:value="${_csrf.token}" type="hidden"/>
+      <button type="submit">Confirm Logout</button>
+    </form>
+  </section>
 </section>
 </body>
 </html>

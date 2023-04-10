@@ -31,14 +31,10 @@ public class TeamService {
   LeagueService leagueService;
   @Autowired
   LeagueRepository leagueRepository;
-  // Temp fields for testing.
-  private List<Team> teamsInLeague = new ArrayList<>(20);
-  private List<User> usersForNextLeague = new ArrayList<>(20);
-  private int teamCounter = 0;
   @Autowired
   private UserRepository userRepository;
 
-  public Team createTeam(User user) {
+  public void createTeam(User user) {
     Team team = new Team();
     team.setUser(user);
     team.setTeamId(user.getUserId());
@@ -56,7 +52,6 @@ public class TeamService {
     addOneTeamToLeague(team);
 
 //    return teamRepository.save(team);
-    return team;
   }
 
 
@@ -121,8 +116,8 @@ public class TeamService {
     for (Team team : teams) {
       team.setRanking(teams.indexOf(team) + 1);
     }
-//    return teamRepository.saveAll(teams);
-    return teams;
+    return teamRepository.saveAll(teams);
+//    return teams;
   }
 
   private int randomPickNumber() {

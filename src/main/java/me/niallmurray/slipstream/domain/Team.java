@@ -29,9 +29,9 @@ public class Team {
   @Column()
   private String teamName;
   @Column()
-  private Double teamPoints;
-  @Column()
   private Double startingPoints;
+  @Column()
+  private Double teamPoints;
   @Column()
   private Integer ranking;
   @Column()

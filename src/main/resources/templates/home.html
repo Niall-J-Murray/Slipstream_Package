@@ -29,26 +29,23 @@
   </ul>
 </header>
 <section id="background">
-<h1>Home</h1>
-<div th:if="${isLoggedIn == true}">
-  <h2 th:text="|Welcome ${user.getUsername()}!|"></h2>
-</div>
-<div th:if="${param.logout != null}">
-  <h3>You have been logged out.</h3>
-</div>
-<div th:if="${isLoggedIn == true}">
-  <h3><a href="/dashboard">Dashboard</a></h3>
-</div>
-<div th:if="${isLoggedIn != true}">
-  <h3><a href="/login">Login</a></h3>
-  -or-
-  <h3><a href="/register">Create New Account</a></h3>
-</div>
-
-<section id="home-links" th:if="${isAdmin == true}">
-  <h4><a href="/driverStandings">Current Driver Standings List</a></h4>
-  <h4><a href="/driverStandingsJSON">Current Driver Standings JSON</a></h4>
-</section>
+  <section class="top-section">
+    <h2><u>[[Home]]</u></h2>
+  <div th:if="${isLoggedIn == true}">
+    <h2 th:text="|Welcome ${user.getUsername()}!|"></h2>
+  </div>
+  <div th:if="${param.logout != null}">
+    <h3>You have been logged out.</h3>
+  </div>
+  <div th:if="${isLoggedIn == true}">
+    <h3><a href="/dashboard">Dashboard</a></h3>
+  </div>
+  <div th:if="${isLoggedIn != true}">
+    <h3><a href="/login">Login</a></h3>
+    -or-
+    <h3><a href="/register">Create New Account</a></h3>
+  </div>
+  </section>
 </section>
 </body>
 </html>
