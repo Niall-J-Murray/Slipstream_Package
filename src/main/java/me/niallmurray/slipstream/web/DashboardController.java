@@ -1,6 +1,5 @@
 package me.niallmurray.slipstream.web;
 
-
 import me.niallmurray.slipstream.domain.Driver;
 import me.niallmurray.slipstream.domain.League;
 import me.niallmurray.slipstream.domain.Team;
@@ -92,7 +91,6 @@ public class DashboardController {
     return "dashboard";
   }
 
-  // Consider JS for team name as only one string needs to be parsed from client.
   @PostMapping("/dashboard/{userId}")
   public String postCreateTeam(@PathVariable Long userId, User user) {
     // Check for unique team names.
@@ -112,7 +110,6 @@ public class DashboardController {
 
   @PostMapping("/dashboard/{userId}/draftPick")
   public String postMakePick(@PathVariable Long userId, Driver driver) {
-    System.out.println(driver);
     Long driverId = driver.getDriverId();
     teamService.addDriverToTeam(userId, driverId);
     return "redirect:/dashboard/" + userId;

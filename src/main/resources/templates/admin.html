@@ -68,7 +68,7 @@
       <th>Last Logout:</th>
       <tr th:each="user : ${users}">
         <td th:text="${user.userId}"></td>
-        <td th:text="${user.getAuthorities().iterator().next().getAuthority()==('ROLE_ADMIN')}
+        <td th:text="${user.authorities.iterator().next().getAuthority()==('ROLE_ADMIN')}
     ? ${user.username + ' (ADMIN) '}  : ${user.username}"></td>
         <td th:text="${user.team != null} ? ${user.team.league.leagueName}: 'No Team'"></td>
         <td th:text="${user.team != null} ? ${user.team.teamName}: 'No Team'"></td>
