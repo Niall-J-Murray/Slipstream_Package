@@ -10,6 +10,7 @@
 body {
     font-family: Font1, Arial, Helvetica, sans-serif;
     color: white;
+    text-shadow: 0.07em 0 black, 0 0.07em black, -0.07em 0 black, 0 -0.07em black;
     background: black;
     margin: 1%;
 }
@@ -33,6 +34,7 @@ button {
     border-radius: 12px;
     display: block;
     color: white;
+    text-shadow: 0.07em 0 black, 0 0.07em black, -0.07em 0 black, 0 -0.07em black;
     font-weight: bold;
     text-align: center;
     vertical-align: baseline;
@@ -141,6 +143,7 @@ section {
 
 a {
     color: white;
+    text-shadow: 0.07em 0 black, 0 0.07em black, -0.07em 0 black, 0 -0.07em black;
     text-decoration: none;
 }
 
@@ -175,6 +178,7 @@ li {
 li a {
     display: block;
     color: white;
+    text-shadow: 0.07em 0 black, 0 0.07em black, -0.07em 0 black, 0 -0.07em black;
     text-align: center;
     vertical-align: baseline;
     margin-left: 10px;
@@ -217,6 +221,7 @@ li button {
     display: block;
     margin: 10px 20px;
     color: white;
+    text-shadow: 0.07em 0 black, 0 0.07em black, -0.07em 0 black, 0 -0.07em black;
     text-align: center;
     vertical-align: baseline;
     padding: 10px 20px;
@@ -244,6 +249,7 @@ li button {
 .league-table tr:nth-child(even) {
     background-color: white;
     color: black;
+    text-shadow: none;
 }
 
 .league-table tr:hover {
@@ -269,4 +275,5 @@ li button {
 
 .error-message {
     color: red;
+    text-shadow: 0.07em 0 black, 0 0.07em black, -0.07em 0 black, 0 -0.07em black;
 }

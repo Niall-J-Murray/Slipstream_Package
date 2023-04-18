@@ -36,7 +36,7 @@ public class DashboardController {
   }
 
   @GetMapping("/dashboard/{userId}")
-  public String getDashboard(ModelMap modelMap, @PathVariable Long userId) {
+  public String getDashboard(@PathVariable Long userId, ModelMap modelMap) {
     User user = userService.findById(userId);
     List<Team> allTeams = teamService.getAllTeams();
     League currentLeague = leagueService.findNewestLeague();
@@ -83,6 +83,7 @@ public class DashboardController {
     if (!userService.isAdmin(user) && user.getTeam() != null) {
       if (user.getTeam().getLeague().getTeams().size() >= 10) {
         modelMap.addAttribute("leagueFull", true);
+        modelMap.addAttribute("nextUserPick", teamService.getNextToPick(user.getTeam().getLeague()));
       }
       if (teamService.timeToPick(user.getTeam().getLeague(), user.getTeam().getTeamId())) {
         modelMap.addAttribute("timeToPick", true);
@@ -105,13 +106,18 @@ public class DashboardController {
       teamService.createTeam(user);
       return "redirect:/dashboard/" + userId;
     }
-    return "redirect:/dashboard/" + userId + "?error";
+    return "redirect:/dashboard/%d?error".formatted(userId);
   }
 
   @PostMapping("/dashboard/{userId}/draftPick")
   public String postMakePick(@PathVariable Long userId, Driver driver) {
+    if (driver.getDriverId() == null) {
+      return "redirect:/dashboard/%d?error".formatted(userId);
+    }
+
     Long driverId = driver.getDriverId();
     teamService.addDriverToTeam(userId, driverId);
+
     return "redirect:/dashboard/" + userId;
   }
 

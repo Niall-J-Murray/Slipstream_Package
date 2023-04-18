@@ -135,6 +135,17 @@ public class TeamService {
     return firstPickNumber == getCurrentPickNumber(league) || secondPickNumber == getCurrentPickNumber(league);
   }
 
+  public String getNextToPick(League league) {
+    String nextUserPick = null;
+    for (Team team : teamRepository.findAll()) {
+      if (timeToPick(league, team.getTeamId())) {
+        nextUserPick = team.getUser().getUsername();
+      }
+    }
+    return nextUserPick;
+  }
+
+
   public List<Team> getAllTeams() {
     return teamRepository.findAll();
   }

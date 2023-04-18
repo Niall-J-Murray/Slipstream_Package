@@ -55,7 +55,9 @@
             <div th:if="${leagueFull and currentPickNumber <= 20}">
               <p th:if="${!timeToPick}">
                 Draft in progress, please wait for your turn to pick.</p>
-              <u><h2 style="color: #2ea44f" th:text="|Current pick number: ${currentPickNumber}"></h2></u>
+              <u><h2 style="color: #2ea44f" th:text="|Current pick number: ${currentPickNumber}|"></h2></u>
+              <u><h2 style="color: #2ea44f" th:if="${!timeToPick}"
+                     th:text="|It's ${nextUserPick}'s turn to select a driver|"></h2></u>
               <u><h2 style="color: #2ea44f" th:if="${timeToPick}"
                      th:text="|It's your turn to pick ${user.username}!|"></h2></u>
             </div>
@@ -81,8 +83,8 @@
                 <input id="teamName" name="teamName" required th:field="*{team.teamName}"
                        th:placeholder="|Team ${user.username}|"
                        type="text"/>
-                <div th:if="${param.error != null}">
-                  <- Sorry, this team name is already taken.
+                <div class="error-message" th:if="${param.error != null}">
+                  Sorry, this team name is already taken
                 </div>
                 <input th:field="${currentLeague}" th:value="${currentLeague}" type="hidden"/>
                 <button type="submit">Submit</button>
@@ -147,8 +149,11 @@
         <table class="league-table">
           <caption><h3>Undrafted Drivers:</h3>
             <div>
-              <button id="confirm-pick" th:if="${leagueFull and timeToPick}" type="submit">Confirm Pick</button>
               <p style="display:inline;">[[|${availableDrivers.size()}/20 drivers remaining|]]</p>
+              <button id="confirm-pick" th:if="${leagueFull and timeToPick}" type="submit">Confirm Pick</button>
+              <p class="error-message" th:if="${param.error != null and user.team.teamName != null}">
+                Please select a driver below
+              </p>
             </div>
           </caption>
           <th th:if="${leagueFull and timeToPick}">Your Pick:</th>
