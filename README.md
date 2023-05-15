@@ -1,21 +1,4 @@
-## Slipstream
-
-Fantasy Formula 1 draft picks web app.
-Full stack java web app, using Thymeleaf, Spring-Boot, Spring Security, Hibernate/JPA and MySQL.
-
-This is project is designed to showcase my knowledge of the stacks listed above.
-It will also be used as a base for further development of those stacks, as well as learning and integrating new ones.
-
-As a fan of Formula 1 and fantasy sports, I noticed a lack of a draft pick 
-- What problem does it solve?
-- What did you learn?
-
-
-jjjjjjjjjjjjjjjjjjjjjjjjjjj
-
-
 <a name="readme-top"></a>
-
 <br/>
 <div align="center">
   <a href="https://slipstreamf1-production.up.railway.app/home">
@@ -25,14 +8,14 @@ jjjjjjjjjjjjjjjjjjjjjjjjjjj
 <h3 align="center">Slipstream F1 Draft Picks</h3>
 
   <p align="center">
-    Fantasy Formula 1 draft picks web app.
+Fantasy Formula 1 draft picks web app.
+      <br />
 Full stack java web app, using Thymeleaf, Spring-Boot, Spring Security, Hibernate/JPA and MySQL.
     <br />
-    <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
+    <a href="https://slipstreamf1-production.up.railway.app/home"><strong>View Deployment</strong></a>
     <br />
     <br />
-    <a href="https://slipstreamf1-production.up.railway.app/home">View Deployment</a>
-    ·
+   </a>
     <a href="https://github.com/Niall-J-Murray/Slipstream_2.0/blob/main/issues">Report Bug</a>
     ·
     <a href="https://github.com/Niall-J-Murray/Slipstream_2.0/blob/main/issues">Request Feature</a>
@@ -72,9 +55,15 @@ Full stack java web app, using Thymeleaf, Spring-Boot, Spring Security, Hibernat
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+[![Slipstream F1][product-screenshot]](https://slipstreamf1-production.up.railway.app/home)
+This is project is designed to showcase my knowledge of the stacks and frameworks listed below.
+It will also be used as a base for further development of those stacks, as well as learning and integrating new ones.
 
-Here's a blank template to get started: To avoid retyping too much info. Do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`
+As a fan of Formula 1 and fantasy sports, I noticed a lack of a draft pick format fantasy F1 game, so I created one!
+The draft pick format means that users teams are all different, instead of the majority of users being able to pick the same players/drivers.
+This game is also designed to appeal more to novice fans, and introduces an element of luck to users chances of winning.
+
+The app will continue to evolve, feedback, suggestions and bug reports are welcome.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -82,9 +71,9 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 
 ### Built With
 
-* [![Next][Next.js]][Next-url]
+* [![Next][Java]][Next-url]
 * [![React][React.js]][React-url]
-* [![Vue][Vue.js]][Vue-url]
+* [![Spring-Boot][Vue.js]][Vue-url]
 * [![Angular][Angular.io]][Angular-url]
 * [![Svelte][Svelte.dev]][Svelte-url]
 * [![Laravel][Laravel.com]][Laravel-url]
