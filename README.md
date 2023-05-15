@@ -71,15 +71,7 @@ The app will continue to evolve, feedback, suggestions and bug reports are welco
 
 ### Built With
 
-* [![Next][Java]][Java-url]
-* [![React][React.js]][React-url]
-* [![Spring-Boot][Vue.js]][Vue-url]
-* [![Angular][Angular.io]][Angular-url]
-* [![Svelte][Svelte.dev]][Svelte-url]
-* [![Laravel][Laravel.com]][Laravel-url]
 * [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-* [![JQuery][JQuery.com]][JQuery-url]
-
 
    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original-wordmark.svg" width="50"
                 height="50" />
