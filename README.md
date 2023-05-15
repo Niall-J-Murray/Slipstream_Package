@@ -71,7 +71,7 @@ The app will continue to evolve, feedback, suggestions and bug reports are welco
 
 ### Built With
 
-* [![Next][Java]][Next-url]
+* [![Next][Java]][Java-url]
 * [![React][React.js]][React-url]
 * [![Spring-Boot][Vue.js]][Vue-url]
 * [![Angular][Angular.io]][Angular-url]
