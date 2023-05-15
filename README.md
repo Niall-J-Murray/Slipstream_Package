@@ -2,7 +2,7 @@
 <br/>
 <div align="center">
   <a href="https://slipstreamf1-production.up.railway.app/home">
-    <img src="https://github.com/Niall-J-Murray/Slipstream_2.0/blob/main/src/main/resources/static/images/customLogoWhite.png" alt="Logo" width="300" height="100">
+    <img src="https://github.com/Niall-J-Murray/Slipstream_2.0/blob/main/src/main/resources/static/images/customLogoWhite.png" alt="Logo" width="350" height="100">
   </a>
 
 <h3 align="center">Slipstream F1 Draft Picks</h3>
