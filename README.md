@@ -71,37 +71,32 @@ The app will continue to evolve, feedback, suggestions and bug reports are welco
 
 ### Built With
 
-* [![Bootstrap][Bootstrap.com]][Bootstrap-url]
-
-   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original-wordmark.svg" width="50"
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original-wordmark.svg" width="50"
                 height="50" />
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original-wordmark.svg" width="50"
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original-wordmark.svg" width="50"
                 height="50" />
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" width="50"
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" width="50"
                 height="50" />
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-plain-wordmark.svg" width="50"
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-plain-wordmark.svg" width="50"
                 height="50" />
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-plain-wordmark.svg" width="50"
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-plain-wordmark.svg" width="50"
                 height="50" />
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" width="50"
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" width="50"
                 height="50" />
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
-<!-- GETTING STARTED -->
 ## Getting Started
+You can visit <a href="https://slipstreamf1-production.up.railway.app/home">Slipstream-F1</a> to try the app online. Instructions on how to play are on the homepage.
+You must register an account and login to see the full application.
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+Alternatively, you can clone or fork the app and download it to run locally.
 
 ### Prerequisites
+To run locally, you will need and IDE with Java 17 or higher.
+You will also need a MySQL localhost, and will need to edit the application.properties file to access your localhost:
+i.e: "spring.datasource.username=" and "spring.datasource.password=" will need correct credentials for your localhost.
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+The app will automatically create a database at "spring.datasource.url=jdbc:mysql://localhost:3306/slipstream", unless you create one named "slipstream" manually.
 
 ### Installation
 
