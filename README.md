@@ -92,27 +92,20 @@ You must register an account and login to see the full application.
 Alternatively, you can clone or fork the app and download it to run locally.
 
 ### Prerequisites
-To run locally, you will need and IDE with Java 17 or higher.
-You will also need a MySQL localhost, and will need to edit the application.properties file to access your localhost:
+To run locally, you will need an IDE with Java 17 or higher.
+You will also need a MySQL localhost on port 3306, and will need to edit the application.properties file to access your localhost:
 i.e: "spring.datasource.username=" and "spring.datasource.password=" will need correct credentials for your localhost.
 
 The app will automatically create a database at "spring.datasource.url=jdbc:mysql://localhost:3306/slipstream", unless you create one named "slipstream" manually.
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
-   git clone https://github.com/github_username/repo_name.git
+   git clone https://github.com/Niall-J-Murray/Slipstream.git
    ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
+2. Import the repo to your IDE
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
