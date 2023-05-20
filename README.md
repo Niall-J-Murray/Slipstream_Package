@@ -79,7 +79,10 @@ The app will continue to evolve, feedback, suggestions and bug reports are welco
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Getting Started
-You can visit <a href="https://slipstreamf1-production.up.railway.app/home">Slipstream-F1</a> to try the app online. Instructions on how to play are on the homepage.
+You can visit <a href="https://slipstreamf1-production.up.railway.app/home">Slipstream-F1</a> to try the app online.
+
+Instructions on how to play are on the homepage.
+
 You must register an account and login to see the full application.
 
 Alternatively, you can clone or fork the app and download it to run locally.
