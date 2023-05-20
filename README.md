@@ -2,7 +2,7 @@
 <br/>
 <div align="center">
   <a href="https://slipstreamf1-production.up.railway.app/home">
-    <img src="https://github.com/Niall-J-Murray/Slipstream_2.0/blob/main/src/main/resources/static/images/customLogoWhite.png" alt="Logo" width="350" height="100">
+    <img src="https://github.com/Niall-J-Murray/Slipstream/blob/main/src/main/resources/static/images/customLogoWhite.png" alt="Logo" width="350" height="100">
   </a>
 
 <h3 align="center">Slipstream F1 Draft Picks</h3>
@@ -16,9 +16,9 @@ Full stack java web app, using Thymeleaf, Spring-Boot, Spring Security, Hibernat
     <br />
     <br />
    </a>
-    <a href="https://github.com/Niall-J-Murray/Slipstream_2.0/blob/main/issues">Report Bug</a>
+    <a href="https://github.com/Niall-J-Murray/Slipstream/blob/main/issues">Report Bug</a>
     ·
-    <a href="https://github.com/Niall-J-Murray/Slipstream_2.0/blob/main/issues">Request Feature</a>
+    <a href="https://github.com/Niall-J-Murray/Slipstream/blob/main/issues">Request Feature</a>
   </p>
 </div>
 
@@ -61,7 +61,7 @@ It will also be used as a base for further development of those stacks, as well 
 
 As a fan of Formula 1 and fantasy sports, I noticed a lack of a draft pick format fantasy F1 game, so I created one!
 The draft pick format means that users teams are all different, instead of the majority of users being able to pick the same players/drivers.
-This game is also designed to appeal more to novice fans, and introduces an element of luck to users chances of winning.
+This game is also designed to appeal more to novice fans, and introduces an element of luck to users’ chances of winning.
 
 The app will continue to evolve, feedback, suggestions and bug reports are welcome.
 
@@ -94,7 +94,7 @@ Alternatively, you can clone or fork the app and download it to run locally.
 ### Prerequisites
 To run locally, you will need an IDE with Java 17 or higher.
 You will also need a MySQL localhost on port 3306, and will need to edit the application.properties file to access your localhost:
-i.e: "spring.datasource.username=" and "spring.datasource.password=" will need correct credentials for your localhost.
+i.e.: "spring.datasource.username=" and "spring.datasource.password=" will need correct credentials for your localhost.
 
 The app will automatically create a database at "spring.datasource.url=jdbc:mysql://localhost:3306/slipstream", unless you create one named "slipstream" manually.
 
@@ -111,54 +111,44 @@ The app will automatically create a database at "spring.datasource.url=jdbc:mysq
    http://127.0.0.1:8080/
    ```
 5. This will lead you to the homepage, with instructions on how to play the game.
+6. Register an account then login to play.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
-
-<!-- USAGE EXAMPLES -->
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+This app is designed as a fun and easy introduction to Formula 1 and fantasy sports. It can give players someone to root for if they have no previous experience of F1. Given the relatively minimal amount of time required to play, it can also be of interest to more serious fans, who may also play more traditional fantasy sports game already.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+Currently, some of the functionality is fairly limited (e.g., players can't choose or create a league to join). This functionality will be added as the project is developed.
 
+This project could also be forked and adapted to use for different sports with relatively little changes needed. 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
-<!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
-    - [ ] Nested Feature
+- [ ] Add optional automated email to allow users to receive email prompts when it is their turn to pick.
+- [ ] Improve UI, especially for smaller screens.
+- [ ] Allow users to choose which league to join.
+- [ ] Allow users to create their own leagues.
+    - [ ] Users can customise leagues by changing number of teams, picks etc...
+- [ ] Create advanced leagues with additional ways of scoring points, based on predictions etc.
 
-See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
-
+See the [open issues](https://github.com/Niall-J-Murray/Slipstream/blob/main/issues) to request features and see known issues.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
-<!-- CONTRIBUTING -->
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Contributions are what make the open-source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
 
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
-
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
-<!-- LICENSE -->
 ## License
 
 Distributed under the MIT License. See `LICENSE.txt` for more information.
@@ -170,10 +160,9 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@twitter_handle](https://twitter.com/twitter_handle) - email@email_client.com
+Niall Murray - [@linkedin](https://www.linkedin.com/in/niall-j-murray/) - niall_murray@outlook.com
 
-Project Link: [https://github.com/github_username/repo_name](https://github.com/github_username/repo_name)
-
+Project Link: [https://github.com/Niall-J-Murray/Slipstream](https://github.com/Niall-J-Murray/Slipstream)
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
@@ -181,11 +170,10 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* []()
-* []()
-* []()
-
+* [](Coders Campus Java Boot Camp)
+* [](ergast.com)
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 
 
@@ -220,54 +208,3 @@ Project Link: [https://github.com/github_username/repo_name](https://github.com/
 [Bootstrap-url]: https://getbootstrap.com
 [JQuery.com]: https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white
 [JQuery-url]: https://jquery.com 
-
-If your README is long, add a table of contents to make it easy for users to find what they need.
-
-- [Installation](#installation)
-- [Usage](#usage)
-- [Credits](#credits)
-- [License](#license)
-
-## Installation
-
-What are the steps required to install your project? Provide a step-by-step description of how to get the development environment running.
-
-## Usage
-
-Provide instructions and examples for use. Include screenshots as needed.
-
-To add a screenshot, create an `assets/images` folder in your repository and upload your screenshot to it. Then, using the relative filepath, add it to your README using the following syntax:
-
-    ```md
-    ![alt text](assets/images/screenshot.png)
-    ```
-
-## Credits
-
-List your collaborators, if any, with links to their GitHub profiles.
-
-If you used any third-party assets that require attribution, list the creators with links to their primary web presence in this section.
-
-If you followed tutorials, include links to those here as well.
-
-## License
-
-The last section of a high-quality README file is the license. This lets other developers know what they can and cannot do with your project. If you need help choosing a license, refer to [https://choosealicense.com/](https://choosealicense.com/).
-
----
-
-🏆 The previous sections are the bare minimum, and your project will ultimately determine the content of this document. You might also want to consider adding the following sections.
-
-## Badges
-
-![badmath](https://img.shields.io/github/languages/top/lernantino/badmath)
-
-Badges aren't necessary, per se, but they demonstrate street cred. Badges let other developers know that you know what you're doing. Check out the badges hosted by [shields.io](https://shields.io/). You may not understand what they all represent now, but you will in time.
-
-## Features
-
-If your project has a lot of features, list them here.
-
-## How to Contribute
-
-If you created an application or package and would like other develo
