@@ -105,8 +105,12 @@ The app will automatically create a database at "spring.datasource.url=jdbc:mysq
    git clone https://github.com/Niall-J-Murray/Slipstream.git
    ```
 2. Import the repo to your IDE
-
-
+3. Build and run the application
+4. Open your web browser and go to:
+  ```sh
+   http://127.0.0.1:8080/
+   ```
+5. This will lead you to the homepage, with instructions on how to play the game.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 
