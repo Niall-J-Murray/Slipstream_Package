@@ -160,6 +160,6 @@ Project Link: [https://github.com/Niall-J-Murray/Slipstream](https://github.com/
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-* [](Coders Campus Java Boot Camp)
-* [](ergast.com)
+* Coders Campus Java Boot Camp
+* ergast.com
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
