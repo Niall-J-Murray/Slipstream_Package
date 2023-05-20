@@ -21,10 +21,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Objects;
 
-@SuppressWarnings("ALL")
 @Controller
 public class AdminController {
   @Autowired
@@ -37,7 +37,7 @@ public class AdminController {
   private DriverService driverService;
   @Autowired
   private AdminService adminService;
-  @Value("${ergast.urls.base}${ergast.urls.currentDriverStandings}")
+  @Value("${ergast.urls.base}${ergast.urls.currentDriverStandings}.json")
   private String f1DataApi;
 
   @GetMapping("/admin")
@@ -55,7 +55,8 @@ public class AdminController {
   @ResponseBody
   @GetMapping("admin/driverStandingsJSON")
   public ResponseEntity<DriverStandingResponse> getDriverStandingsResponse() {
-    return new RestTemplate().getForEntity(f1DataApi + ".json", DriverStandingResponse.class);
+    URI uri = URI.create("https://ergast.com/api/f1/current/driverStandings.json");
+    return new RestTemplate().getForEntity(uri, DriverStandingResponse.class);
   }
 
   public List<Driver> getDriversFromResponse() {
@@ -73,6 +74,13 @@ public class AdminController {
 
     modelMap.addAttribute("allDrivers", driverService.sortDriversStanding());
     return "redirect:/admin";
+  }
+
+  // To automatically add drivers when first user attempts login,
+  // if admin role has not already added drivers.
+  // Admin can manually add drivers using PostMapping above.
+  public void addDrivers() {
+    driverService.addDrivers(getDriversFromResponse());
   }
 
   @PostMapping("/admin/updateDrivers")
