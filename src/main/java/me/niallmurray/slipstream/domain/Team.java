@@ -23,7 +23,7 @@ public class Team {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long teamId;
   @JoinColumn(name = "user_id")
-  @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REMOVE})
+  @OneToOne(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
   //1-1 for now, see comment in User.class
   private User user;
   @Column()

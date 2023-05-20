@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
+@SuppressWarnings("SameReturnValue")
 @Controller
 public class DashboardController {
-
   @Autowired
   private UserService userService;
   @Autowired
@@ -41,7 +41,7 @@ public class DashboardController {
     List<Team> allTeams = teamService.getAllTeams();
     League currentLeague = leagueService.findNewestLeague();
 
-    if (currentLeague.getTeams().size() != 0
+    if (!currentLeague.getTeams().isEmpty()
             && currentLeague.getTeams().size() % 10 == 0) {
       currentLeague = leagueService.createLeague();
     }
@@ -55,18 +55,19 @@ public class DashboardController {
     modelMap.addAttribute("allDrivers", driverService.sortDriversStanding());
     modelMap.addAttribute("leagueFull", false);
     modelMap.addAttribute("timeToPick", false);
+    modelMap.addAttribute("leagueActive", false);
 
     // Change view depending on if user has created a team
     // Also handles NPEs.
     if (user.getTeam() == null) {
       modelMap.addAttribute("teamLeague", currentLeague);
       modelMap.addAttribute("availableDrivers", driverService.getUndraftedDrivers(currentLeague));
-      modelMap.addAttribute("currentPickNumber", teamService.getCurrentPickNumber(currentLeague));
+      modelMap.addAttribute("currentPickNumber", leagueService.getCurrentPickNumber(currentLeague));
       modelMap.addAttribute("teamsByRank", teamService.updateLeagueTeamsRankings(currentLeague));
     } else {
       modelMap.addAttribute("teamLeague", user.getTeam().getLeague());
       modelMap.addAttribute("availableDrivers", driverService.getUndraftedDrivers(user.getTeam().getLeague()));
-      modelMap.addAttribute("currentPickNumber", teamService.getCurrentPickNumber(user.getTeam().getLeague()));
+      modelMap.addAttribute("currentPickNumber", leagueService.getCurrentPickNumber(user.getTeam().getLeague()));
       modelMap.addAttribute("teamsByRank", teamService.updateLeagueTeamsRankings(user.getTeam().getLeague()));
     }
 
@@ -78,8 +79,8 @@ public class DashboardController {
       modelMap.addAttribute("teamsByRank", teamService.updateLeagueTeamsRankings(currentLeague));
 
     }
-// Currently 10 players per league.
-// After league is full, new users are added to new league.
+    // Currently 10 players per league.
+    // After league is full, new users are added to new league.
     if (!userService.isAdmin(user) && user.getTeam() != null) {
       if (user.getTeam().getLeague().getTeams().size() >= 10) {
         modelMap.addAttribute("leagueFull", true);
@@ -88,14 +89,19 @@ public class DashboardController {
       if (teamService.timeToPick(user.getTeam().getLeague(), user.getTeam().getTeamId())) {
         modelMap.addAttribute("timeToPick", true);
       }
+      //    Set active flag to true when draft is finished, but will not change if teams are removed from league
+      if (Boolean.TRUE.equals(user.getTeam().getLeague().getIsActive())) {
+        modelMap.addAttribute("leagueActive", true);
+      }
     }
+
     return "dashboard";
   }
 
   @PostMapping("/dashboard/{userId}")
   public String postCreateTeam(@PathVariable Long userId, User user) {
     // Check for unique team names.
-    String teamName = user.getTeam().getTeamName();
+    String teamName = user.getTeam().getTeamName().trim();
     if (teamService.teamNameExists(teamName)) {
       Team team = new Team();
       user = userService.findById(userId);
@@ -114,13 +120,22 @@ public class DashboardController {
     if (driver.getDriverId() == null) {
       return "redirect:/dashboard/%d?error".formatted(userId);
     }
-
     Long driverId = driver.getDriverId();
     teamService.addDriverToTeam(userId, driverId);
-
     return "redirect:/dashboard/" + userId;
   }
 
+  @PostMapping("/dashboard/{userId}/deleteTeam")
+  public String postDeleteTeam(@PathVariable Long userId) {
+    User user = userService.findById(userId);
+    Team team = user.getTeam();
+    League league = team.getLeague();
+
+    teamService.deleteTeam(team);
+    userService.save(user);
+    leagueService.save(league);
+    return "redirect:/dashboard/" + userId;
+  }
 }
 
 

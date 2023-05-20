@@ -24,17 +24,17 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 import java.util.Objects;
 
+@SuppressWarnings("ALL")
 @Controller
 public class AdminController {
-
   @Autowired
-  ActiveUserStore activeUserStore;
+  private ActiveUserStore activeUserStore;
   @Autowired
-  TeamService teamService;
+  private TeamService teamService;
   @Autowired
-  LeagueService leagueService;
+  private LeagueService leagueService;
   @Autowired
-  DriverService driverService;
+  private DriverService driverService;
   @Autowired
   private AdminService adminService;
   @Value("${ergast.urls.base}${ergast.urls.currentDriverStandings}")
@@ -46,9 +46,9 @@ public class AdminController {
     modelMap.addAttribute("users", allUserAccounts);
     modelMap.addAttribute("leagues", leagueService.findAll());
     modelMap.addAttribute("activeUsers", activeUserStore.getUsers());
+    modelMap.addAttribute("allDrivers", driverService.sortDriversStanding());
     modelMap.addAttribute("isLoggedIn", true);
     modelMap.addAttribute("isAdmin", true);
-    modelMap.addAttribute("allDrivers", driverService.sortDriversStanding());
     return "admin";
   }
 
@@ -58,29 +58,27 @@ public class AdminController {
     return new RestTemplate().getForEntity(f1DataApi + ".json", DriverStandingResponse.class);
   }
 
-  @PostMapping("/admin/addDrivers")
-  public String getAddDrivers(ModelMap modelMap) {
+  public List<Driver> getDriversFromResponse() {
     List<StandingsList> standingsLists = Objects.requireNonNull(getDriverStandingsResponse().getBody())
             .mRData.standingsTable
             .standingsLists;
     List<DriverStanding> currentStandings = standingsLists.listIterator().next().driverStandings;
-    List<Driver> drivers = driverService.mapDTOToDrivers(currentStandings);
 
-    driverService.addDrivers(drivers);
+    return driverService.mapDTOToDrivers(currentStandings);
+  }
+
+  @PostMapping("/admin/addDrivers")
+  public String getAddDrivers(ModelMap modelMap) {
+    driverService.addDrivers(getDriversFromResponse());
+
     modelMap.addAttribute("allDrivers", driverService.sortDriversStanding());
     return "redirect:/admin";
   }
 
   @PostMapping("/admin/updateDrivers")
   public String getUpdateDriverStandings(ModelMap modelMap) {
-    List<StandingsList> standingsLists = Objects.requireNonNull(getDriverStandingsResponse().getBody())
-            .mRData.standingsTable
-            .standingsLists;
-    List<DriverStanding> currentStandings = standingsLists.listIterator().next().driverStandings;
-    List<Driver> drivers = driverService.mapDTOToDrivers(currentStandings);
+    driverService.updateDrivers(getDriversFromResponse());
 
-
-    driverService.updateDrivers(drivers);
     for (League league : leagueService.findAll()) {
       teamService.updateLeagueTeamsRankings(league);
     }
