@@ -22,9 +22,6 @@ Full stack java web app, using Thymeleaf, Spring-Boot, Spring Security, Hibernat
   </p>
 </div>
 
-
-
-<!-- TABLE OF CONTENTS -->
 <details>
   <summary>Table of Contents</summary>
   <ol>
@@ -50,12 +47,9 @@ Full stack java web app, using Thymeleaf, Spring-Boot, Spring Security, Hibernat
   </ol>
 </details>
 
-
-
-<!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Slipstream F1][product-screenshot]](https://slipstreamf1-production.up.railway.app/home)
+[![Slipstream F1][product-screenshot]](https://slipstreamf1-production.up.railway.app/home)</br>
 This is project is designed to showcase my knowledge of the stacks and frameworks listed below.
 It will also be used as a base for further development of those stacks, as well as learning and integrating new ones.
 
@@ -66,7 +60,6 @@ This game is also designed to appeal more to novice fans, and introduces an elem
 The app will continue to evolve, feedback, suggestions and bug reports are welcome.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
 
 
 ### Built With
