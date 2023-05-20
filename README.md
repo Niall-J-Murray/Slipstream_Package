@@ -63,7 +63,9 @@ The app will continue to evolve, feedback, suggestions and bug reports are welco
 
 
 ### Built With
-
+<a href="https://www.java.com"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original-wordmark.svg" width="50"
+                height="50" /></a>
+<a></a>
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original-wordmark.svg" width="50"
                 height="50" />
                 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original-wordmark.svg" width="50"
