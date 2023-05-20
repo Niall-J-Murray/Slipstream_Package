@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Objects;
 
@@ -55,8 +54,7 @@ public class AdminController {
   @ResponseBody
   @GetMapping("admin/driverStandingsJSON")
   public ResponseEntity<DriverStandingResponse> getDriverStandingsResponse() {
-    URI uri = URI.create("https://ergast.com/api/f1/current/driverStandings.json");
-    return new RestTemplate().getForEntity(uri, DriverStandingResponse.class);
+    return new RestTemplate().getForEntity(f1DataApi, DriverStandingResponse.class);
   }
 
   public List<Driver> getDriversFromResponse() {
