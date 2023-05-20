@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -24,17 +22,22 @@ public class League {
   @Column(nullable = false, unique = true)
   private String leagueName;
   @Column()
-  private LocalDateTime creationTime;
+  private String creationTimestamp;
+  @Column()
+  private Boolean isActive;
+  @Column()
+  private String activeTimestamp;
   @ManyToMany(
           fetch = FetchType.LAZY,
           cascade = {CascadeType.MERGE})
   private List<Team> teams = new ArrayList<>();
 
+
   @Override
   public String toString() {
     return "Id= " + leagueId +
             ", Name= " + leagueName +
-            ", Creation Time=" + creationTime.truncatedTo(ChronoUnit.MINUTES) +
+            ", Creation Time=" + creationTimestamp +
             ", No. of Teams= " + teams.size();
   }
 

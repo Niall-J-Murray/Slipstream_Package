@@ -10,18 +10,21 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+@SuppressWarnings("SpringJavaAutowiredFieldsWarningInspection")
 @Service
 public class UserService {
 
   @Autowired
-  ActiveUserStore activeUserStore;
+  private ActiveUserStore activeUserStore;
   @Autowired
   private UserRepository userRepository;
 
   public void createUser(User user) {
+    user.setUsername(user.getUsername().trim());
     Authority authority = new Authority();
     authority.setUser(user);
     authority.setAuthority("ROLE_USER");
@@ -29,7 +32,7 @@ public class UserService {
     user.getAuthorities().add(authority);
     user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
     // For new users first login and to check for unsuccessful logouts.
-    user.setLastLogout(String.valueOf(LocalDateTime.of(666, 6, 6, 6, 6)));
+    user.setLastLogout(String.valueOf(LocalDateTime.of(123, 4, 5, 6, 7)));
 
     userRepository.save(user);
   }
@@ -70,5 +73,17 @@ public class UserService {
     User user = findById(userId);
     user.setLastLogout(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yy HH:mm")));
     userRepository.save(user);
+  }
+
+  public void save(User user) {
+    userRepository.save(user);
+  }
+
+  public void updateUser(User user) {
+    userRepository.save(user);
+  }
+
+  public List<User> findAll() {
+    return userRepository.findAll();
   }
 }

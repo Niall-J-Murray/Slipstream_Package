@@ -4,10 +4,7 @@ import me.niallmurray.slipstream.domain.Driver;
 import me.niallmurray.slipstream.domain.League;
 import me.niallmurray.slipstream.domain.Team;
 import me.niallmurray.slipstream.domain.User;
-import me.niallmurray.slipstream.repositories.DriverRepository;
-import me.niallmurray.slipstream.repositories.LeagueRepository;
 import me.niallmurray.slipstream.repositories.TeamRepository;
-import me.niallmurray.slipstream.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,24 +16,17 @@ import java.util.random.RandomGenerator;
 @Service
 public class TeamService {
   @Autowired
-  UserService userService;
+  private TeamRepository teamRepository;
   @Autowired
-  TeamRepository teamRepository;
+  private UserService userService;
   @Autowired
-  DriverService driverService;
+  private LeagueService leagueService;
   @Autowired
-  DriverRepository driverRepository;
-  @Autowired
-  LeagueService leagueService;
-  @Autowired
-  LeagueRepository leagueRepository;
-  @Autowired
-  private UserRepository userRepository;
+  private DriverService driverService;
 
   public void createTeam(User user) {
     Team team = new Team();
     team.setUser(user);
-    team.setTeamId(user.getUserId());
 
     if (teamNameExists(user.getTeam().getTeamName())) {
       team.setTeamName(user.getTeam().getTeamName());
@@ -51,33 +41,12 @@ public class TeamService {
     addOneTeamToLeague(team);
   }
 
-
   public void addOneTeamToLeague(Team team) {
     League league = leagueService.findNewestLeague();
     List<Team> teams = league.getTeams();
     teams.add(team);
     league.setTeams(teams);
-    leagueRepository.save(league);
-  }
-
-  public List<Team> updateLeagueTeamsRankings(League league) {
-    List<Team> teams = league.getTeams();
-    for (Team team : teams) {
-      Double totalDriverPoints = team.getDrivers().stream()
-              .mapToDouble(Driver::getPoints).sum();
-      team.setTeamPoints(totalDriverPoints - team.getStartingPoints());
-    }
-    // Sort by pick order until all picks made
-    if (getCurrentPickNumber(league) < 21) {
-      teams.sort(Comparator.comparing(Team::getFirstPickNumber));
-      return teams;
-    }
-    teams.sort(Comparator.comparing(Team::getFirstPickNumber).reversed());
-    teams.sort(Comparator.comparing(Team::getTeamPoints).reversed());
-    for (Team team : teams) {
-      team.setRanking(teams.indexOf(team) + 1);
-    }
-    return teamRepository.saveAll(teams);
+    leagueService.save(league);
   }
 
   private int randomPickNumber() {
@@ -103,8 +72,8 @@ public class TeamService {
 
   public void addDriverToTeam(Long userId, Long driverId) {
     User user = userService.findById(userId);
-    Driver driver = driverRepository.findById(driverId).get();
-    Team team = teamRepository.findById(user.getTeam().getTeamId()).get();
+    Driver driver = driverService.findById(driverId);
+    Team team = findById(user.getTeam().getTeamId());
     List<Driver> teamDrivers = user.getTeam().getDrivers();
 
     if (teamDrivers.size() < 2) {
@@ -119,25 +88,23 @@ public class TeamService {
     team.setUser(user);
     user.setTeam(user.getTeam());
 
-    userRepository.save(user);
+    userService.save(user);
     teamRepository.save(team);
-    driverRepository.save(driver);
-  }
-
-  public int getCurrentPickNumber(League league) {
-    List<Driver> undraftedDrivers = driverService.getUndraftedDrivers(league);
-    return 21 - undraftedDrivers.size();
+    driverService.save(driver);
   }
 
   public boolean timeToPick(League league, Long teamId) {
-    int firstPickNumber = teamRepository.findById(teamId).get().getFirstPickNumber();
-    int secondPickNumber = teamRepository.findById(teamId).get().getSecondPickNumber();
-    return firstPickNumber == getCurrentPickNumber(league) || secondPickNumber == getCurrentPickNumber(league);
+    int firstPickNumber = findById(teamId).getFirstPickNumber();
+    int secondPickNumber = findById(teamId).getSecondPickNumber();
+
+    return firstPickNumber == leagueService.getCurrentPickNumber(league)
+            || secondPickNumber == leagueService.getCurrentPickNumber(league);
   }
 
   public String getNextToPick(League league) {
     String nextUserPick = null;
-    for (Team team : teamRepository.findAll()) {
+    List<Team> teamsInLeague = getAllTeamsByLeague(league);
+    for (Team team : teamsInLeague) {
       if (timeToPick(league, team.getTeamId())) {
         nextUserPick = team.getUser().getUsername();
       }
@@ -145,14 +112,59 @@ public class TeamService {
     return nextUserPick;
   }
 
+  public List<Team> updateLeagueTeamsRankings(League league) {
+    List<Team> teams = league.getTeams();
+    for (Team team : teams) {
+      Double totalDriverPoints = team.getDrivers().stream()
+              .mapToDouble(Driver::getPoints).sum();
+      team.setTeamPoints(totalDriverPoints - team.getStartingPoints());
+    }
+    // Sort by pick order until all picks made and league is active
+    if (Boolean.FALSE.equals(league.getIsActive())) {
+      teams.sort(Comparator.comparing(Team::getFirstPickNumber));
+      return teams;
+    }
+    teams.sort(Comparator.comparing(Team::getFirstPickNumber).reversed());
+    teams.sort(Comparator.comparing(Team::getTeamPoints).reversed());
+    for (Team team : teams) {
+      team.setRanking(teams.indexOf(team) + 1);
+    }
+    return teamRepository.saveAll(teams);
+  }
+
 
   public List<Team> getAllTeams() {
     return teamRepository.findAll();
+  }
+
+  public List<Team> getAllTeamsByLeague(League league) {
+    return teamRepository.findAll().stream()
+            .filter(team -> team.getLeague().equals(league))
+            .toList();
   }
 
   public List<Team> getAllTeamsByNextPick() {
     List<Team> allTeams = teamRepository.findAll();
     allTeams.sort(Comparator.comparing(Team::getFirstPickNumber));
     return allTeams;
+  }
+
+  public void deleteTeam(Team team) {
+    League league = team.getLeague();
+    List<Driver> drivers = team.getDrivers();
+    User user = team.getUser();
+    for (Driver driver : drivers) {
+      driver.getTeams().remove(team);
+      driverService.save(driver);
+    }
+    league.getTeams().remove(team);
+    user.setTeam(null);
+    teamRepository.delete(team);
+    userService.save(user);
+    leagueService.save(league);
+  }
+
+  public Team findById(Long teamId) {
+    return teamRepository.findById(teamId).orElse(null);
   }
 }

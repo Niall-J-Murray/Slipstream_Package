@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
+@SuppressWarnings("SameReturnValue")
 @Controller
 public class LoginController {
-
   @Autowired
-  ActiveUserStore activeUserStore;
+  private ActiveUserStore activeUserStore;
   @Autowired
   private AdminService adminService;
   @Autowired
