@@ -49,7 +49,8 @@ Full stack java web app, using Thymeleaf, Spring-Boot, Spring Security, Hibernat
 
 ## About The Project
 
-[![Slipstream F1][product-screenshot]](https://slipstreamf1-production.up.railway.app/home)</br>
+<a href="https://slipstreamf1-production.up.railway.app/home">Slipstream F1</a>
+  </br>
 This is project is designed to showcase my knowledge of the stacks and frameworks listed below.
 It will also be used as a base for further development of those stacks, as well as learning and integrating new ones.
 
@@ -64,15 +65,15 @@ The app will continue to evolve, feedback, suggestions and bug reports are welco
 
 ### Built With
 <a href="https://www.java.com">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original-wordmark.svg" width="50" height="50" /></a>-
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original-wordmark.svg" width="50" height="50" /></a> 
 <a href="https://spring.io/projects/spring-boot">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original-wordmark.svg" width="50" height="50" /></a>-
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/spring/spring-original-wordmark.svg" width="50" height="50" /></a> 
 <a href="https://www.mysql.com/">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" width="50" height="50" /></a>-
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" width="50" height="50" /></a> 
 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-plain-wordmark.svg" width="50" height="50" /></a>-
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-plain-wordmark.svg" width="50" height="50" /></a> 
 <a href="https://developer.mozilla.org/en-US/docs/Web/CSS">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-plain-wordmark.svg" width="50" height="50" /></a>-
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-plain-wordmark.svg" width="50" height="50" /></a> 
 <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript">
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" width="50" height="50" /></a> 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -85,6 +86,7 @@ Alternatively, you can clone or fork the app and download it to run locally.
 
 ### Prerequisites
 To run locally, you will need an IDE with Java 17 or higher.
+
 You will also need a MySQL localhost on port 3306, and will need to edit the application.properties file to access your localhost:
 i.e.: "spring.datasource.username=" and "spring.datasource.password=" will need correct credentials for your localhost.
 
@@ -125,7 +127,7 @@ This project could also be forked and adapted to use for different sports with r
     - [ ] Users can customise leagues by changing number of teams, picks etc...
 - [ ] Create advanced leagues with additional ways of scoring points, based on predictions etc.
 
-See the [open issues](https://github.com/Niall-J-Murray/Slipstream/blob/main/issues) to request features and see known issues.
+See the [issues](https://github.com/Niall-J-Murray/Slipstream/blob/main/issues) to request features and see known issues.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Contributing
@@ -135,9 +137,9 @@ Contributions are what make the open-source community such an amazing place to l
 If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
 
 1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
+2. Create your Feature Branch (`git checkout -b feature/NewFeature`)
+3. Commit your Changes (`git commit -m 'Add some NewFeature'`)
+4. Push to the Branch (`git push origin feature/NewFeature`)
 5. Open a Pull Request
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
