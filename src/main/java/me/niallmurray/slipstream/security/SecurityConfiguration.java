@@ -38,7 +38,7 @@ public class SecurityConfiguration {
             .hasRole("ADMIN")
             .requestMatchers("/dashboard/**", "/confirm_logout/**", "/logout/**")
             .hasAnyRole("USER", "ADMIN")
-            .requestMatchers("/", "/f1/", "/home/**", "/login", "/perform_login/**", "/register", "/css/**", "/js/**", "/images/**", "/plugins/**")
+            .requestMatchers("/", "/f1/", "/home/**", "/login", "/perform_login/**", "/register","/h2/**","/h2-console/**", "/css/**", "/js/**", "/images/**", "/plugins/**")
             .permitAll()
             .anyRequest()
             .authenticated()
